@@ -66,3 +66,19 @@ We have to use `pip` as `oTree` is not on conda-forge yet.
 ```bash
     pip install -r requirements.txt
 ```
+
+## Testing locally
+
+Open a terminal in the project folder and run
+
+```bash
+otree devserver
+```
+
+Then navigate to http://localhost:8000 in your browser.
+You can stop the server by pressing <btn>Ctrl</btn>+<btn>c</btn> in your terminal window.
+
+## Live deployment
+
+TODO! Idea: put everything in a Docker container to ensure reproducibility
+(Does the BLU lab allow Docker?)
