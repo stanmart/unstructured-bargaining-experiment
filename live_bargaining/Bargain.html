@@ -12,62 +12,90 @@ Make a deal
     Please negotiate with the {{ other_role }} below.
 </p>
 
-<h2>Propose allocation</h2>    
-<table rules="rows" style="width: 100%; table-layout:fixed;">
-    <colgroup>
-        <col span="1" style="width: 20%;">
-        <col span="1" style="width: 12%;">
-        <col span="1" style="width: 12%;">
-        <col span="1" style="width: 12%;">
-        <col span="1" style="width: 12%;">
-        <col span="1" style="width: 12%;">
-        <col span="1" style="width: 20%;">
-    </colgroup>
+<div style="border: 2px solid black; border-radius: 10px; margin: 1%; padding: 10px">
+    <h3>Propose allocation</h2>    
+    <table rules="rows" style="width: 100%; table-layout:fixed;">
+        <colgroup>
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 12%;">
+            <col span="1" style="width: 20%;">
+        </colgroup>
 
-    <tbody>
+        <tbody>
+            <tr>
+                <th></th>
+                <th style="text-align: center;">Player 1</th>
+                <th style="text-align: center;">Player 2</th>
+                <th style="text-align: center;">Player 3</th>
+                <th style="text-align: center;">Player 4</th>
+                <th style="text-align: center;">Player 5</th>
+                <th style="text-align: right;">Total</th>
+            </tr>
+            <tr style="height: 3em;">
+                <th style="text-align: left;">In coalition</th>
+                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-1" style="width: 1.5em; height: 1.5em"></td>
+                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-2" style="width: 1.5em; height: 1.5em"></td>
+                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-3" style="width: 1.5em; height: 1.5em"></td>
+                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-4" style="width: 1.5em; height: 1.5em"></td>
+                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-5" style="width: 1.5em; height: 1.5em"></td>
+                <td style="text-align: right;"><div class="allocation-total" id="total-shareable"style="text-align: right; font-weight: bold;">0</div></td>
+
+            </tr>
+            <tr style="height: 3em;">
+                <th style="text-align: left;">Allocation</th>
+                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1" style="width: 50%;"></td>
+                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2" style="width: 50%;"></td>
+                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3" style="width: 50%;"></td>
+                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4" style="width: 50%;"></td>
+                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5" style="width: 50%;"></td>
+                <td style="text-align: right;"><div class="allocation-total" id="total-shared" style="text-align: right; font-weight: bold;">0</div></td>
+            </tr>
+        </tbody>
         <tr>
-            <th></th>
-            <th style="text-align: center;">Player 1</th>
-            <th style="text-align: center;">Player 2</th>
-            <th style="text-align: center;">Player 3</th>
-            <th style="text-align: center;">Player 4</th>
-            <th style="text-align: center;">Player 5</th>
-            <th style="text-align: right;">Total</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;"><button type="button" onclick="sendOffer()" id="btn-accept" style="width: 100%">Submit</button></td>
         </tr>
-        <tr style="height: 3em;">
-            <th style="text-align: left;">In coalition</th>
-            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-1" style="width: 1.5em; height: 1.5em"></td>
-            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-2" style="width: 1.5em; height: 1.5em"></td>
-            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-3" style="width: 1.5em; height: 1.5em"></td>
-            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-4" style="width: 1.5em; height: 1.5em"></td>
-            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-5" style="width: 1.5em; height: 1.5em"></td>
-            <td style="text-align: right;"><div class="allocation-total" id="total-shareable"style="text-align: right; font-weight: bold;">0</div></td>
+    </table>
+</div>
 
-        </tr>
-        <tr style="height: 3em;">
-            <th style="text-align: left;">Allocation</th>
-            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1" style="width: 50%;"></td>
-            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2" style="width: 50%;"></td>
-            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3" style="width: 50%;"></td>
-            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4" style="width: 50%;"></td>
-            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5" style="width: 50%;"></td>
-            <td style="text-align: right;"><div class="allocation-total" id="total-shared" style="text-align: right; font-weight: bold;">0</div></td>
-        </tr>
-    </tbody>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td style="text-align: right;"><button type="button" onclick="sendOffer()" id="btn-accept" style="width: 100%">Submit</button></td>
-    </tr>
-</table>
+<div>
 
+    <div style="width: 48%; float: left; padding: 10px; border: 2px solid black; border-radius: 10px; margin: 1%;">
+        <h3>Chat</h4>
+        {{ chat nickname=player.role }} 
+    </div>
+    
+    <div style="width: 48%; float: right; padding: 10px; border: 2px solid black; border-radius: 10px; margin: 1%;">
+        <h3>Offers</h4>
+        <div>
+            <table style="width: 100%">
+                <tr>
+                    <th style="text-align: center; width: 15%">P1</th>
+                    <th style="text-align: center; width: 15%">P2</th>
+                    <th style="text-align: center; width: 15%">P3</th>
+                    <th style="text-align: center; width: 15%">P4</th>
+                    <th style="text-align: center; width: 15%">P5</th>
+                    <th style="text-align: right; width: 25%">Total</th>
+                </tr>
+            </table>
+        </div>
+          
+        <div style="height: 300px; overflow: auto;">
+            <table id="offers-table"></table>
+        </div>
+    </div>
+        
+</div>
 
-<h4>Chat</h4>
-{{ chat nickname=player.role }}
 
 <script>
     let btnAccept = document.getElementById('btn-accept');
