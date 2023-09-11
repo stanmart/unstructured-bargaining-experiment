@@ -150,7 +150,7 @@ function sendOffer() {
         allocation5.value,
     ];
     liveSend({'type': 'propose', 'members': members, 'allocations': allocations})
-    my_offer.value = '';
+    alert('Offer submitted successfully');
 }
 
 function sendAccept() {
