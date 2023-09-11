@@ -103,24 +103,22 @@ Make a deal
         {{ chat nickname=player.role }} 
     </div>
     
-    <div class="section flex-item">
+    <div class="section flex-item vertical-fill">
         <h3>Past Proposals</h4>
-        <div>
-            <table class="offer-table">
-                <tr>
-                    <th class="offer-left-col">From</th>
-                    <th class="offer-id-col">ID</th>
-                    <th class="offerplayer-col">P1</th>
-                    <th class="offerplayer-col">P2</th>
-                    <th class="offerplayer-col">P3</th>
-                    <th class="offerplayer-col">P4</th>
-                    <th class="offerplayer-col">P5</th>
-                </tr>
-            </table>
-        </div>
-          
-        <div style="overflow: auto;">
-            <table class="offer-table" id="offers-table">
+        <div class="flex-item vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules">
+                <thead>
+                    <tr>
+                        <th class="offer-left-col">From</th>
+                        <th class="offer-id-col">ID</th>
+                        <th class="offer-player-col">P1</th>
+                        <th class="offer-player-col">P2</th>
+                        <th class="offer-player-col">P3</th>
+                        <th class="offer-player-col">P4</th>
+                        <th class="offer-player-col">P5</th>
+                    </tr>
+                </thead>
+                <tbody id="past-offers-table"></tbody>
             </table>
         </div>
     </div>

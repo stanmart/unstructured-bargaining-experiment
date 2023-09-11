@@ -28,7 +28,10 @@ let payoff5 = document.getElementById('payoff-5');
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
 
+let pastOffersTable = document.getElementById('past-offers-table');
+
 let totalShareableValue = 0;
+let pastOffers = []
 
 let pieByEntrants = {
     0: 0,
@@ -92,7 +95,7 @@ allocation1.addEventListener('change', function () {
     allocation1.value = Math.floor(Math.max(0, allocation1.value));
     updateTotalShared();
 });
-allocation1.addEventListener("keyup", function(event) {
+allocation1.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         allocation1.value = Math.floor(Math.max(0, allocation1.value));
         updateTotalShared();
@@ -103,7 +106,7 @@ allocation2.addEventListener('change', function () {
     allocation1.value = Math.floor(Math.max(0, allocation1.value));
     updateTotalShared();
 });
-allocation2.addEventListener("keyup", function(event) {
+allocation2.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         allocation2.value = Math.floor(Math.max(0, allocation2.value));
         updateTotalShared();
@@ -114,7 +117,7 @@ allocation3.addEventListener('change', function () {
     allocation1.value = Math.floor(Math.max(0, allocation1.value));
     updateTotalShared();
 });
-allocation3.addEventListener("keyup", function(event) {
+allocation3.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         allocation3.value = Math.floor(Math.max(0, allocation3.value));
         updateTotalShared();
@@ -125,7 +128,7 @@ allocation4.addEventListener('change', function () {
     allocation1.value = Math.floor(Math.max(0, allocation1.value));
     updateTotalShared();
 });
-allocation4.addEventListener("keyup", function(event) {
+allocation4.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         allocation4.value = Math.floor(Math.max(0, allocation4.value));
         updateTotalShared();
@@ -136,7 +139,7 @@ allocation5.addEventListener('change', function () {
     allocation1.value = Math.floor(Math.max(0, allocation1.value));
     updateTotalShared();
 });
-allocation5.addEventListener("keyup", function(event) {
+allocation5.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         allocation5.value = Math.floor(Math.max(0, allocation5.value));
         updateTotalShared();
@@ -162,12 +165,12 @@ function sendOffer() {
         allocation4.value,
         allocation5.value,
     ];
-    liveSend({'type': 'propose', 'members': members, 'allocations': allocations})
+    liveSend({ 'type': 'propose', 'members': members, 'allocations': allocations })
     alert('Offer submitted successfully');
 }
 
 function sendAccept() {
-    liveSend({'type': 'accept', 'amount': otherProposal})
+    liveSend({ 'type': 'accept', 'amount': otherProposal })
 }
 
 function cu(amount) {
@@ -216,6 +219,65 @@ function updateTotalShared() {
     }
 }
 
+function updatePastOffers(newPastOffers) {
+    if (newPastOffers.length < pastOffers.length) {
+        pastOffersTable.innerHTML = '';
+        pastOffers = [];
+    }
+    if (!(JSON.stringify(newPastOffers.slice(0, pastOffers.length)) === JSON.stringify(pastOffers))) {
+        pastOffersTable.innerHTML = '';
+        pastOffers = [];
+    }
+    newPastOffers.slice(pastOffers.length).forEach(function (offer) {
+        pastOffers.push(offer);
+        let row = pastOffersTable.insertRow();
+
+        let from = row.insertCell();
+        from.className = "offer-left-col";
+        from.innerHTML = `P${offer.from}`;
+        from.style.fontWeight = 'bold';
+
+        let id = row.insertCell();
+        id.className = "offer-id-col";
+        id.innerHTML = offer.offer_id;
+        id.style.fontWeight = 'bold';
+
+        for (let i = 0; i < 5; i++) {
+            let cell = row.insertCell();
+            cell.className = "offer-player-col";
+            if (!offer.members[i]) {
+                cell.innerHTML = '—';
+            } else {
+                cell.innerHTML = offer.allocations[i]
+            }
+            if (i === js_vars.my_id - 1) {
+                cell.style.fontWeight = 'bold';
+                cell.style.color = 'blue';
+            }
+        }
+
+    });
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
     liveSend({});
 });
+
+
+// Testing
+
+let newPastOffers = [
+    {
+        "from": 1,
+        "offer_id": 1,
+        "members": [true, false, true, true, false],
+        "allocations": [50, 0, 20, 10, 0],
+    },
+    {
+        "from": 2,
+        "offer_id": 2,
+        "members": [true, true, true, true, true],
+        "allocations": [50, 10, 20, 10, 10],
+    }
+];
+updatePastOffers(newPastOffers);

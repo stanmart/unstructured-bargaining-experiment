@@ -12,10 +12,12 @@
 }
 
 .flex-item {
+    display: "flex";
     flex: 1;
 }
 
 .vertical-fill {
+    flex: 1;
     display: flex;
     flex-flow: column;
 }
@@ -66,7 +68,7 @@ input {
 
 .offer-id-col {
     width: 15%;
-    text-align: left;
+    text-align: center;
 }
 .coalition-member {
     width: 1.5em;
@@ -83,9 +85,14 @@ input {
     font-weight: bold;
 }
 
-.offer-table{
+.offer-table {
     table-layout: fixed;
     width: 100%;
+}
+
+.horizontal-rules tr {
+    border-bottom: 1px solid black;
+    border-top: none; 
 }
 
 .otree-chat__nickname {
