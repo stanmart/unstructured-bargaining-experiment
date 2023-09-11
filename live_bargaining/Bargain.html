@@ -1,6 +1,11 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block title }}
 Make a deal
 {{ endblock }}
+
 {{ block content }}
 
 <p>
@@ -12,47 +17,37 @@ Make a deal
     Please negotiate with the {{ other_role }} below.
 </p>
 
-<div style="border: 2px solid black; border-radius: 10px; margin: 1%; padding: 15px">
+<div class="section">
     <h3>Propose allocation</h2>    
-    <table rules="rows" style="width: 100%; table-layout:fixed;">
-        <colgroup>
-            <col span="1" style="width: 20%;">
-            <col span="1" style="width: 12%;">
-            <col span="1" style="width: 12%;">
-            <col span="1" style="width: 12%;">
-            <col span="1" style="width: 12%;">
-            <col span="1" style="width: 12%;">
-            <col span="1" style="width: 20%;">
-        </colgroup>
-
+    <table class="offer-table">
         <tbody>
             <tr>
                 <th></th>
-                <th style="text-align: center;">Player 1</th>
-                <th style="text-align: center;">Player 2</th>
-                <th style="text-align: center;">Player 3</th>
-                <th style="text-align: center;">Player 4</th>
-                <th style="text-align: center;">Player 5</th>
+                <th class="offer-player-col">Player 1</th>
+                <th class="offer-player-col">Player 2</th>
+                <th class="offer-player-col">Player 3</th>
+                <th class="offer-player-col">Player 4</th>
+                <th class="offer-player-col">Player 5</th>
                 <th style="text-align: right;">Total</th>
             </tr>
             <tr style="height: 3em;">
-                <th style="text-align: left;">In coalition</th>
-                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-1" style="width: 1.5em; height: 1.5em"></td>
-                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-2" style="width: 1.5em; height: 1.5em"></td>
-                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-3" style="width: 1.5em; height: 1.5em"></td>
-                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-4" style="width: 1.5em; height: 1.5em"></td>
-                <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-5" style="width: 1.5em; height: 1.5em"></td>
-                <td style="text-align: right;"><div class="allocation-total" id="total-shareable"style="text-align: right; font-weight: bold;">0</div></td>
+                <th class="offer-left-col">In coalition</th>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-1"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-2"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-3"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-4"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-5"></td>
+                <td class="offer-total-col"><div class="allocation-total" id="total-shareable">0</div></td>
 
             </tr>
             <tr style="height: 3em;">
-                <th style="text-align: left;">Allocation</th>
-                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1" style="width: 50%;"></td>
-                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2" style="width: 50%;"></td>
-                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3" style="width: 50%;"></td>
-                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4" style="width: 50%;"></td>
-                <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5" style="width: 50%;"></td>
-                <td style="text-align: right;"><div class="allocation-total" id="total-shared" style="text-align: right; font-weight: bold;">0</div></td>
+                <th class="offer-left-col">Allocation</th>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5"></td>
+                <td class="offer-total-col"><div class="allocation-total" id="total-shared">0</div></td>
             </tr>
         </tbody>
         <tr>
@@ -67,200 +62,38 @@ Make a deal
     </table>
 </div>
 
-<div>
+<div class="side-by-side" style="height: 500px;">
 
-    <div style="width: 48%; float: left; padding: 15px; border: 2px solid black; border-radius: 10px; margin: 1%;">
-        <h3>Chat</h4>
+    <div class="section flex-item vertical-fill">
+        <h3>Chat</h3>
         {{ chat nickname=player.role }} 
     </div>
     
-    <div style="width: 48%; float: right; padding: 15px; border: 2px solid black; border-radius: 10px; margin: 1%;">
-        <h3>Offers</h4>
+    <div class="section flex-item">
+        <h3>Past Offers</h4>
         <div>
-            <table style="width: 100%">
+            <table class="offer-table">
                 <tr>
-                    <th style="text-align: center; width: 16%">From</th>
-                    <th style="text-align: center; width: 14%">ID</th>
-                    <th style="text-align: center; width: 14%">P1</th>
-                    <th style="text-align: center; width: 14%">P2</th>
-                    <th style="text-align: center; width: 14%">P3</th>
-                    <th style="text-align: center; width: 14%">P4</th>
-                    <th style="text-align: center; width: 14%">P5</th>
+                    <th class="offer-left-col">From</th>
+                    <th class="offer-id-col">ID</th>
+                    <th class="offerplayer-col">P1</th>
+                    <th class="offerplayer-col">P2</th>
+                    <th class="offerplayer-col">P3</th>
+                    <th class="offerplayer-col">P4</th>
+                    <th class="offerplayer-col">P5</th>
                 </tr>
             </table>
         </div>
           
-        <div style="height: 300px; overflow: auto;">
-            <table id="offers-table"></table>
+        <div style="overflow: auto;">
+            <table class="offer-table" id="offers-table">
+            </table>
         </div>
     </div>
         
 </div>
 
 
-<script>
-    let btnAccept = document.getElementById('btn-accept');
-
-    let isMember1 = document.getElementById('is-member-1');
-    let isMember2 = document.getElementById('is-member-2');
-    let isMember3 = document.getElementById('is-member-3');
-    let isMember4 = document.getElementById('is-member-4');
-    let isMember5 = document.getElementById('is-member-5');
-
-    let allocation1 = document.getElementById('allocation-1');
-    let allocation2 = document.getElementById('allocation-2');
-    let allocation3 = document.getElementById('allocation-3');
-    let allocation4 = document.getElementById('allocation-4');
-    let allocation5 = document.getElementById('allocation-5');
-
-    let totalShareable = document.getElementById('total-shareable');
-    let totalShared = document.getElementById('total-shared');
-
-    let totalShareableValue = 0;
-
-    let pieByEntrants = {
-        0: 0,
-        1: 60,
-        2: 80,
-        3: 95,
-        4: 100,
-    };
-
-    isMember1.addEventListener('change', function () {
-        allocation1.disabled = !isMember1.checked;
-        allocation1.value = 0;
-        updateTotalShareable();
-        updateTotalShared();
-    });
-
-    isMember2.addEventListener('change', function () {
-        allocation2.disabled = !isMember2.checked;
-        allocation2.value = 0;
-        updateTotalShareable();
-        updateTotalShared();
-    });
-
-    isMember3.addEventListener('change', function () {
-        allocation3.disabled = !isMember3.checked;
-        allocation3.value = 0;
-        updateTotalShareable();
-        updateTotalShared();
-    });
-
-    isMember4.addEventListener('change', function () {
-        allocation4.disabled = !isMember4.checked;
-        allocation4.value = 0;
-        updateTotalShareable();
-        updateTotalShared();
-    });
-
-    isMember5.addEventListener('change', function () {
-        allocation5.disabled = !isMember5.checked;
-        allocation5.value = 0;
-        updateTotalShareable();
-        updateTotalShared();
-    });
-
-    allocation1.addEventListener('change', function () {
-        allocation1.value = Math.floor(Math.max(0, allocation1.value));
-        updateTotalShared();
-    });
-
-    allocation2.addEventListener('change', function () {
-        allocation1.value = Math.floor(Math.max(0, allocation1.value));
-        updateTotalShared();
-    });
-
-    allocation3.addEventListener('change', function () {
-        allocation1.value = Math.floor(Math.max(0, allocation1.value));
-        updateTotalShared();
-    });
-
-    allocation4.addEventListener('change', function () {
-        allocation1.value = Math.floor(Math.max(0, allocation1.value));
-        updateTotalShared();
-    });
-
-    allocation5.addEventListener('change', function () {
-        allocation1.value = Math.floor(Math.max(0, allocation1.value));
-        updateTotalShared();
-    });
-
-    function sendOffer() {
-        if (totalSharedValue > totalShareableValue) {
-            alert('You cannot offer more than the total shareable value');
-            return;
-        }
-        members = [
-            isMember1.checked,
-            isMember2.checked,
-            isMember3.checked,
-            isMember4.checked,
-            isMember5.checked,
-        ];
-        allocations = [
-            allocation1.value,
-            allocation2.value,
-            allocation3.value,
-            allocation4.value,
-            allocation5.value,
-        ];
-        liveSend({'type': 'propose', 'members': members, 'allocations': allocations})
-        my_offer.value = '';
-    }
-
-    function sendAccept() {
-        liveSend({'type': 'accept', 'amount': otherProposal})
-    }
-
-    function cu(amount) {
-        return `${amount} points`;
-    }
-
-    function liveRecv(data) {
-        if ('proposals' in data) {
-            for (let [id_in_group, proposal] of data.proposals) {
-
-                if (id_in_group === js_vars.my_id) {
-                    msgMyProposal.innerHTML = cu(proposal)
-                } else {
-                    msgOtherProposal.innerHTML = cu(proposal);
-                    otherProposal = proposal;
-                    btnAccept.style.display = 'block';
-                }
-            }
-        }
-        if ('finished' in data) {
-            document.getElementById('form').submit();
-        }
-    }
-
-    function updateTotalShareable() {
-        if (isMember1.checked) {
-            total = isMember2.checked + isMember3.checked + isMember4.checked + isMember5.checked;
-            totalShareableValue = pieByEntrants[total];
-        } else {
-            totalShareableValue = 0;
-        }
-        totalShareable.innerHTML = totalShareableValue;
-    }
-
-    function updateTotalShared() {
-        totalSharedValue = parseInt(allocation1.value) + parseInt(allocation2.value) + parseInt(allocation3.value) + parseInt(allocation4.value) + parseInt(allocation5.value);
-        totalShared.innerHTML = totalSharedValue;
-        if (totalSharedValue > totalShareableValue) {
-            totalShared.style.color = 'red';
-        } else if (totalSharedValue < totalShareableValue) {
-            totalShared.style.color = 'black';
-        } else {
-            totalShared.style.color = 'green';
-        }
-    }
-
-    window.addEventListener('DOMContentLoaded', (event) => {
-        liveSend({});
-    });
-
-</script>
+<script src="{{ static 'live_bargaining.js' }}"></script>
 
 {{ endblock }}
