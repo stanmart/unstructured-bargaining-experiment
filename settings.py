@@ -2,9 +2,9 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='bargaining',
-        app_sequence=['introduction', 'live_bargaining', 'survey'],
-        num_demo_participants=5,
+        name='live_bargaining',
+        app_sequence=['live_bargaining'],
+        num_demo_participants=2,
     ),
 ]
 
@@ -25,7 +25,7 @@ SESSION_FIELDS = []
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'CHF'
+REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = True
 
 ADMIN_USERNAME = 'admin'
