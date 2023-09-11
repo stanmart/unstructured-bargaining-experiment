@@ -1,3 +1,4 @@
+import pickle
 from otree.api import *
 
 
@@ -13,11 +14,23 @@ Also, the continuous-time version works smoother & faster,
 and is less resource-intensive since it all takes place in 1 page.
 """
 
+with open('preparation/group_matrices/group_matrices.pkl', 'rb') as file:
+    group_matrices = pickle.load(file)
+
+
+def creating_session(subsession):
+    group_matrix_size = sum(len(row) for row in group_matrices[0])
+    if len(subsession.get_players()) == group_matrix_size:
+        subsession_index = subsession.round_number - 1
+        subsession.set_group_matrix(group_matrices[subsession_index])
+    else:
+        subsession.group_randomly()
+
 
 class C(BaseConstants):
     NAME_IN_URL = 'live_bargaining'
-    PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 1
+    PLAYERS_PER_GROUP = 5
+    NUM_ROUNDS = 5
     SELLER_ROLE = 'Seller'
     BUYER_ROLE = 'Buyer'
 
