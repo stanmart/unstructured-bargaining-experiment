@@ -8,19 +8,26 @@ Make a deal
 
 {{ block content }}
 
-<p>
-    This is a 5-player game.
-    Any subset of the players can form a coalition.
-    The value the coalition can produce depends on its members like so:
-    <ul>
-        <li>If Player 0 is not in the coalition, the value is 0.</li>
-        <li>Otherwise, it is increasing in the number of members (see graph).</li>
-    </ul>
-</p>
-<p>
-    You are <span style="color: blue; font-weight: bold;">Player {{ player.id_in_group }}</span>.
-    Please negotiate with the other players below.
-</p>
+<div class="side-by-side">
+    <div class="flex">
+        <p>
+            This is a 5-player game.
+            Any subset of the players can form a coalition.
+            The value the coalition can produce depends on its members like so:
+            <ul>
+                <li>If Player 0 is not in the coalition, the value is 0.</li>
+                <li>Otherwise, it is increasing in the number of members (see graph).</li>
+            </ul>
+        </p>
+        <p>
+            You are <span style="color: blue; font-weight: bold;">Player {{ player.id_in_group }}</span>.
+            Please negotiate with the other players below.
+        </p>
+    </div>
+    <div>
+        <canvas id="payoff-chart"></canvas>
+    </div>
+</div>
 
 <div class="section">
     <h3>Propose allocation</h2>    
@@ -131,6 +138,7 @@ Make a deal
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ static 'live_bargaining.js' }}"></script>
 
 {{ endblock }}

@@ -257,6 +257,7 @@ function updatePastOffers(newPastOffers) {
     });
 }
 
+// Setup
 window.addEventListener('DOMContentLoaded', (event) => {
     liveSend({});
 });
@@ -266,8 +267,40 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
     thisPlayerHeaders[i].style.color = 'blue';
 }
 
+// Chart
+const ctx = document.getElementById('payoff-chart');
 
-// Testing
+let chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(pieByEntrants),
+        datasets: [{
+            label: "Coalition's payoff",
+            data: Object.values(pieByEntrants),
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            },
+            x: {
+                title: {
+                    text: "P1 + this many others in coalition",
+                    display: true
+                }
+            }
+        },
+        maintainAspectRatio: false,
+    }
+});
+chart.canvas.parentNode.style.height = '200px';
+chart.canvas.parentNode.style.width = '400px';
+
+
+
+// Temp code for testing:
 
 let newPastOffers = [
     {
