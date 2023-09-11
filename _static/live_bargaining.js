@@ -250,7 +250,7 @@ function updatePastOffers(newPastOffers) {
             }
             if (i === js_vars.my_id - 1) {
                 cell.style.fontWeight = 'bold';
-                cell.style.color = 'blue';
+                cell.style.color = '#056fb7';
             }
         }
 
@@ -264,7 +264,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 document.getElementById(`accepted-${js_vars.my_id}`).disabled = false;
 let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
 for (let i = 0; i < thisPlayerHeaders.length; i++) {
-    thisPlayerHeaders[i].style.color = 'blue';
+    thisPlayerHeaders[i].style.color = '#056fb7';
 }
 
 // Chart
@@ -278,6 +278,8 @@ let chart = new Chart(ctx, {
             label: "Coalition's payoff",
             data: Object.values(pieByEntrants),
             borderWidth: 1,
+            borderColor: "#056fb7",
+            backgroundColor: "#5994c7"
         }]
     },
     options: {
