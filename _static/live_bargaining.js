@@ -1,3 +1,4 @@
+let btnPropose = document.getElementById('btn-propose');
 let btnAccept = document.getElementById('btn-accept');
 
 let isMember1 = document.getElementById('is-member-1');
@@ -11,6 +12,18 @@ let allocation2 = document.getElementById('allocation-2');
 let allocation3 = document.getElementById('allocation-3');
 let allocation4 = document.getElementById('allocation-4');
 let allocation5 = document.getElementById('allocation-5');
+
+let accepted1 = document.getElementById('accepted-1');
+let accepted2 = document.getElementById('accepted-2');
+let accepted3 = document.getElementById('accepted-3');
+let accepted4 = document.getElementById('accepted-4');
+let accepted5 = document.getElementById('accepted-5');
+
+let payoff1 = document.getElementById('payoff-1');
+let payoff2 = document.getElementById('payoff-2');
+let payoff3 = document.getElementById('payoff-3');
+let payoff4 = document.getElementById('payoff-4');
+let payoff5 = document.getElementById('payoff-5');
 
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
@@ -170,13 +183,15 @@ function liveRecv(data) {
             } else {
                 msgOtherProposal.innerHTML = cu(proposal);
                 otherProposal = proposal;
-                btnAccept.style.display = 'block';
+                btnPropose.style.display = 'block';
             }
         }
     }
     if ('finished' in data) {
         document.getElementById('form').submit();
     }
+    document.getElementById(`accepted-${js_vars.my_id}`).disabled = false;
+
 }
 
 function updateTotalShareable() {
