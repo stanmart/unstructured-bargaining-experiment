@@ -12,43 +12,171 @@ Make a deal
     Please negotiate with the {{ other_role }} below.
 </p>
 
-<table class="table">
+<h2>Propose allocation</h2>    
+<table rules="rows" style="width: 100%; table-layout:fixed;">
+    <colgroup>
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 12%;">
+        <col span="1" style="width: 12%;">
+        <col span="1" style="width: 12%;">
+        <col span="1" style="width: 12%;">
+        <col span="1" style="width: 12%;">
+        <col span="1" style="width: 20%;">
+    </colgroup>
+
+    <tbody>
+        <tr>
+            <th></th>
+            <th style="text-align: center;">Player 1</th>
+            <th style="text-align: center;">Player 2</th>
+            <th style="text-align: center;">Player 3</th>
+            <th style="text-align: center;">Player 4</th>
+            <th style="text-align: center;">Player 5</th>
+            <th style="text-align: right;">Total</th>
+        </tr>
+        <tr style="height: 3em;">
+            <th style="text-align: left;">In coalition</th>
+            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-1" style="width: 1.5em; height: 1.5em"></td>
+            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-2" style="width: 1.5em; height: 1.5em"></td>
+            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-3" style="width: 1.5em; height: 1.5em"></td>
+            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-4" style="width: 1.5em; height: 1.5em"></td>
+            <td style="text-align: center;"><input type="checkbox" class="coalition-member" id="is-member-5" style="width: 1.5em; height: 1.5em"></td>
+            <td style="text-align: right;"><div class="allocation-total" id="total-shareable"style="text-align: right; font-weight: bold;">0</div></td>
+
+        </tr>
+        <tr style="height: 3em;">
+            <th style="text-align: left;">Allocation</th>
+            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1" style="width: 50%;"></td>
+            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2" style="width: 50%;"></td>
+            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3" style="width: 50%;"></td>
+            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4" style="width: 50%;"></td>
+            <td style="text-align: center;"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5" style="width: 50%;"></td>
+            <td style="text-align: right;"><div class="allocation-total" id="total-shared" style="text-align: right; font-weight: bold;">0</div></td>
+        </tr>
+    </tbody>
     <tr>
-        <th>Your current proposal</th>
-        <td id="my-proposal">(none)</td>
-        <td>
-            <input type="number" id="my_offer">
-            <button type="button" onclick="sendOffer()" id="btn-offer">Make new offer</button>
-        </td>
-    </tr>
-    <tr>
-        <th>{{ other_role }} proposal</th>
-        <td id="other-proposal">(none)</td>
-        <td>
-            <button type="button" id="btn-accept" onclick="sendAccept(this)" style="display: none">Accept</button>
-        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="text-align: right;"><button type="button" onclick="sendOffer()" id="btn-accept" style="width: 100%">Submit</button></td>
     </tr>
 </table>
+
 
 <h4>Chat</h4>
 {{ chat nickname=player.role }}
 
 <script>
-    let my_offer = document.getElementById('my_offer');
     let btnAccept = document.getElementById('btn-accept');
-    let msgOtherProposal = document.getElementById('other-proposal');
-    let msgMyProposal = document.getElementById('my-proposal');
 
-    let otherProposal;
+    let isMember1 = document.getElementById('is-member-1');
+    let isMember2 = document.getElementById('is-member-2');
+    let isMember3 = document.getElementById('is-member-3');
+    let isMember4 = document.getElementById('is-member-4');
+    let isMember5 = document.getElementById('is-member-5');
 
-    my_offer.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            sendOffer();
-        }
+    let allocation1 = document.getElementById('allocation-1');
+    let allocation2 = document.getElementById('allocation-2');
+    let allocation3 = document.getElementById('allocation-3');
+    let allocation4 = document.getElementById('allocation-4');
+    let allocation5 = document.getElementById('allocation-5');
+
+    let totalShareable = document.getElementById('total-shareable');
+    let totalShared = document.getElementById('total-shared');
+
+    let totalShareableValue = 0;
+
+    let pieByEntrants = {
+        0: 0,
+        1: 60,
+        2: 80,
+        3: 95,
+        4: 100,
+    };
+
+    isMember1.addEventListener('change', function () {
+        allocation1.disabled = !isMember1.checked;
+        allocation1.value = 0;
+        updateTotalShareable();
+        updateTotalShared();
+    });
+
+    isMember2.addEventListener('change', function () {
+        allocation2.disabled = !isMember2.checked;
+        allocation2.value = 0;
+        updateTotalShareable();
+        updateTotalShared();
+    });
+
+    isMember3.addEventListener('change', function () {
+        allocation3.disabled = !isMember3.checked;
+        allocation3.value = 0;
+        updateTotalShareable();
+        updateTotalShared();
+    });
+
+    isMember4.addEventListener('change', function () {
+        allocation4.disabled = !isMember4.checked;
+        allocation4.value = 0;
+        updateTotalShareable();
+        updateTotalShared();
+    });
+
+    isMember5.addEventListener('change', function () {
+        allocation5.disabled = !isMember5.checked;
+        allocation5.value = 0;
+        updateTotalShareable();
+        updateTotalShared();
+    });
+
+    allocation1.addEventListener('change', function () {
+        allocation1.value = Math.floor(Math.max(0, allocation1.value));
+        updateTotalShared();
+    });
+
+    allocation2.addEventListener('change', function () {
+        allocation1.value = Math.floor(Math.max(0, allocation1.value));
+        updateTotalShared();
+    });
+
+    allocation3.addEventListener('change', function () {
+        allocation1.value = Math.floor(Math.max(0, allocation1.value));
+        updateTotalShared();
+    });
+
+    allocation4.addEventListener('change', function () {
+        allocation1.value = Math.floor(Math.max(0, allocation1.value));
+        updateTotalShared();
+    });
+
+    allocation5.addEventListener('change', function () {
+        allocation1.value = Math.floor(Math.max(0, allocation1.value));
+        updateTotalShared();
     });
 
     function sendOffer() {
-        liveSend({'type': 'propose', 'amount': my_offer.value})
+        if (totalSharedValue > totalShareableValue) {
+            alert('You cannot offer more than the total shareable value');
+            return;
+        }
+        members = [
+            isMember1.checked,
+            isMember2.checked,
+            isMember3.checked,
+            isMember4.checked,
+            isMember5.checked,
+        ];
+        allocations = [
+            allocation1.value,
+            allocation2.value,
+            allocation3.value,
+            allocation4.value,
+            allocation5.value,
+        ];
+        liveSend({'type': 'propose', 'members': members, 'allocations': allocations})
         my_offer.value = '';
     }
 
@@ -75,6 +203,28 @@ Make a deal
         }
         if ('finished' in data) {
             document.getElementById('form').submit();
+        }
+    }
+
+    function updateTotalShareable() {
+        if (isMember1.checked) {
+            total = isMember2.checked + isMember3.checked + isMember4.checked + isMember5.checked;
+            totalShareableValue = pieByEntrants[total];
+        } else {
+            totalShareableValue = 0;
+        }
+        totalShareable.innerHTML = totalShareableValue;
+    }
+
+    function updateTotalShared() {
+        totalSharedValue = parseInt(allocation1.value) + parseInt(allocation2.value) + parseInt(allocation3.value) + parseInt(allocation4.value) + parseInt(allocation5.value);
+        totalShared.innerHTML = totalSharedValue;
+        if (totalSharedValue > totalShareableValue) {
+            totalShared.style.color = 'red';
+        } else if (totalSharedValue < totalShareableValue) {
+            totalShared.style.color = 'black';
+        } else {
+            totalShared.style.color = 'green';
         }
     }
 
