@@ -193,8 +193,6 @@ function liveRecv(data) {
     if ('finished' in data) {
         document.getElementById('form').submit();
     }
-    document.getElementById(`accepted-${js_vars.my_id}`).disabled = false;
-
 }
 
 function updateTotalShareable() {
@@ -262,6 +260,11 @@ function updatePastOffers(newPastOffers) {
 window.addEventListener('DOMContentLoaded', (event) => {
     liveSend({});
 });
+document.getElementById(`accepted-${js_vars.my_id}`).disabled = false;
+let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
+for (let i = 0; i < thisPlayerHeaders.length; i++) {
+    thisPlayerHeaders[i].style.color = 'blue';
+}
 
 
 // Testing
