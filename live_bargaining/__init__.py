@@ -22,7 +22,10 @@ def creating_session(subsession):
     group_matrix_size = sum(len(row) for row in group_matrices[0])
     if len(subsession.get_players()) == group_matrix_size:
         subsession_index = subsession.round_number - 1
-        subsession.set_group_matrix(group_matrices[subsession_index])
+        if subsession_index < len(group_matrices):
+            subsession.set_group_matrix(group_matrices[subsession_index])
+        else:
+            subsession.group_randomly()
     else:
         subsession.group_randomly()
 
