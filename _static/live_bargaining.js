@@ -267,7 +267,7 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
     thisPlayerHeaders[i].style.color = '#056fb7';
 }
 
-// Chart
+// Payoff chart
 const ctx = document.getElementById('payoff-chart');
 
 let chart = new Chart(ctx, {
@@ -295,11 +295,23 @@ let chart = new Chart(ctx, {
             }
         },
         maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+        }
     }
 });
 chart.canvas.parentNode.style.height = '200px';
 chart.canvas.parentNode.style.width = '400px';
 
+// Payoff table
+payoffTableRow = document.getElementById('payoff-table-values');
+Object.values(pieByEntrants).forEach(function (payoff) {
+    let cell = payoffTableRow.insertCell();
+    cell.innerHTML = payoff;
+    cell.style.textAlign = 'center';
+});
 
 
 // Temp code for testing:
