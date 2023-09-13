@@ -163,13 +163,39 @@ function sendOffer() {
 }
 
 function sendAccept() {
-    // TODO
+
+    let thisAccepted = document.getElementById(`accepted-${js_vars.my_id}`);
+    
+    if (thisAccepted.value === '') {
+        acceptedOffer = 0;
+    } else {
+        acceptedOffer = parseInt(thisAccepted.value);
+    }
+
+    if (!(thisAccepted.value === "" || pastOffers.some(offer => offer.offer_id === acceptedOffer))) {
+        alert('The entered offer ID does not exist');
+        return;
+    }
+
+    liveSend({ 'type': 'accept', 'offer_id': acceptedOffer })
+    if (acceptedOffer != 0) {
+        alert(`Offer ${thisAccepted.value} accepted successfully`);
+    } else {
+        alert('Acceptance revoked successfully');
+    }
     return;
+
+}
+
+function sendRevert() {
+
+    let thisAccepted = document.getElementById(`accepted-${js_vars.my_id}`);
+    thisAccepted.value = '';
+    sendAccept()
+
 }
 
 function liveRecv(data) {
-
-    console.log(data);
 
     if (data['type'] === 'error') {
         alert(data['content']);
@@ -179,6 +205,16 @@ function liveRecv(data) {
     if (data['type'] === 'proposals_history') {
         updatePastOffers(data['proposals_history']);
         return;
+    }
+
+    if (data['type'] === 'acceptances') {
+        updateAcceptances(data['acceptances'], data['coalition_members'], data['payoffs']);
+        return;
+    }
+
+    if (data['type'] === 'reload') {
+        updatePastOffers(data['proposals_history']);
+        updateAcceptances(data['acceptances'], data['coalition_members'], data['payoffs']);
     }
 
 }
@@ -198,7 +234,7 @@ function updateTotalShared() {
     totalShared.innerHTML = totalSharedValue;
     if (totalSharedValue > totalShareableValue) {
         totalShared.style.color = 'red';
-    } else if (totalSharedValue < totalShareableValue) {
+    } else {
         totalShared.style.color = 'black';
     } 
 }
@@ -242,6 +278,28 @@ function updatePastOffers(newPastOffers) {
 
     });
 }
+
+function updateAcceptances(acceptances, coalition_members, payoffs) {
+    for (let i = 0; i < 5; i++) {
+        let thisAccepted = document.getElementById(`accepted-${i + 1}`);
+        let thisPayoff = document.getElementById(`payoff-${i + 1}`);
+        if (acceptances[i] === 0) {
+            thisAccepted.value = '';
+        } else {
+            thisAccepted.value = acceptances[i];
+        }
+        if (coalition_members[i]) {
+            thisPayoff.innerHTML = payoffs[i];
+            thisPayoff.style.color = 'green';
+            thisPayoff.style.fontWeight = 'bold';
+        } else {
+            thisPayoff.innerHTML = '—';
+            thisPayoff.style.color = 'black';
+            thisPayoff.style.fontWeight = 'normal';
+        }
+    } 
+}
+
 
 // Setup
 window.addEventListener('DOMContentLoaded', (event) => {

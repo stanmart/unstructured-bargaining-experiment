@@ -119,16 +119,16 @@ Make a deal
                 <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-3"></td>
                 <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-4"></td>
                 <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-5"></td>
-                <td><button type="button" onclick="acceptProposal()" id="btn-accept" style="width: 100%">Submit</button></td>
+                <td><button type="button" onclick="sendAccept()" id="btn-accept" style="width: 100%">Submit</button></td>
             </tr>
             <tr style="height: 3em;">
                 <th class="offer-left-col">Implied payoff</th>
-                <td class="offer-player-col"><div class="allocation" id="payoff-1"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-2"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-3"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-4"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-5"></div></td>
-                <td><button type="button" onclick="revertAcceptance()" id="btn-revert" style="width: 100%">Revert</button></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-1"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-2"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-3"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-4"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-5"></div></td>
+                <td><button type="button" onclick="sendRevert()" id="btn-revert" style="width: 100%">Revoke</button></td>
             </tr>
         </tbody>
     </table>
