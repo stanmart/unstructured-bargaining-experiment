@@ -1,20 +1,39 @@
+import pickle
 from otree.api import *
 
 doc = """ 
 """
 #todo: add doc
-        
+
+with open('preparation/group_matrices/group_matrices.pkl', 'rb') as file:
+    group_matrices = pickle.load(file)
+
+
+def creating_session(subsession):
+    group_matrix_size = sum(len(row) for row in group_matrices[0])
+    if len(subsession.get_players()) == group_matrix_size:
+        subsession_index = subsession.round_number - 1
+        if subsession_index < len(group_matrices):
+            subsession.set_group_matrix(group_matrices[subsession_index])
+        else:
+            subsession.group_randomly()
+    else:
+        subsession.group_randomly()
+
+       
 # todo: adapt role names to framing
 class C(BaseConstants):
     NAME_IN_URL = 'live_bargaining'
     PLAYERS_PER_GROUP = 5 
-    NUM_ROUNDS = 4
+    NUM_ROUNDS = 5
 
     BIG_ROLE = 'Big Player'
     SMALL1_ROLE = 'Small Player'
     SMALL2_ROLE = 'Small Player'
     SMALL3_ROLE = 'Small Player'
     SMALL4_ROLE = 'Small Player'
+
+    
 class Subsession(BaseSubsession):
     pass
 class Group(BaseGroup):
