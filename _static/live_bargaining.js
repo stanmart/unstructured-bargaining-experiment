@@ -170,6 +170,12 @@ function cu(amount) {
 }
 
 function liveRecv(data) {
+
+    if (data['type'] === 'error') {
+        alert(data['content']);
+        return;
+    }
+
     if ('proposals' in data) {
         for (let [id_in_group, proposal] of data.proposals) {
 
