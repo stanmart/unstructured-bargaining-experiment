@@ -77,7 +77,7 @@ class Bargain(Page):
     @staticmethod
     def live_method(player: Player, data):
 
-        if 'propose' in data:
+        if data['type'] == 'propose':
             error_messages = check_validity(player=player, members=data['members'], allocations=data['allocations'])
             if error_messages:
                 return error_messages
