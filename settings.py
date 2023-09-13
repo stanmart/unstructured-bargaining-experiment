@@ -35,3 +35,12 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 DEMO_PAGE_INTRO_HTML = """ """
 
 SECRET_KEY = '5644004254536'
+
+ROOMS = [
+    dict(
+        name='blu',
+        display_name='BLU Econ Lab',
+        participant_label_file='_rooms/blu.txt',
+        use_secure_urls=True
+    ),
+]
