@@ -96,7 +96,7 @@ allocation1.addEventListener("keyup", function (event) {
 });
 
 allocation2.addEventListener('change', function () {
-    allocation1.value = Math.floor(Math.max(0, allocation1.value));
+    allocation2.value = Math.floor(Math.max(0, allocation2.value));
     updateTotalShared();
 });
 allocation2.addEventListener("keyup", function (event) {
@@ -107,7 +107,7 @@ allocation2.addEventListener("keyup", function (event) {
 });
 
 allocation3.addEventListener('change', function () {
-    allocation1.value = Math.floor(Math.max(0, allocation1.value));
+    allocation3.value = Math.floor(Math.max(0, allocation3.value));
     updateTotalShared();
 });
 allocation3.addEventListener("keyup", function (event) {
@@ -118,7 +118,7 @@ allocation3.addEventListener("keyup", function (event) {
 });
 
 allocation4.addEventListener('change', function () {
-    allocation1.value = Math.floor(Math.max(0, allocation1.value));
+    allocation4.value = Math.floor(Math.max(0, allocation4.value));
     updateTotalShared();
 });
 allocation4.addEventListener("keyup", function (event) {
@@ -129,7 +129,7 @@ allocation4.addEventListener("keyup", function (event) {
 });
 
 allocation5.addEventListener('change', function () {
-    allocation1.value = Math.floor(Math.max(0, allocation1.value));
+    allocation5.value = Math.floor(Math.max(0, allocation5.value));
     updateTotalShared();
 });
 allocation5.addEventListener("keyup", function (event) {
@@ -167,10 +167,6 @@ function sendAccept() {
     return;
 }
 
-function cu(amount) {
-    return `${amount} points`;
-}
-
 function liveRecv(data) {
 
     if (data['type'] === 'error') {
@@ -202,9 +198,7 @@ function updateTotalShared() {
         totalShared.style.color = 'red';
     } else if (totalSharedValue < totalShareableValue) {
         totalShared.style.color = 'black';
-    } else {
-        totalShared.style.color = 'green';
-    }
+    } 
 }
 
 function updatePastOffers(newPastOffers) {
