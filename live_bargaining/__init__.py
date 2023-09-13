@@ -38,10 +38,11 @@ class C(BaseConstants):
 
     
 class Subsession(BaseSubsession):
-    pass
+    expiry = models.FloatField(initial = float("inf"))
 
 class Group(BaseGroup):
     last_offer_id = models.IntegerField(initial = 0)
+
 class Player(BasePlayer):
     accepted_offer = models.IntegerField(initial = 0)  # 0 means no offer accepted
     accept_final_offer = models.StringField(label="Choose which offer to accept")
