@@ -1,10 +1,11 @@
 import pickle
+import time
+
 from otree.api import *
 
 doc = """ 
 """
 #todo: add doc
-
 
 def creating_session(subsession):
     num_active_groups = len(subsession.get_groups())
@@ -32,6 +33,8 @@ class C(BaseConstants):
     SMALL2_ROLE = 'Player 3'
     SMALL3_ROLE = 'Player 4'
     SMALL4_ROLE = 'Player 5'
+
+    TIME_PER_ROUND = 5 * 60
 
     
 class Subsession(BaseSubsession):
@@ -169,10 +172,22 @@ def create_acceptance_data(group: Group):
                 "payoffs": [0, 0, 0, 0, 0],
             }
 
+class WaitForBargaining(WaitPage):
+
+    timeout = float("inf")
+
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        group.subsession.expiry = time.time() + C.TIME_PER_ROUND        
 
 
 class Bargain(Page):
-#    timeout_seconds = 3
+    timer_text = 'Time left in round:'
+
+    @staticmethod
+    def get_timeout_seconds(player):
+        return player.subsession.expiry - time.time()
+
 
     @staticmethod
     def js_vars(player: Player):
@@ -216,4 +231,4 @@ class Bargain(Page):
 class Results(Page):
     pass
 
-page_sequence = [Bargain, Results]
+page_sequence = [WaitForBargaining, Bargain, Results]
