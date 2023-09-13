@@ -169,6 +169,8 @@ function sendAccept() {
 
 function liveRecv(data) {
 
+    console.log(data);
+
     if (data['type'] === 'error') {
         alert(data['content']);
         return;
@@ -216,7 +218,7 @@ function updatePastOffers(newPastOffers) {
 
         let from = row.insertCell();
         from.className = "offer-left-col";
-        from.innerHTML = `P${offer.from}`;
+        from.innerHTML = `P${offer.player}`;
         from.style.fontWeight = 'bold';
 
         let id = row.insertCell();
@@ -251,25 +253,7 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
     thisPlayerHeaders[i].style.color = '#056fb7';
 }
 
-// Temp code for testing:
-
-let prod_fct = [0, 50, 80, 95, 100];
-
-let newPastOffers = [
-    {
-        "from": 1,
-        "offer_id": 1,
-        "members": [true, false, true, true, false],
-        "allocations": [50, 0, 20, 10, 0],
-    },
-    {
-        "from": 2,
-        "offer_id": 2,
-        "members": [true, true, true, true, true],
-        "allocations": [50, 10, 20, 10, 10],
-    }
-];
-updatePastOffers(newPastOffers);
+let prod_fct = js_vars.prod_fct;
 
 // Payoff chart
 const ctx = document.getElementById('payoff-chart');
