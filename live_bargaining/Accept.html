@@ -10,44 +10,7 @@ Make a deal
 
 <div>
     <p> INSTRUCTIONS RECAP: </p>
-    <p>
-        This is a 5-player game.
-        Any subset of the players can form a coalition.
-        The value the coalition can produce depends on its members like so:
-        <ul>
-            <li>If Player 1 is not in the coalition, the value is 0.</li>
-            <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
-        </ul>
-    </p>
-    <p>
-        You can propose as many allocations as you'd like, and change your acceptance decision at any time. 
-        You can only submit positive integer values.
-        The other players will see your proposals and decisions.
-        Coalitions and allocations are final when the time runs out.
-    </p>
-    <p>
-        You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. Please negotiate with the other players below.
-    </p>
-</div>
- 
-<div class="section" style="height:400px;">
-    <h3>Proposals</h4>
-    <div class="flex-item vertical-fill" style="overflow-y: auto;">
-        <table class="offer-table horizontal-rules">
-            <thead>
-                <tr>
-                    <th class="offer-left-col">From</th>
-                    <th class="offer-id-col">ID</th>
-                    <th class="offer-player-col player-1">P1</th>
-                    <th class="offer-player-col player-2">P2</th>
-                    <th class="offer-player-col player-3">P3</th>
-                    <th class="offer-player-col player-4">P4</th>
-                    <th class="offer-player-col player-5">P5</th>
-                </tr>
-            </thead>
-            <tbody id="past-offers-table"></tbody>
-        </table>
-    </div>
+    <p>TODO</p>
 </div>
 
 <div class="section">
@@ -70,19 +33,37 @@ Make a deal
                 <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-3"></td>
                 <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-4"></td>
                 <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-5"></td>
-                <td><button type="button" onclick="acceptProposal()" id="btn-accept" style="width: 100%">Submit</button></td>
             </tr>
             <tr style="height: 3em;">
                 <th class="offer-left-col">Implied payoff</th>
-                <td class="offer-player-col"><div class="allocation" id="payoff-1"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-2"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-3"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-4"></div></td>
-                <td class="offer-player-col"><div class="allocation" id="payoff-5"></div></td>
-                <td><button type="button" onclick="revertAcceptance()" id="btn-revert" style="width: 100%">Revert</button></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-1"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-2"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-3"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-4"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-5"></div></td>
             </tr>
         </tbody>
     </table>
+</div>
+ 
+<div class="section" style="height:400px;">
+    <h3>Proposals</h4>
+    <div class="flex-item vertical-fill" style="overflow-y: auto;">
+        <table class="offer-table horizontal-rules">
+            <thead>
+                <tr>
+                    <th class="offer-left-col">From</th>
+                    <th class="offer-id-col">ID</th>
+                    <th class="offer-player-col player-1">P1</th>
+                    <th class="offer-player-col player-2">P2</th>
+                    <th class="offer-player-col player-3">P3</th>
+                    <th class="offer-player-col player-4">P4</th>
+                    <th class="offer-player-col player-5">P5</th>
+                </tr>
+            </thead>
+            <tbody id="past-offers-table"></tbody>
+        </table>
+    </div>
 </div>
 
 <div class="section">
