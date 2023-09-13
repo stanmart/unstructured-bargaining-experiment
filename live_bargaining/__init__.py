@@ -69,7 +69,10 @@ class Bargain(Page):
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(my_id=player.id_in_group)
+        return dict(
+            my_id=player.id_in_group,
+            prod_fct = prod_fcts()[player.round_number],
+        )
 
     @staticmethod
     def live_method(player: Player, data):
@@ -81,12 +84,6 @@ class Bargain(Page):
             
             Proposal.create(player=player, members=data['members'], allocations=data['allocations'])
         return {0: {"type": "proposals_history", "proposals_history": Proposal.filter(group=group)}}
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        return dict(
-            prod_fct = prod_fcts()[player.round_number]
-            )
 
 class Results(Page):
     pass
