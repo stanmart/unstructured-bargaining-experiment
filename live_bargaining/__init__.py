@@ -17,10 +17,12 @@ class C(BaseConstants):
     SMALL4_ROLE = 'Small Player'
 class Subsession(BaseSubsession):
     pass
+
 class Group(BaseGroup):
-    deal_price = models.CurrencyField(initial = 0) 
+    deal_price = models.CurrencyField(initial = 0)
+    last_offer_id = models.IntegerField(initial = 0)
 class Player(BasePlayer):
-    pass
+    accepted_offer = models.IntegerField(initial = 0)  # 0 means no offer accepted
 
 #todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
@@ -35,6 +37,7 @@ def prod_fcts():
 class Proposal(ExtraModel):
     player = models.Link(Player)
     group = models.Link(Group)
+    offer_id = models.IntegerField()
     member_1 = models.BooleanField()
     member_2 = models.BooleanField()
     member_3 = models.BooleanField()
@@ -48,9 +51,11 @@ class Proposal(ExtraModel):
 
     @classmethod
     def create_fromlist(cls, player, members, allocations):
+        player.group.last_offer_id += 1
         return cls.create(
             player=player,
             group=player.group,
+            offer_id=player.group.last_offer_id,
             member_1=members[0],
             member_2=members[1],
             member_3=members[2],
@@ -68,22 +73,28 @@ class Proposal(ExtraModel):
         filtered = cls.filter(*args, **kwargs)
         return [
             {
-                "offer_id": id,
+                "offer_id": proposal.offer_id,
                 "player": proposal.player.id_in_group,
                 "members": [proposal.member_1, proposal.member_2, proposal.member_3, proposal.member_4, proposal.member_5],
                 "allocations": [proposal.allocation_1, proposal.allocation_2, proposal.allocation_3, proposal.allocation_4, proposal.allocation_5],
             }
-            for id, proposal in enumerate(filtered)
+            for proposal in filtered
         ]
+    
+
+class Acceptance(ExtraModel):
+    player = models.Link(Player)
+    group = models.Link(Group)
+    offer_id = models.TextField()
 
 
-def check_validity(player: Player, members, allocations):
+def check_proposal_validity(player: Player, members, allocations):
     if len(members) != len(allocations): 
         return {player.id_in_group: {"type": "error", "content" : "Data is incomplete"}}
     
     try:
         allocations = [int(val) for val in allocations]
-    except ValueError:
+    except (ValueError, TypeError):
         return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
 
     if any(allocations[i] > 0 and members[i] == 0 for i in range(len(members))): 
@@ -108,6 +119,39 @@ def check_validity(player: Player, members, allocations):
     #todo: adapt error message to framing to players
 
 
+def check_acceptance_validity(player: Player, offer_id):
+    if not isinstance(offer_id, int):
+        return {player.id_in_group: {"type": "error", "content" : "Invalid offer id"}}
+    if offer_id != 0 and offer_id not in (proposal["offer_id"] for proposal in Proposal.filter_tolist(group=player.group)):
+        return {player.id_in_group: {"type": "error", "content" : "The offer you are trying to accept does not exist"}}
+    
+
+def create_acceptance_data(group: Group):
+    players = sorted(group.get_players(), key=lambda p: p.id_in_group)
+    p1_offer = players[0].accepted_offer
+    if players[0].accepted_offer == 0:  # P1 not in any coalition
+        return {
+            "acceptances": [player.accepted_offer for player in players],
+            "coalition_members": [False, False, False, False, False],
+            "payoffs": [0, 0, 0, 0, 0],
+        }
+    else:
+        offer = Proposal.filter_tolist(group=group, offer_id=p1_offer)[0]
+        if all(player.accepted_offer == p1_offer for member, player in zip(offer["members"], players) if member):
+            return {
+                "acceptances": [player.accepted_offer for player in players],
+                "coalition_members": offer["members"],
+                "payoffs": offer["allocations"],
+            }
+        else:  # Not everyonoe accepted the offer
+            return {
+                "acceptances": [player.accepted_offer for player in players],
+                "coalition_members": [False, False, False, False, False],
+                "payoffs": [0, 0, 0, 0, 0],
+            }
+
+
+
 class Bargain(Page):
 #    timeout_seconds = 3
 
@@ -122,12 +166,33 @@ class Bargain(Page):
     def live_method(player: Player, data):
 
         if 'type' in data and data['type'] == 'propose':
-            error_messages = check_validity(player=player, members=data['members'], allocations=data['allocations'])
+            error_messages = check_proposal_validity(player=player, members=data['members'], allocations=data['allocations'])
             if error_messages:
                 return error_messages
             
             Proposal.create_fromlist(player=player, members=data['members'], allocations=data['allocations'])
             return {0: {"type": "proposals_history", "proposals_history": Proposal.filter_tolist(group=player.group)}}
+        
+        if 'type' in data and data['type'] == 'accept':
+            error_messages = check_acceptance_validity(player=player, offer_id=data['offer_id'])
+            if error_messages:
+                return error_messages
+
+            offer_id = data['offer_id']
+            Acceptance.create(player=player, group=player.group, offer_id=offer_id)
+            player.accepted_offer = offer_id
+            return {0: create_acceptance_data(group=player.group) | {"type": "acceptances"}}
+        
+        # Reload page case:
+        return {
+            player.id_in_group: {
+                "type": "reload",
+                "proposals_history": Proposal.filter_tolist(group=player.group),
+                **create_acceptance_data(group=player.group),
+            }
+        }
+
+
 
 class Results(Page):
     pass
