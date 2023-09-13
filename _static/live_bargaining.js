@@ -33,14 +33,6 @@ let pastOffersTable = document.getElementById('past-offers-table');
 let totalShareableValue = 0;
 let pastOffers = []
 
-let pieByEntrants = {
-    0: 0,
-    1: 60,
-    2: 80,
-    3: 95,
-    4: 100,
-};
-
 isMember1.addEventListener('change', function () {
     allocation1.disabled = !isMember1.checked;
     allocation1.value = 0;
@@ -198,7 +190,7 @@ function liveRecv(data) {
 function updateTotalShareable() {
     if (isMember1.checked) {
         total = isMember2.checked + isMember3.checked + isMember4.checked + isMember5.checked;
-        totalShareableValue = pieByEntrants[total];
+        totalShareableValue = prod_fct[total];
     } else {
         totalShareableValue = 0;
     }
@@ -267,16 +259,36 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
     thisPlayerHeaders[i].style.color = '#056fb7';
 }
 
+// Temp code for testing:
+
+let prod_fct = [0, 50, 80, 95, 100];
+
+let newPastOffers = [
+    {
+        "from": 1,
+        "offer_id": 1,
+        "members": [true, false, true, true, false],
+        "allocations": [50, 0, 20, 10, 0],
+    },
+    {
+        "from": 2,
+        "offer_id": 2,
+        "members": [true, true, true, true, true],
+        "allocations": [50, 10, 20, 10, 10],
+    }
+];
+updatePastOffers(newPastOffers);
+
 // Payoff chart
 const ctx = document.getElementById('payoff-chart');
 
 let chart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: Object.keys(pieByEntrants),
+        labels: Array.from(Array(prod_fct.length).keys()),
         datasets: [{
             label: "Coalition's payoff",
-            data: Object.values(pieByEntrants),
+            data: prod_fct,
             borderWidth: 1,
             borderColor: "#056fb7",
             backgroundColor: "#5994c7"
@@ -307,27 +319,8 @@ chart.canvas.parentNode.style.width = '400px';
 
 // Payoff table
 payoffTableRow = document.getElementById('payoff-table-values');
-Object.values(pieByEntrants).forEach(function (payoff) {
+prod_fct.forEach(function (payoff) {
     let cell = payoffTableRow.insertCell();
     cell.innerHTML = payoff;
     cell.style.textAlign = 'center';
 });
-
-
-// Temp code for testing:
-
-let newPastOffers = [
-    {
-        "from": 1,
-        "offer_id": 1,
-        "members": [true, false, true, true, false],
-        "allocations": [50, 0, 20, 10, 0],
-    },
-    {
-        "from": 2,
-        "offer_id": 2,
-        "members": [true, true, true, true, true],
-        "allocations": [50, 10, 20, 10, 10],
-    }
-];
-updatePastOffers(newPastOffers);
