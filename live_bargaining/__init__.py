@@ -27,11 +27,11 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = 5 
     NUM_ROUNDS = 5
 
-    BIG_ROLE = 'Big Player'
-    SMALL1_ROLE = 'Small Player'
-    SMALL2_ROLE = 'Small Player'
-    SMALL3_ROLE = 'Small Player'
-    SMALL4_ROLE = 'Small Player'
+    BIG_ROLE = 'Player 1'
+    SMALL1_ROLE = 'Player 2'
+    SMALL2_ROLE = 'Player 3'
+    SMALL3_ROLE = 'Player 4'
+    SMALL4_ROLE = 'Player 5'
 
     
 class Subsession(BaseSubsession):
@@ -117,7 +117,7 @@ def check_validity(player: Player, members, allocations):
 
     prod_fct = prod_fcts()[player.round_number]
     coalition_size = sum(members)
-    big_player_included = any([player.group.get_player_by_id(i+1).role == 'Big Player' for i in range(len(members)) if members[i]]) #todo: check this works correctly
+    big_player_included = any([player.group.get_player_by_id(i+1).id_in_group == 1 for i in range(len(members)) if members[i]]) #todo: check this works correctly
 
     if not big_player_included and sum(allocations) > 0: 
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Big Player is not included"}}
