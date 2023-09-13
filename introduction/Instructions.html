@@ -1,0 +1,57 @@
+{{ block title }}
+Instructions
+{{ endblock }}
+
+{{ block content }}
+
+<p> In this experiment you will play five rounds of the following bargaining game: </p>
+
+<p>
+    <b> The general structure: </b> 
+    You will bargain in groups of five. The game will be the same for each group.
+    After each bargaining the round, the groups will be reshuffled. 
+    It will be done in such a way that you are unlikely to play with the same participants more than once.
+    Each bargaining round will last five minutes. 
+</p>
+
+<p>
+    <b> The game: </b>
+    Any subset of players in each group can form a coalition. Each coalition generates some value (denoted in CHF).
+    The value the coalition generates depends on its members like so:
+    <ul>
+        <li>If Player 1 is not in the coalition, the value is 0.</li>
+        <li>If Player 1 is in the coalition, the value is increasing in the number of members (see table and graph below for an example).</li>
+    </ul>
+
+    <img src="{{ static 'screenshot_coalition_payoffs.png' }}"/>
+</p>
+<p>
+    As a group you will thus have two decisions to make: which players will form a coalition and how the value of that coalition will be allocated among its members.
+
+    Only if all members of a coalition agree on the same allocation, will the bargaining be successful and the value of that coalition paid out according to the agreed-upon allocation.
+    Otherwise, everyone in the group gets 0 in this round.
+</p>
+
+<p>
+    <b> The bargaining interface:</b>
+    (See below for a screenshot) You will bargain over a text chat, you can do so in any way you like. 
+    There is only one group chat for everyone in the group, private chats are not possible. 
+    During the bargaining, players can make proposals ("Propose allocation"). 
+    All proposals will be logged under "Past Proposals". 
+    Players can indicate their most preferred proposal under "Accept Proposal", using the Proposal ID given in "Past Proposals". 
+    Note that this is just for coordination purposes: "Accept Proposal" is not binding and only indicates current preferences.
+    At the end of the five minutes, a new page will open and you will have to enter which proposal you are actually choosing. 
+    The payoffs of that round will be based on those final answers.
+</p>
+
+<p> 
+    <b> The payment: </b>
+    You will receive a payment at the end of the experiment. 
+    It will be a show-up fee of CHF 10 plus your bargaining payoff randomly drawn from one of the rounds you played.
+</p>
+
+If you have any questions on the game, please raise your hand now and an experimenter will come to you. 
+
+
+{{ next_button}}
+{{ endblock }}

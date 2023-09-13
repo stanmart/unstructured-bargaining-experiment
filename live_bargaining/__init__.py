@@ -25,7 +25,7 @@ def creating_session(subsession):
 class C(BaseConstants):
     NAME_IN_URL = 'live_bargaining'
     PLAYERS_PER_GROUP = 5 
-    NUM_ROUNDS = 5
+    NUM_ROUNDS = 4 #adjust for main experiment
 
     BIG_ROLE = 'Big Player'
     SMALL1_ROLE = 'Small Player'
