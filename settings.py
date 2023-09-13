@@ -41,5 +41,6 @@ ROOMS = [
         name='blu',
         display_name='BLU Econ Lab',
         participant_label_file='_rooms/blu.txt',
+        use_secure_urls=True
     ),
 ]
