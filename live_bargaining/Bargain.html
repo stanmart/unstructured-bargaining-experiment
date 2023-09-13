@@ -1,87 +1,171 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block title }}
 Make a deal
 {{ endblock }}
+
 {{ block content }}
 
-<p>
-    This is a 2-player game. A seller and a buyer are negotiating for the price of
-    [insert item here].
-</p>
-<p>
-    You are the {{ player.role }}.
-    Please negotiate with the {{ other_role }} below.
-</p>
+<div class="side-by-side">
+    <div class="flex">
+        <p> INSTRUCTIONS RECAP: </p>
+        <p>
+            This is a 5-player game.
+            Any subset of the players can form a coalition.
+            The value the coalition can produce depends on its members like so:
+            <ul>
+                <li>If Player 1 is not in the coalition, the value is 0.</li>
+                <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
+            </ul>
+        </p>
+        <p>
+            You can propose as many allocations as you'd like, and change your acceptance decision at any time. 
+            You can only submit positive integer values.
+            The other players will see your proposals and decisions.
+            Coalitions and allocations are final when the time runs out.
+        </p>
+        <p>
+            You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. Please negotiate with the other players below.
+        </p>
+    </div>
+    <div>
+        <table id="payoff-table">
+            <colgroup>
+                <col style="width: 50%;">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+            </colgroup>
+            <tr>
+                <th>P1 + this many others</th>
+                <th style="text-align: center;">0</th>
+                <th style="text-align: center;">1</th>
+                <th style="text-align: center;">2</th>
+                <th style="text-align: center;">3</th>
+                <th style="text-align: center;">4</th>
+            </tr>
+            <tr id="payoff-table-values">
+                <th>Coalition's payoff</th>
+            </tr>
+        </table>
+        <canvas id="payoff-chart"></canvas>
+    </div>
+</div>
 
-<table class="table">
-    <tr>
-        <th>Your current proposal</th>
-        <td id="my-proposal">(none)</td>
-        <td>
-            <input type="number" id="my_offer">
-            <button type="button" onclick="sendOffer()" id="btn-offer">Make new offer</button>
-        </td>
-    </tr>
-    <tr>
-        <th>{{ other_role }} proposal</th>
-        <td id="other-proposal">(none)</td>
-        <td>
-            <button type="button" id="btn-accept" onclick="sendAccept(this)" style="display: none">Accept</button>
-        </td>
-    </tr>
-</table>
+<div class="section">
+    <h3>Propose allocation</h2>    
+    <table class="offer-table">
+        <tbody>
+            <tr>
+                <th></th>
+                <th class="offer-player-col player-1">Player 1</th>
+                <th class="offer-player-col player-2">Player 2</th>
+                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-4">Player 4</th>
+                <th class="offer-player-col player-5">Player 5</th>
+                <th style="text-align: right;">Total</th>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">In coalition</th>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-1"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-2"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-3"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-4"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-5"></td>
+                <td class="offer-total-col"><div class="allocation-total" id="total-shareable">0</div></td>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Allocation</th>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5"></td>
+                <td class="offer-total-col"><div class="allocation-total" id="total-shared">0</div></td>
+            </tr>
+        </tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;"><button type="button" onclick="sendOffer()" id="btn-propose" style="width: 100%">Submit</button></td>
+        </tr>
+    </table>
+</div>
 
-<h4>Chat</h4>
-{{ chat nickname=player.role }}
+<div class="section">
+    <h3>Accept proposal</h2>    
+    <table class="offer-table">
+        <tbody>
+            <tr>
+                <th></th>
+                <th class="offer-player-col player-1">Player 1</th>
+                <th class="offer-player-col player-2">Player 2</th>
+                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-4">Player 4</th>
+                <th class="offer-player-col player-5">Player 5</th>
+                <th style="text-align: right;"></th>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Accepted proposal</th>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-1"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-2"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-3"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-4"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-5"></td>
+                <td><button type="button" onclick="acceptProposal()" id="btn-accept" style="width: 100%">Submit</button></td>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Implied payoff</th>
+                <td class="offer-player-col"><div class="allocation" id="payoff-1"></div></td>
+                <td class="offer-player-col"><div class="allocation" id="payoff-2"></div></td>
+                <td class="offer-player-col"><div class="allocation" id="payoff-3"></div></td>
+                <td class="offer-player-col"><div class="allocation" id="payoff-4"></div></td>
+                <td class="offer-player-col"><div class="allocation" id="payoff-5"></div></td>
+                <td><button type="button" onclick="revertAcceptance()" id="btn-revert" style="width: 100%">Revert</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-<script>
-    let my_offer = document.getElementById('my_offer');
-    let btnAccept = document.getElementById('btn-accept');
-    let msgOtherProposal = document.getElementById('other-proposal');
-    let msgMyProposal = document.getElementById('my-proposal');
+<div class="side-by-side" style="height: 500px;">
 
-    let otherProposal;
+    <div class="section flex-item vertical-fill">
+        <h3>Chat</h3>
+        {{ chat nickname=player.role }} 
+    </div>
+    
+    <div class="section flex-item vertical-fill">
+        <h3>Past Proposals</h4>
+        <div class="flex-item vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules">
+                <thead>
+                    <tr>
+                        <th class="offer-left-col">From</th>
+                        <th class="offer-id-col">ID</th>
+                        <th class="offer-player-col player-1">P1</th>
+                        <th class="offer-player-col player-2">P2</th>
+                        <th class="offer-player-col player-3">P3</th>
+                        <th class="offer-player-col player-4">P4</th>
+                        <th class="offer-player-col player-5">P5</th>
+                    </tr>
+                </thead>
+                <tbody id="past-offers-table"></tbody>
+            </table>
+        </div>
+    </div>
+        
+</div>
 
-    my_offer.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            sendOffer();
-        }
-    });
 
-    function sendOffer() {
-        liveSend({'type': 'propose', 'amount': my_offer.value})
-        my_offer.value = '';
-    }
-
-    function sendAccept() {
-        liveSend({'type': 'accept', 'amount': otherProposal})
-    }
-
-    function cu(amount) {
-        return `${amount} points`;
-    }
-
-    function liveRecv(data) {
-        if ('proposals' in data) {
-            for (let [id_in_group, proposal] of data.proposals) {
-
-                if (id_in_group === js_vars.my_id) {
-                    msgMyProposal.innerHTML = cu(proposal)
-                } else {
-                    msgOtherProposal.innerHTML = cu(proposal);
-                    otherProposal = proposal;
-                    btnAccept.style.display = 'block';
-                }
-            }
-        }
-        if ('finished' in data) {
-            document.getElementById('form').submit();
-        }
-    }
-
-    window.addEventListener('DOMContentLoaded', (event) => {
-        liveSend({});
-    });
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ static 'live_bargaining.js' }}"></script>
 
 {{ endblock }}
