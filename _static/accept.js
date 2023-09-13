@@ -2,7 +2,6 @@ let pastOffersTable = document.getElementById('past-offers-table');
 
 function populatePastOffers(pastOffers) {
     pastOffers.forEach(function (offer) {
-        pastOffers.push(offer);
         let row = pastOffersTable.insertRow();
 
         let from = row.insertCell();
