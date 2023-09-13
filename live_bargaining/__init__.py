@@ -5,20 +5,20 @@ doc = """
 """
 #todo: add doc
 
-with open('preparation/group_matrices/group_matrices.pkl', 'rb') as file:
-    group_matrices = pickle.load(file)
-
 
 def creating_session(subsession):
-    group_matrix_size = sum(len(row) for row in group_matrices[0])
-    if len(subsession.get_players()) == group_matrix_size:
+    num_active_groups = len(subsession.get_groups())
+    if num_active_groups in [6,7]:
         subsession_index = subsession.round_number - 1
+        with open('preparation/group_matrices/group_matrices_' + str(num_active_groups) + '_groups.pkl', 'rb') as file:
+            group_matrices = pickle.load(file)
         if subsession_index < len(group_matrices):
             subsession.set_group_matrix(group_matrices[subsession_index])
         else:
             subsession.group_randomly()
     else:
         subsession.group_randomly()
+
 
        
 # todo: adapt role names to framing

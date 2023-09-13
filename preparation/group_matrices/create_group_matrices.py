@@ -2,10 +2,6 @@ import pickle
 import warnings
 import pandas as pd
 
-golfers = pd.read_csv("golfer_solution.csv", index_col=0)
-golfers.index = [int(name.lstrip("Player ")) - 1 for name in golfers.index]
-golfers.columns = [int(name.lstrip("Round ")) - 1 for name in golfers.columns]
-
 class Groups:
     def __init__(self, num_players, num_groups):
         self.was_first = [False] * num_players
@@ -32,10 +28,15 @@ class Groups:
                 for player in range(len(self.results[round][group])):
                     self.results[round][group][player] = self.results[round][group][player] + 1
 
-groups = Groups(len(golfers), 6)
-for round in golfers.columns:
-    groups.add_round(golfers.loc[:, round])
-groups.adjust_indices()
+for num_groups in [6,7]:
+    golfers = pd.read_csv("golfer_solution_" + str(num_groups) + "_groups.csv", index_col=0)
+    golfers.index = [int(name.lstrip("Player ")) - 1 for name in golfers.index]
+    golfers.columns = [int(name.lstrip("Round ")) - 1 for name in golfers.columns]
 
-with open("group_matrices.pkl", "wb") as f:
-    pickle.dump(groups.results, f)
+    groups = Groups(len(golfers), num_groups)
+    for round in golfers.columns:
+        groups.add_round(golfers.loc[:, round])
+    groups.adjust_indices()
+
+    with open("group_matrices_"+ str(num_groups) +"_groups.pkl", "wb") as f:
+        pickle.dump(groups.results, f)
