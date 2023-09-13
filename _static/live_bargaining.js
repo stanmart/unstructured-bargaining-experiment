@@ -31,6 +31,7 @@ let totalShared = document.getElementById('total-shared');
 let pastOffersTable = document.getElementById('past-offers-table');
 
 let totalShareableValue = 0;
+let totalSharedValue = 0;
 let pastOffers = []
 
 isMember1.addEventListener('change', function () {
@@ -162,7 +163,8 @@ function sendOffer() {
 }
 
 function sendAccept() {
-    liveSend({ 'type': 'accept', 'amount': otherProposal })
+    // TODO
+    return;
 }
 
 function cu(amount) {
@@ -176,21 +178,11 @@ function liveRecv(data) {
         return;
     }
 
-    if ('proposals' in data) {
-        for (let [id_in_group, proposal] of data.proposals) {
+    if (data['type'] === 'proposals_history') {
+        updatePastOffers(data['proposals_history']);
+        return;
+    }
 
-            if (id_in_group === js_vars.my_id) {
-                msgMyProposal.innerHTML = cu(proposal)
-            } else {
-                msgOtherProposal.innerHTML = cu(proposal);
-                otherProposal = proposal;
-                btnPropose.style.display = 'block';
-            }
-        }
-    }
-    if ('finished' in data) {
-        document.getElementById('form').submit();
-    }
 }
 
 function updateTotalShareable() {
