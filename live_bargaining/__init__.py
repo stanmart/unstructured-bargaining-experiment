@@ -41,10 +41,10 @@ class Subsession(BaseSubsession):
     pass
 
 class Group(BaseGroup):
-    deal_price = models.CurrencyField(initial = 0)
     last_offer_id = models.IntegerField(initial = 0)
 class Player(BasePlayer):
     accepted_offer = models.IntegerField(initial = 0)  # 0 means no offer accepted
+    accept_final_offer = models.StringField(label="Choose which offer to accept")
 
 #todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
@@ -182,7 +182,7 @@ class WaitForBargaining(WaitPage):
 
 
 class Bargain(Page):
-    timer_text = 'Time left in round:'
+    timer_text = 'Time left for bargaining:'
 
     @staticmethod
     def get_timeout_seconds(player):
@@ -228,7 +228,28 @@ class Bargain(Page):
 
 
 
-class Results(Page):
-    pass
 
-page_sequence = [WaitForBargaining, Bargain, Results]
+def accept_final_offer_choices(player):
+    choices = ["Reject all"] + [str(offer["offer_id"]) for offer in Proposal.filter_tolist(group=player.group)]
+    return choices
+
+class Accept(Page):
+    timer_text = 'Time left to decide:'
+    timeout_seconds = 60
+
+    form_model = 'player'
+    form_fields = ["accept_final_offer"]
+
+    @staticmethod
+    def js_vars(player: Player):
+        acceptance_data = create_acceptance_data(player.group)
+        return dict(
+            my_id=player.id_in_group,
+            past_offers = Proposal.filter_tolist(group=player.group),
+            acceptances = acceptance_data["acceptances"],
+            coalition_members = acceptance_data["coalition_members"],
+            payoffs = acceptance_data["payoffs"],
+        )
+
+
+page_sequence = [WaitForBargaining, Bargain, Accept]
