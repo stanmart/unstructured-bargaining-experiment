@@ -42,7 +42,7 @@ def compute_final_payoffs(subsession: Subsession):
     payment_round = randint(1, number_of_bargaining_rounds)
 
     for player in players:
-        player.participant.vars['final_payoff'] = player.participant.vars['payoff_round' + str(payment_round )]   
+        player.participant.vars['final_payoff'] = player.participant.vars['payoff_round' + str(payment_round )] + subsession.session.config['participation_fee']
 
 # PAGES
 
