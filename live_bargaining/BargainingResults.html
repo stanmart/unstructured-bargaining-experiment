@@ -3,14 +3,16 @@
 {{ endblock }}
 
 {{ block title }}
-Make a deal
+Bargaining outcome
 {{ endblock }}
 
 {{ block content }}
 
+<p>Thank you for submitting your answer.</p>
+<p>The final bargaining outcome is:</p>
 
 <div class="section">
-    <h3>Preferred proposals at the end of bargaining</h2>    
+    <h3>Accepted proposals</h2>
     <table class="offer-table">
         <tbody>
             <tr>
@@ -22,7 +24,7 @@ Make a deal
                 <th class="offer-player-col player-5">Player 5</th>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">Preferred proposal ID</th>
+                <th class="offer-left-col">Accepted proposal ID</th>
                 <td class="offer-player-col" id="accepted-1" class="allocation">—</td>
                 <td class="offer-player-col" id="accepted-2" class="allocation">—</td>
                 <td class="offer-player-col" id="accepted-3" class="allocation">—</td>
@@ -40,7 +42,7 @@ Make a deal
         </tbody>
     </table>
 </div>
- 
+
 <div class="section" style="height:400px;">
     <h3>All proposals</h4>
     <div class="flex-item vertical-fill" style="overflow-y: auto;">
@@ -62,12 +64,8 @@ Make a deal
 </div>
 
 <div class="section">
-    <h3>Make your final choice</h3>
-
-    Choose an offer to accept:
-    {{ form.accept_final_offer }}
-
-    Remember that all proposed members of an offer must accept it for it to be implemented. In the case of disagreement, the payoff is zero.
+    <h3>Payoff</h3>
+    <p>Your payoff in this round is: <b> {{ player.payoff }} </b> </p>
 </div>
 
 {{ next_button }}
@@ -75,5 +73,3 @@ Make a deal
 <script src="{{ static 'accept.js' }}"></script>
 
 {{ endblock }}
-
-
