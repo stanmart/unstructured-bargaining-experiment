@@ -24,7 +24,7 @@ Bargaining outcome
                 <th class="offer-player-col player-5">Player 5</th>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">Preferred proposal</th>
+                <th class="offer-left-col">Accepted proposal ID</th>
                 <td class="offer-player-col" id="accepted-1" class="allocation">—</td>
                 <td class="offer-player-col" id="accepted-2" class="allocation">—</td>
                 <td class="offer-player-col" id="accepted-3" class="allocation">—</td>
@@ -43,6 +43,26 @@ Bargaining outcome
     </table>
 </div>
 
+<div class="section" style="height:400px;">
+    <h3>All proposals</h4>
+    <div class="flex-item vertical-fill" style="overflow-y: auto;">
+        <table class="offer-table horizontal-rules">
+            <thead>
+                <tr>
+                    <th class="offer-left-col">From</th>
+                    <th class="offer-id-col">ID</th>
+                    <th class="offer-player-col player-1">P1</th>
+                    <th class="offer-player-col player-2">P2</th>
+                    <th class="offer-player-col player-3">P3</th>
+                    <th class="offer-player-col player-4">P4</th>
+                    <th class="offer-player-col player-5">P5</th>
+                </tr>
+            </thead>
+            <tbody id="past-offers-table"></tbody>
+        </table>
+    </div>
+</div>
+
 <div class="section">
     <h3>Payoff</h3>
     <p>Your payoff in this round is: <b> {{ player.payoff }} </b> </p>
@@ -50,6 +70,6 @@ Bargaining outcome
 
 {{ next_button }}
 
-<script src="{{ static 'bargaining_outcome.js' }}"></script>
+<script src="{{ static 'accept.js' }}"></script>
 
 {{ endblock }}
