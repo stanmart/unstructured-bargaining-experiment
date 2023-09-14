@@ -1,5 +1,6 @@
 import pickle
 import time
+from datetime import datetime
 
 from otree.api import *
 
@@ -62,6 +63,7 @@ def prod_fcts():
 #todo: move to constants?
 
 class Proposal(ExtraModel):
+    timestamp = models.StringField()
     player = models.Link(Player)
     group = models.Link(Group)
     offer_id = models.IntegerField()
@@ -80,6 +82,7 @@ class Proposal(ExtraModel):
     def create_fromlist(cls, player, members, allocations):
         player.group.last_offer_id += 1
         return cls.create(
+            timestamp=datetime.now().isoformat(),
             player=player,
             group=player.group,
             offer_id=player.group.last_offer_id,
@@ -110,6 +113,7 @@ class Proposal(ExtraModel):
     
 
 class Acceptance(ExtraModel):
+    timestamp = models.StringField()
     player = models.Link(Player)
     group = models.Link(Group)
     offer_id = models.TextField()
@@ -216,7 +220,7 @@ class Bargain(Page):
                 return error_messages
 
             offer_id = data['offer_id']
-            Acceptance.create(player=player, group=player.group, offer_id=offer_id)
+            Acceptance.create(timestamp=datetime.now().isoformat(), player=player, group=player.group, offer_id=offer_id)
             player.accepted_offer = offer_id
             return_data = create_acceptance_data(group=player.group)
             return_data["type"] = "acceptances"
@@ -230,9 +234,6 @@ class Bargain(Page):
                 **create_acceptance_data(group=player.group),
             }
         }
-
-
-
 
 def accept_final_offer_choices(player):
     choices = ["Reject all"] + [str(offer["offer_id"]) for offer in Proposal.filter_tolist(group=player.group)]
@@ -255,6 +256,7 @@ class Accept(Page):
             coalition_members = acceptance_data["coalition_members"],
             payoffs = acceptance_data["payoffs"],
         )
+
 
 def compute_payoffs(group: Group):
     players = sorted(group.get_players(), key=lambda p: p.id_in_group)
@@ -290,6 +292,89 @@ class BargainingResults(Page):
             coalition_members = acceptance_data["coalition_members"],
             payoffs = acceptance_data["payoffs"],
         )
+
+
+def custom_export(players):
+
+    yield [
+        "timestamp",
+        "event_type",
+        "session_code",
+        "participant_code",
+        "round_number",
+        "player_id",
+        "id_in_group",
+        "group_id",
+        "offer_id",
+        "member_1",
+        "member_2",
+        "member_3",
+        "member_4",
+        "member_5",
+        "allocation_1",
+        "allocation_2",
+        "allocation_3",
+        "allocation_4",
+        "allocation_5",
+        "accepted_offer",
+    ]
+
+    # 'filter' without any args returns everything
+    proposals = Proposal.filter()
+    for proposal in proposals:
+        player = proposal.player
+        participant = player.participant
+        session = player.session
+        yield [
+            proposal.timestamp,
+            "proposal",
+            session.code,
+            participant.code,
+            player.round_number,
+            player.id,
+            player.id_in_group,
+            player.group.id,
+            proposal.offer_id,
+            proposal.member_1,
+            proposal.member_2,
+            proposal.member_3,
+            proposal.member_4,
+            proposal.member_5,
+            proposal.allocation_1,
+            proposal.allocation_2,
+            proposal.allocation_3,
+            proposal.allocation_4,
+            proposal.allocation_5,
+            "",
+        ]
+
+    acceptances = Acceptance.filter()
+    for acceptance in acceptances:
+        player = acceptance.player
+        participant = player.participant
+        session = player.session
+        yield [
+            acceptance.timestamp,
+            "acceptance",
+            session.code,
+            participant.code,
+            player.round_number,
+            player.id,
+            player.id_in_group,
+            player.group.id,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            acceptance.offer_id,
+        ]
 
 
 page_sequence = [WaitForBargaining, Bargain, Accept, WaitForAnswers, BargainingResults]
