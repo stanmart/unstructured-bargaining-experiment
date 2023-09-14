@@ -9,6 +9,7 @@ class Groups:
         self.results = []
 
     def add_round(self, allocation):
+        is_trial_round = (len(self.results)==0)
         self.results.append([[] for _ in range(self.num_groups)])
         for player, group in enumerate(allocation):
             group_id = int(group.lstrip("Group ")) - 1
@@ -20,7 +21,7 @@ class Groups:
             first_in_group = self.results[-1][group][0]
             if self.was_first[self.results[-1][group][0]]:
                 warnings.warn(f"Player {first_in_group} was first multiple times")
-            self.was_first[first_in_group] = True
+            self.was_first[first_in_group] = True if not is_trial_round else False
 
     def adjust_indices(self):
         for round in range(len(self.results)):

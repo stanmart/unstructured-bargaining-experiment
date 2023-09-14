@@ -30,7 +30,7 @@ def creating_session(subsession):
 class C(BaseConstants):
     NAME_IN_URL = 'live_bargaining'
     PLAYERS_PER_GROUP = 5 
-    NUM_ROUNDS = 4 #todo: adjust for main experiment
+    NUM_ROUNDS = 5 #todo: adjust for main experiment
 
     BIG_ROLE = 'Player 1'
     SMALL1_ROLE = 'Player 2'
@@ -54,10 +54,11 @@ class Player(BasePlayer):
 #todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
     return {
-                1: [0, 25, 50, 75, 100], #linear
-                2: [0, 5, 20, 60, 100], #convex
-                3: [0,  45,  80,  90, 100], #concave
-                4: [0, 0, 0, 0, 0] #dummy
+                1: [0, 30, 60, 80, 100], # trial
+                2: [0, 25, 50, 75, 100], #linear
+                3: [0, 5, 20, 60, 100], #convex
+                4: [0,  45,  80,  90, 100], #concave
+                5: [0, 0, 0, 0, 0] #dummy
             } 
 #todo: move to constants?
 
