@@ -1,5 +1,5 @@
 from otree.api import *
-
+from random import randint
 
 class C(BaseConstants):
     NAME_IN_URL = 'survey'
@@ -33,12 +33,30 @@ class Player(BasePlayer):
   
 
 # FUNCTIONS
+def compute_final_payoffs(subsession: Subsession):
+    
+    players = subsession.get_players()
+    # get number of bargaining rounds
+    player0_payoffs = [players[0].participant.vars['payoff_round' + str(i)] for i in range(1,6)]
+    number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)
+    payment_round = randint(1, number_of_bargaining_rounds)
+
+    for player in players:
+        player.participant.vars['final_payoff'] = player.participant.vars['payoff_round' + str(payment_round )]   
+
 # PAGES
+
 class Questions(Page):
     form_model = 'player'
     form_fields = ['age', 'gender', 'reflection', 'comments']
 
+class WaitForAll(WaitPage):
+    wait_for_all_groups = True
+    after_all_players_arrive = compute_final_payoffs
+
 class Completion(Page):
     pass
 
-page_sequence = [Questions, Completion]
+
+
+page_sequence = [Questions, WaitForAll, Completion]

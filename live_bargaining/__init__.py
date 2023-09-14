@@ -20,13 +20,17 @@ def creating_session(subsession):
     else:
         subsession.group_randomly()
 
+    for player in subsession.get_players():
+        for i in range(1,6):
+            player.participant.vars['payoff_round' + str(i)] = -1
+
 
        
 # todo: adapt role names to framing
 class C(BaseConstants):
     NAME_IN_URL = 'live_bargaining'
     PLAYERS_PER_GROUP = 5 
-    NUM_ROUNDS = 4 #adjust for main experiment
+    NUM_ROUNDS = 4 #todo: adjust for main experiment
 
     BIG_ROLE = 'Player 1'
     SMALL1_ROLE = 'Player 2'
@@ -166,7 +170,7 @@ def create_acceptance_data(group: Group):
                 "coalition_members": offer["members"],
                 "payoffs": offer["allocations"],
             }
-        else:  # Not everyonoe accepted the offer
+        else:  # Not everyone accepted the offer
             return {
                 "acceptances": [player.accepted_offer for player in players],
                 "coalition_members": [False, False, False, False, False],
@@ -252,5 +256,32 @@ class Accept(Page):
             payoffs = acceptance_data["payoffs"],
         )
 
+def compute_payoffs(group: Group):
+    players = sorted(group.get_players(), key=lambda p: p.id_in_group)
+    for player in players:
+        player.accepted_offer = 0 if player.accept_final_offer == "Reject all" else int(player.accept_final_offer) 
+    
+    final_payoffs = create_acceptance_data(group)["payoffs"]
 
-page_sequence = [WaitForBargaining, Bargain, Accept]
+    for i in range(len(final_payoffs)):
+        players[i].payoff = final_payoffs[i]
+        players[i].participant.vars['payoff_round' + str(group.round_number)] = final_payoffs[i]  
+
+class WaitForAnswers(WaitPage):
+    after_all_players_arrive = compute_payoffs
+
+class BargainingResults(Page):
+
+    @staticmethod
+    def js_vars(player: Player):
+        acceptance_data = create_acceptance_data(player.group)
+        return dict(
+            my_id=player.id_in_group,
+            past_offers = Proposal.filter_tolist(group=player.group),
+            acceptances = acceptance_data["acceptances"],
+            coalition_members = acceptance_data["coalition_members"],
+            payoffs = acceptance_data["payoffs"],
+        )
+
+
+page_sequence = [WaitForBargaining, Bargain, Accept, WaitForAnswers, BargainingResults]
