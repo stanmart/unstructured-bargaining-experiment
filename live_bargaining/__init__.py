@@ -218,7 +218,9 @@ class Bargain(Page):
             offer_id = data['offer_id']
             Acceptance.create(player=player, group=player.group, offer_id=offer_id)
             player.accepted_offer = offer_id
-            return {0: create_acceptance_data(group=player.group) | {"type": "acceptances"}}
+            return_data = create_acceptance_data(group=player.group)
+            return_data["type"] = "acceptances"
+            return {0: return_data}
         
         # Reload page case:
         return {
