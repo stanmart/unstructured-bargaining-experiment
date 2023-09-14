@@ -14,7 +14,7 @@ Make a deal
 </div>
 
 <div class="section">
-    <h3>State of negotiations at timeout</h2>    
+    <h3>Preferred proposals at the end of bargaining</h2>    
     <table class="offer-table">
         <tbody>
             <tr>
@@ -24,30 +24,29 @@ Make a deal
                 <th class="offer-player-col player-3">Player 3</th>
                 <th class="offer-player-col player-4">Player 4</th>
                 <th class="offer-player-col player-5">Player 5</th>
-                <th style="text-align: right;"></th>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">Accepted proposal</th>
-                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-1"></td>
-                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-2"></td>
-                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-3"></td>
-                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-4"></td>
-                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-5"></td>
+                <th class="offer-left-col">Preferred proposal</th>
+                <td class="offer-player-col" id="accepted-1" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-2" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-3" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-4" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-5" class="allocation">—</td>
             </tr>
             <tr style="height: 3em;">
                 <th class="offer-left-col">Implied payoff</th>
-                <td class="offer-player-col"><div class="payoff" id="payoff-1"></div></td>
-                <td class="offer-player-col"><div class="payoff" id="payoff-2"></div></td>
-                <td class="offer-player-col"><div class="payoff" id="payoff-3"></div></td>
-                <td class="offer-player-col"><div class="payoff" id="payoff-4"></div></td>
-                <td class="offer-player-col"><div class="payoff" id="payoff-5"></div></td>
+                <td class="offer-player-col" class="payoff" id="payoff-1">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-2">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-3">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-4">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-5">—</td>
             </tr>
         </tbody>
     </table>
 </div>
  
 <div class="section" style="height:400px;">
-    <h3>Proposals</h4>
+    <h3>All proposals</h4>
     <div class="flex-item vertical-fill" style="overflow-y: auto;">
         <table class="offer-table horizontal-rules">
             <thead>
