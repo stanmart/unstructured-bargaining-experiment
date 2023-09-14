@@ -8,50 +8,48 @@ Bargaining outcome
 
 {{ block content }}
 
-    <p>
-       Thank you for submitting your answer. 
+<p>Thank you for submitting your answer.</p>
+<p>The final bargaining outcome is:</p>
 
-       The final bargaining outcome is: 
+<div class="section">
+    <h3>Accepted proposals</h2>
+    <table class="offer-table">
+        <tbody>
+            <tr>
+                <th></th>
+                <th class="offer-player-col player-1">Player 1</th>
+                <th class="offer-player-col player-2">Player 2</th>
+                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-4">Player 4</th>
+                <th class="offer-player-col player-5">Player 5</th>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Preferred proposal</th>
+                <td class="offer-player-col" id="accepted-1" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-2" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-3" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-4" class="allocation">—</td>
+                <td class="offer-player-col" id="accepted-5" class="allocation">—</td>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Implied payoff</th>
+                <td class="offer-player-col" class="payoff" id="payoff-1">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-2">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-3">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-4">—</td>
+                <td class="offer-player-col" class="payoff" id="payoff-5">—</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-       <div class="section">
-        <table class="offer-table">
-            <tbody>
-                <tr>
-                    <th></th>
-                    <th class="offer-player-col player-1">Player 1</th>
-                    <th class="offer-player-col player-2">Player 2</th>
-                    <th class="offer-player-col player-3">Player 3</th>
-                    <th class="offer-player-col player-4">Player 4</th>
-                    <th class="offer-player-col player-5">Player 5</th>
-                    <th style="text-align: right;"></th>
-                </tr>
-                <tr style="height: 3em;">
-                    <th class="offer-left-col">Accepted proposal</th>
-                    <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-1"></td>
-                    <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-2"></td>
-                    <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-3"></td>
-                    <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-4"></td>
-                    <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-5"></td>
-                </tr>
-                <tr style="height: 3em;">
-                    <th class="offer-left-col">Payoffs</th>
-                    <td class="offer-player-col"><div class="payoff" id="payoff-1"></div></td>
-                    <td class="offer-player-col"><div class="payoff" id="payoff-2"></div></td>
-                    <td class="offer-player-col"><div class="payoff" id="payoff-3"></div></td>
-                    <td class="offer-player-col"><div class="payoff" id="payoff-4"></div></td>
-                    <td class="offer-player-col"><div class="payoff" id="payoff-5"></div></td>    
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="section">
+    <h3>Payoff</h3>
+    <p>Your payoff in this round is: <b> {{ player.payoff }} </b> </p>
+</div>
 
-       Your payoff in this round is: <b> {{ player.payoff}} </b> 
+{{ next_button }}
 
-
-    </p>
-
-    {{ next_button}}
-
-    <script src="{{ static 'bargaining_outcome.js' }}"></script>
+<script src="{{ static 'bargaining_outcome.js' }}"></script>
 
 {{ endblock }}
