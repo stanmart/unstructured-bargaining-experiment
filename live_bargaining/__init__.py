@@ -179,11 +179,9 @@ def create_acceptance_data(group: Group):
 
 class WaitForBargaining(WaitPage):
 
-    timeout = float("inf")
-
     @staticmethod
     def after_all_players_arrive(group: Group):
-        group.subsession.expiry = time.time() + C.TIME_PER_ROUND        
+        group.subsession.expiry = time.time() + C.TIME_PER_ROUND
 
 
 class Bargain(Page):
