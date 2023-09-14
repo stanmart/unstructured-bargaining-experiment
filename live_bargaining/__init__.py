@@ -259,7 +259,15 @@ class Accept(Page):
 def compute_payoffs(group: Group):
     players = sorted(group.get_players(), key=lambda p: p.id_in_group)
     for player in players:
-        player.accepted_offer = 0 if player.accept_final_offer == "Reject all" else int(player.accept_final_offer) 
+        if player.accepted_offer in ["", "Reject all"]:
+            payoff_num = 0
+        else:
+            try:
+                payoff_num = int(player.accepted_offer)
+            except (ValueError, TypeError):
+                payoff_num = 0
+    
+        player.accepted_offer = payoff_num
     
     final_payoffs = create_acceptance_data(group)["payoffs"]
 
