@@ -1,6 +1,3 @@
-let btnPropose = document.getElementById('btn-propose');
-let btnAccept = document.getElementById('btn-accept');
-
 let isMember1 = document.getElementById('is-member-1');
 let isMember2 = document.getElementById('is-member-2');
 let isMember3 = document.getElementById('is-member-3');
@@ -13,17 +10,7 @@ let allocation3 = document.getElementById('allocation-3');
 let allocation4 = document.getElementById('allocation-4');
 let allocation5 = document.getElementById('allocation-5');
 
-let accepted1 = document.getElementById('accepted-1');
-let accepted2 = document.getElementById('accepted-2');
-let accepted3 = document.getElementById('accepted-3');
-let accepted4 = document.getElementById('accepted-4');
-let accepted5 = document.getElementById('accepted-5');
-
-let payoff1 = document.getElementById('payoff-1');
-let payoff2 = document.getElementById('payoff-2');
-let payoff3 = document.getElementById('payoff-3');
-let payoff4 = document.getElementById('payoff-4');
-let payoff5 = document.getElementById('payoff-5');
+let acceptDropdown = document.getElementById('offer-select');
 
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
@@ -164,34 +151,22 @@ function sendOffer() {
 
 function sendAccept() {
 
-    let thisAccepted = document.getElementById(`accepted-${js_vars.my_id}`);
-    
-    if (thisAccepted.value === '') {
-        acceptedOffer = 0;
-    } else {
-        acceptedOffer = parseInt(thisAccepted.value);
-    }
-
-    if (!(thisAccepted.value === "" || pastOffers.some(offer => offer.offer_id === acceptedOffer))) {
-        alert('The entered offer ID does not exist');
+    if (acceptDropdown.value === '') {
+        alert('You must select an offer to accept');
         return;
     }
-
+    
+    acceptedOffer = parseInt(acceptDropdown.value);
     liveSend({ 'type': 'accept', 'offer_id': acceptedOffer })
-    if (acceptedOffer != 0) {
-        alert(`Offer ${thisAccepted.value} accepted successfully`);
-    } else {
-        alert('Acceptance revoked successfully');
-    }
+    alert(`Offer ${acceptDropdown.value} marked as preferred`);
     return;
 
 }
 
 function sendRevert() {
 
-    let thisAccepted = document.getElementById(`accepted-${js_vars.my_id}`);
-    thisAccepted.value = '';
-    sendAccept()
+    liveSend({ 'type': 'accept', 'offer_id': 0 })
+    alert(`Preferred offer cleared`);
 
 }
 
@@ -248,8 +223,21 @@ function updatePastOffers(newPastOffers) {
         pastOffersTable.innerHTML = '';
         pastOffers = [];
     }
-    newPastOffers.slice(pastOffers.length).forEach(function (offer) {
-        pastOffers.push(offer);
+    pastOffers = newPastOffers
+    pastOffersTable.innerHTML = '';
+    acceptDropdown.innerHTML = '';
+
+    default_option = document.createElement("option");
+    default_option.text = '';
+    default_option.disabled = true;
+    default_option.selected = true;
+    acceptDropdown.add(default_option);
+
+    newPastOffers.forEach(function (offer) {
+        let option = document.createElement("option");
+        option.text = offer.offer_id;
+        acceptDropdown.add(option);
+
         let row = pastOffersTable.insertRow();
 
         let from = row.insertCell();
@@ -283,19 +271,24 @@ function updateAcceptances(acceptances, coalition_members, payoffs) {
     for (let i = 0; i < 5; i++) {
         let thisAccepted = document.getElementById(`accepted-${i + 1}`);
         let thisPayoff = document.getElementById(`payoff-${i + 1}`);
+
         if (acceptances[i] === 0) {
-            thisAccepted.value = '';
+            thisAccepted.innerHTML = '—';
         } else {
-            thisAccepted.value = acceptances[i];
+            thisAccepted.innerHTML = acceptances[i];
         }
         if (coalition_members[i]) {
             thisPayoff.innerHTML = payoffs[i];
             thisPayoff.style.color = 'green';
             thisPayoff.style.fontWeight = 'bold';
+            thisAccepted.style.color = 'green';
+            thisAccepted.style.fontWeight = 'bold';
         } else {
             thisPayoff.innerHTML = '—';
             thisPayoff.style.color = 'black';
             thisPayoff.style.fontWeight = 'normal';
+            thisAccepted.style.color = 'black';
+            thisAccepted.style.fontWeight = 'normal';
         }
     } 
 }
