@@ -1,0 +1,84 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
+{{ block title }}
+Make a deal
+{{ endblock }}
+
+{{ block content }}
+
+<div>
+    <p> INSTRUCTIONS RECAP: </p>
+    <p>TODO</p>
+</div>
+
+<div class="section">
+    <h3>State of negotiations at timeout</h2>    
+    <table class="offer-table">
+        <tbody>
+            <tr>
+                <th></th>
+                <th class="offer-player-col player-1">Player 1</th>
+                <th class="offer-player-col player-2">Player 2</th>
+                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-4">Player 4</th>
+                <th class="offer-player-col player-5">Player 5</th>
+                <th style="text-align: right;"></th>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Accepted proposal</th>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-1"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-2"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-3"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-4"></td>
+                <td class="offer-player-col"><input disabled="true", value="", class="allocation" id="accepted-5"></td>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Implied payoff</th>
+                <td class="offer-player-col"><div class="payoff" id="payoff-1"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-2"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-3"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-4"></div></td>
+                <td class="offer-player-col"><div class="payoff" id="payoff-5"></div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+ 
+<div class="section" style="height:400px;">
+    <h3>Proposals</h4>
+    <div class="flex-item vertical-fill" style="overflow-y: auto;">
+        <table class="offer-table horizontal-rules">
+            <thead>
+                <tr>
+                    <th class="offer-left-col">From</th>
+                    <th class="offer-id-col">ID</th>
+                    <th class="offer-player-col player-1">P1</th>
+                    <th class="offer-player-col player-2">P2</th>
+                    <th class="offer-player-col player-3">P3</th>
+                    <th class="offer-player-col player-4">P4</th>
+                    <th class="offer-player-col player-5">P5</th>
+                </tr>
+            </thead>
+            <tbody id="past-offers-table"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="section">
+    <h3>Make your final choice</h3>
+
+    Choose an offer to accept:
+    {{ form.accept_final_offer }}
+
+    Remember that all proposed members of an offer must accept it for it to be implemented. In the case of disagreement, the payoff is zero.
+</div>
+
+{{ next_button }}
+
+<script src="{{ static 'accept.js' }}"></script>
+
+{{ endblock }}
+
+
