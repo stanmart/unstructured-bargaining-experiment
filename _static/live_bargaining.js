@@ -277,14 +277,13 @@ function updateAcceptances(acceptances, coalition_members, payoffs) {
         } else {
             thisAccepted.innerHTML = acceptances[i];
         }
+        thisPayoff.innerHTML = payoffs[i];
         if (coalition_members[i]) {
-            thisPayoff.innerHTML = payoffs[i];
             thisPayoff.style.color = 'green';
             thisPayoff.style.fontWeight = 'bold';
             thisAccepted.style.color = 'green';
             thisAccepted.style.fontWeight = 'bold';
         } else {
-            thisPayoff.innerHTML = '—';
             thisPayoff.style.color = 'black';
             thisPayoff.style.fontWeight = 'normal';
             thisAccepted.style.color = 'black';
