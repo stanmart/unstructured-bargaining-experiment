@@ -78,7 +78,6 @@ otree devserver
 Then navigate to http://localhost:8000 in your browser.
 You can stop the server by pressing <btn>Ctrl</btn>+<btn>c</btn> in your terminal window.
 
-## Live deployment
+## Prod deployment
 
-TODO! Idea: put everything in a Docker container to ensure reproducibility
-(Does the BLU lab allow Docker?)
+The `Procfile` is set up to start a production server on Heroku. Simply create an app, assign a dyno and a Postgres database, and deploy the app from this repo.
