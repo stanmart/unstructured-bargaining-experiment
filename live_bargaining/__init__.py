@@ -144,7 +144,7 @@ def check_proposal_validity(player: Player, members, allocations):
     big_player_included = any([player.group.get_player_by_id(i+1).id_in_group == 1 for i in range(len(members)) if members[i]]) #todo: check this works correctly
 
     if not big_player_included and sum(allocations) > 0: 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Big Player is not included"}}
+        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Player 1 is not included"}}
 
     if big_player_included and sum(allocations) > prod_fct[coalition_size - 1]:
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocations exceed payoff available to this coalition"}}
