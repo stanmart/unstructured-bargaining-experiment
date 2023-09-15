@@ -17,7 +17,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=10.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['payoff_round1', 'payoff_round2', 'payoff_round3', 'payoff_round4', 'payoff_round5', 'final_payoff']
+PARTICIPANT_FIELDS = ['payoff_round1', 'payoff_round2', 'payoff_round3', 'payoff_round4', 'payoff_round5', 'payoff_round6', 'final_payoff']
 SESSION_FIELDS = []
 
 # ISO-639 code

@@ -36,10 +36,10 @@ class Player(BasePlayer):
 def compute_final_payoffs(subsession: Subsession):
     
     players = subsession.get_players()
-    # get number of bargaining rounds
-    player0_payoffs = [players[0].participant.vars['payoff_round' + str(i)] for i in range(1,6)]
+    # get number of (non-trial) bargaining rounds
+    player0_payoffs = [players[0].participant.vars['payoff_round' + str(i)] for i in range(2,7)] 
     number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)
-    payment_round = randint(1, number_of_bargaining_rounds)
+    payment_round = randint(2, number_of_bargaining_rounds)
 
     for player in players:
         player.participant.vars['final_payoff'] = player.participant.vars['payoff_round' + str(payment_round )] + subsession.session.config['participation_fee']

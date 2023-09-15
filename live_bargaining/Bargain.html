@@ -10,7 +10,7 @@ Make a deal
 
 <div class="side-by-side">
     <div class="flex">
-        <p> INSTRUCTIONS RECAP: </p>
+        <p> <b> Instructions Recap:  </b> </p>
         <p>
             This is a 5-player game.
             Any subset of the players can form a coalition.
@@ -28,6 +28,13 @@ Make a deal
         <p>
             You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. Please negotiate with the other players below.
         </p>
+
+        {{ if subsession.round_number == 1 }}
+            <p>
+                <span style="color: #b70505; font-weight: bold;"> Note: This is the trial round. Its payoffs do not count for your final payoffs.</span>
+            </p>
+        {{ endif }}
+       
     </div>
     <div>
         <table id="payoff-table">
