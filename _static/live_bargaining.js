@@ -370,12 +370,3 @@ prod_fct.forEach(function (payoff, i) {
     valueCell.innerHTML = payoff;
     valueCell.style.textAlign = 'center';
 });
-
-// Instructions for the dummy case
-
-if (P5IsDummy) {
-    dummyInstructions = document.getElementsByClassName('dummy-instruction');
-    for (dummyInstruction of dummyInstructions) {
-        dummyInstruction.style.removeProperty('display');
-    };
-}

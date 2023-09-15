@@ -18,9 +18,8 @@ Make a deal
             <ul>
                 <li>If Player 1 is not in the coalition, the value is 0.</li>
                 <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
-
-                {{ if subsession.round_number == 5 }}
-                <li style="display: none;", class="dummy-instruction"><span style="color: #b70505; font-weight: bold;">  Note that in this round, unlike in previous rounds, the coalition value does not depend on whether Player 5 is in the coalition or not.</span></li>
+                {{ if p5_is_dummy }}
+                <li><span style="color: #b70505; font-weight: bold;">  Note that in this round, unlike in previous rounds, the coalition value does not depend on whether Player 5 is in the coalition or not.</span></li>
                 {{ endif }}
                 <!-- The line below might be more suitable for the final experiment -->
                 <!-- <li style="display: none;" class="dummy-instruction">The shareable coalition value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->

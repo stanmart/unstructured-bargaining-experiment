@@ -204,6 +204,12 @@ class Bargain(Page):
             my_id=player.id_in_group,
             prod_fct = prod_fcts()[player.round_number],
         )
+    
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            p5_is_dummy = len(prod_fcts()[player.round_number]) == 4,
+        )
 
     @staticmethod
     def live_method(player: Player, data):
