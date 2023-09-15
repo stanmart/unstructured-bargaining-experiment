@@ -21,6 +21,9 @@ let totalShareableValue = 0;
 let totalSharedValue = 0;
 let pastOffers = []
 
+let prod_fct = js_vars.prod_fct;
+let P5IsDummy = prod_fct.length == 4;
+
 isMember1.addEventListener('change', function () {
     allocation1.disabled = !isMember1.checked;
     allocation1.value = 0;
@@ -197,7 +200,7 @@ function liveRecv(data) {
 function updateTotalShareable() {
     if (isMember1.checked) {
         let numMembers = isMember2.checked + isMember3.checked + isMember4.checked;
-        if (prod_fct.length == 5) {
+        if (P5IsDummy) {
             numMembers += isMember5.checked;
         }
         totalShareableValue = prod_fct[numMembers];
@@ -306,8 +309,6 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
     thisPlayerHeaders[i].style.color = '#056fb7';
 }
 
-let prod_fct = js_vars.prod_fct;
-
 // Payoff chart
 const ctx = document.getElementById('payoff-chart');
 
@@ -330,7 +331,7 @@ let chart = new Chart(ctx, {
             },
             x: {
                 title: {
-                    text: "P1 + this many others in coalition",
+                    text: "P1 + this many others in coalition" + (P5IsDummy ? " (excluding P5)" : ""),
                     display: true
                 }
             }
@@ -347,9 +348,30 @@ chart.canvas.parentNode.style.height = '200px';
 chart.canvas.parentNode.style.width = '400px';
 
 // Payoff table
+payoffTableHeader = document.getElementById('payoff-table-header');
 payoffTableRow = document.getElementById('payoff-table-values');
-prod_fct.forEach(function (payoff) {
-    let cell = payoffTableRow.insertCell();
-    cell.innerHTML = payoff;
-    cell.style.textAlign = 'center';
+
+if (P5IsDummy) {
+    let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
+    coalitionSizeHeader.innerHTML += " (excluding P5)";
+}
+
+prod_fct.forEach(function (payoff, i) {
+    let headerCell = document.createElement("th");
+    headerCell.innerHTML = i;
+    headerCell.style.textAlign = 'center';
+    payoffTableHeader.appendChild(headerCell)
+
+    let valueCell = payoffTableRow.insertCell();
+    valueCell.innerHTML = payoff;
+    valueCell.style.textAlign = 'center';
 });
+
+// Instructions for the dummy case
+
+if (P5IsDummy) {
+    dummyInstructions = document.getElementsByClassName('dummy-instruction');
+    for (dummyInstruction of dummyInstructions) {
+        dummyInstruction.style.removeProperty('display');
+    };
+}

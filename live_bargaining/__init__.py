@@ -59,7 +59,7 @@ def prod_fcts():
                 2: [0, 25, 50, 75, 100], #linear
                 3: [0, 5, 20, 60, 100], #convex
                 4: [0,  45,  80,  90, 100], #concave
-                5: [0, 0, 0, 0, 0] #dummy
+                5: [0, 33, 67, 100] #dummy
             } 
 #todo: move to constants?
 
@@ -146,7 +146,7 @@ def check_proposal_validity(player: Player, members, allocations):
     if not big_player_included and sum(allocations) > 0: 
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Big Player is not included"}}
 
-    if big_player_included and sum(allocations) > prod_fct[coalition_size - 1]: 
+    if big_player_included and sum(allocations) > prod_fct[coalition_size - 1]:
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocations exceed payoff available to this coalition"}}
     #todo: adapt error message to framing to players
 
