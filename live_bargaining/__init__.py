@@ -131,11 +131,8 @@ def check_proposal_validity(player: Player, members, allocations):
 
     if any(allocations[i] > 0 and members[i] == 0 for i in range(len(members))): 
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: only members in the coalition can receive positive payoffs"}}
-
-    if not all(isinstance(val, int) and val >= 0 for val in allocations): 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
     
-    if not all(isinstance(val, int) and (val == 0 or val == 1) for val in members): 
+    if not all(isinstance(val, bool) for val in members): 
         return {player.id_in_group: {"type": "error", "content" : "Invalid entry for members"}}
 
 

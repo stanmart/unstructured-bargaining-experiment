@@ -130,8 +130,12 @@ allocation5.addEventListener("keyup", function (event) {
 });
 
 function sendOffer() {
+    if (totalSharedValue > 0 && !isMember1.checked) {
+        alert('Invalid allocation: allocation has to be zero when Player 1 is not included');
+        return;
+    }
     if (totalSharedValue > totalShareableValue) {
-        alert('You cannot offer more than the total shareable value');
+        alert('Invalid allocation: allocations exceed payoff available to this coalition');
         return;
     }
     members = [
