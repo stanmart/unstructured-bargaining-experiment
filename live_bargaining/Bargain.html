@@ -18,6 +18,11 @@ Make a deal
             <ul>
                 <li>If Player 1 is not in the coalition, the value is 0.</li>
                 <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
+
+                {{ if subsession.round_number == 5 }}
+                <li> <span style="color: #b70505; font-weight: bold;">  Note that in this round, unlike in previous rounds, the coalition value does not depend on whether Player 5 is in the coalition or not.</span></li>
+                {{ endif }}
+
             </ul>
         </p>
         <p>
