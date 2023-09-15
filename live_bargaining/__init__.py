@@ -22,8 +22,8 @@ def creating_session(subsession):
         subsession.group_randomly()
 
     for player in subsession.get_players():
-        for i in range(1,6):
-            player.participant.vars['payoff_round' + str(i)] = -1
+        for i in range(1,7):
+            setattr(player.participant, 'payoff_round' + str(i), -1)
 
 
        
@@ -51,6 +51,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     accepted_offer = models.IntegerField(initial = 0)  # 0 means no offer accepted
     accept_final_offer = models.StringField(label="Choose which offer to accept")
+    payoff_this_round = models.IntegerField(initial = 0)
 
 #todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
@@ -263,20 +264,24 @@ def compute_payoffs(group: Group):
     players = sorted(group.get_players(), key=lambda p: p.id_in_group)
     for player in players:
         if player.accepted_offer in ["", "Reject all"]:
-            payoff_num = 0
+            final_accept_num = 0
         else:
             try:
-                payoff_num = int(player.accepted_offer)
+                final_accept_num = int(player.accept_final_offer)
             except (ValueError, TypeError):
-                payoff_num = 0
+                final_accept_num = 0
     
-        player.accepted_offer = payoff_num
+        player.accepted_offer = final_accept_num
     
     final_payoffs = create_acceptance_data(group)["payoffs"]
 
     for i in range(len(final_payoffs)):
-        players[i].payoff = final_payoffs[i]
-        players[i].participant.vars['payoff_round' + str(group.round_number)] = final_payoffs[i]  
+        players[i].payoff_this_round = final_payoffs[i]
+        setattr(
+            players[i].participant,
+            'payoff_round' + str(group.round_number),
+            final_payoffs[i]
+        )
 
 class WaitForAnswers(WaitPage):
     after_all_players_arrive = compute_payoffs
