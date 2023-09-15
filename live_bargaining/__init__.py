@@ -141,12 +141,16 @@ def check_proposal_validity(player: Player, members, allocations):
 
     prod_fct = prod_fcts()[player.round_number]
     coalition_size = sum(members)
-    big_player_included = any([player.group.get_player_by_id(i+1).id_in_group == 1 for i in range(len(members)) if members[i]]) #todo: check this works correctly
+    big_player_included = members[0]  # the big player is always first
 
     if not big_player_included and sum(allocations) > 0: 
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Player 1 is not included"}}
 
-    if big_player_included and sum(allocations) > prod_fct[coalition_size - 1]:
+    num_small_players = coalition_size - big_player_included
+    if len(prod_fct) == 4:  # p5 is a dummy player
+        num_small_players -= members[-1]  # the dummy player is always last
+
+    if sum(allocations) > prod_fct[num_small_players]:
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocations exceed payoff available to this coalition"}}
     #todo: adapt error message to framing to players
 
