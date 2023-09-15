@@ -51,6 +51,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     accepted_offer = models.IntegerField(initial = 0)  # 0 means no offer accepted
     accept_final_offer = models.StringField(label="Choose which offer to accept")
+    payoff_this_round = models.IntegerField(initial = 0)
 
 #todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
@@ -275,7 +276,7 @@ def compute_payoffs(group: Group):
     final_payoffs = create_acceptance_data(group)["payoffs"]
 
     for i in range(len(final_payoffs)):
-        players[i].payoff = final_payoffs[i]
+        players[i].payoff_this_round = final_payoffs[i]
         players[i].participant.vars['payoff_round' + str(group.round_number)] = final_payoffs[i]  
 
 class WaitForAnswers(WaitPage):
