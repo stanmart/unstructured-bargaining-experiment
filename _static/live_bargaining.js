@@ -200,7 +200,7 @@ function liveRecv(data) {
 function updateTotalShareable() {
     if (isMember1.checked) {
         let numMembers = isMember2.checked + isMember3.checked + isMember4.checked;
-        if (P5IsDummy) {
+        if (!P5IsDummy) {
             numMembers += isMember5.checked;
         }
         totalShareableValue = prod_fct[numMembers];
