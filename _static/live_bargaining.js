@@ -196,8 +196,11 @@ function liveRecv(data) {
 
 function updateTotalShareable() {
     if (isMember1.checked) {
-        total = isMember2.checked + isMember3.checked + isMember4.checked + isMember5.checked;
-        totalShareableValue = prod_fct[total];
+        let numMembers = isMember2.checked + isMember3.checked + isMember4.checked;
+        if (prod_fct.length == 5) {
+            numMembers += isMember5.checked;
+        }
+        totalShareableValue = prod_fct[numMembers];
     } else {
         totalShareableValue = 0;
     }
