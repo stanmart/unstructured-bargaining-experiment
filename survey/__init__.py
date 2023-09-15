@@ -8,7 +8,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    payment_round = models.IntegerField()
 
 
 class Group(BaseGroup):
@@ -39,11 +39,12 @@ def compute_final_payoffs(subsession: Subsession):
     # get number of (non-trial) bargaining rounds
     player0_payoffs = [players[0].participant.vars['payoff_round' + str(i)] for i in range(2,7)] 
     number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)
-    payment_round = randint(2, number_of_bargaining_rounds)
+    subsession.payment_round = randint(2, number_of_bargaining_rounds)
 
     for player in players:
-        player.payoff = player.participant.vars['payoff_round' + str(payment_round )]
-        player.participant.vars['final_payoff'] = player.participant.payoff_plus_participation_fee()
+        player.payoff = getattr(player.participant, 'payoff_round' + str(subsession.payment_round))
+        player.participant.final_payoff = player.participant.payoff_plus_participation_fee()
+
 
 # PAGES
 

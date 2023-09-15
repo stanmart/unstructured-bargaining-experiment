@@ -8,7 +8,11 @@ The End
         Thank you for participating in this experiment!
     </p>
     <p>
-        This is your final payoff for this experiment (one payment randomly drawn from one of the rounds you played + participation fee of 10 CHF): <b> {{ player.participant.final_payoff }} CHF </b>
+        <ul>
+            <li> Payment from a randomly drawn round (round {{subsession.payment_round}}): {{ player.payoff }}</li>
+            <li> Participation fee: {{ player.session.config.participation_fee }}</li>
+        </ul>
+        Total: <b>{{ player.participant.final_payoff }}</b>
     </p>
 
 {{ endblock }}
