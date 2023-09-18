@@ -17,7 +17,7 @@ Instructions
 <p>
     <b> The game: </b>
     Any subset of players in each group can form a coalition. Each coalition generates some value (denoted in CHF).
-    The value the coalition generates depends on its members like so:
+    The value the coalition generates depends on its members:
     <ul>
         <li>If Player 1 is not in the coalition, the value is 0.</li>
         <li>If Player 1 is in the coalition, the value is increasing in the number of members (see table and graph below for an example).</li>
@@ -27,20 +27,18 @@ Instructions
     <img src="{{ static 'screenshot_coalition_payoffs.png' }}"/>
 </p>
 <p>
-    As a group you will thus have two decisions to make: which players will form a coalition and how the value of that coalition will be allocated among its members.
-
-    Only if all members of a coalition agree on the same allocation, will the bargaining be successful and the value of that coalition paid out according to the agreed-upon allocation.
-    Otherwise, everyone in the group gets 0 in this round.
+    You will have two decisions to make: which players form a coalition and how the value of that coalition is allocated among its members. 
+    You can only submit positive integer values as allocations.
 </p>
 
 <p>
     <b> The bargaining interface:</b>
     You will bargain over a text chat, you can do so in any way you like. 
     There is only one group chat for everyone in the group, private chats are not possible. 
-    During the bargaining, players can make proposals ("Propose allocation"). 
-    All proposals will be logged under "Past Proposals". 
-    Players can indicate their most preferred proposal under "Accept Proposal", using the Proposal ID given in "Past Proposals". 
-    Note that this is just for coordination purposes: "Accept Proposal" is not binding and only indicates current preferences.
+    During the bargaining, players can make proposals in the proposal interface to help coordination ("Propose allocation"). They can propose as many proposals as they like.
+    All proposals will be logged under "Past proposals". 
+    Players can indicate their currently most preferred proposal under "Preferred proposal", using the Proposal ID given in "Past proposals".
+    Note that this is just for coordination purposes: "Preferred proposal" is not binding, it only indicates current preferences and can be changed at any time.
     At the end of the five minutes, a new page will open and you will have to enter which proposal you are choosing as your final answer (at this stage, communication will not be possible anymore). 
     You will also have the possibility to reject all offers. 
     The payoffs of that round will be based on those final answers.
@@ -49,7 +47,11 @@ Instructions
 <p> 
     <b> The payment: </b>
     You will receive a payment at the end of the experiment. 
-    It will be a show-up fee of CHF 10 plus your bargaining payoff randomly drawn from one of the (non-trial) rounds you played.
+    <ul>
+        <li>The payoffs in a given individual round is computed as follows: Only if all members of a proposed coalition agree on the same allocation, will the bargaining be successful and the value of that coalition paid out according to the agreed-upon allocation.
+            Otherwise, everyone in the group gets 0 in this round. </li>
+        <li>Your final payoffs at the end of the experiment will then be computed as the show-up fee of CHF 10 plus your bargaining payoff randomly drawn from one of the (non-trial) rounds you played. </li>
+    </ul>
 </p>
 
 If you have any questions on the game, please raise your hand now and an experimenter will come to you. 

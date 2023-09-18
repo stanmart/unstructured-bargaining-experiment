@@ -1,0 +1,17 @@
+{{ block content }}
+
+{{ if subsession.round_number == 1}}
+    <p> You will now play one <b> trial round </b>. 
+        The results of this round will not be relevant for your payoffs at the end.
+    </p> 
+    <p> If you have any questions during or after this round, please raise your hand and an experimenter will come to you.</p> 
+{{ else }}
+    <p> 
+        You will now play <b>round {{ actual_round_number}}</b> of the actual game. 
+        The results of this round will be relevant for your payoffs at the end.
+    </p>
+{{ endif }}
+
+
+{{ next_button}}
+{{ endblock }}

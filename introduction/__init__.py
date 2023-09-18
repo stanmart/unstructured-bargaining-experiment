@@ -29,4 +29,4 @@ class Instructions(Page):
     pass
 
 
-page_sequence = [Introduction, Instructions]
+page_sequence = [Instructions]

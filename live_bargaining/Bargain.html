@@ -3,18 +3,19 @@
 {{ endblock }}
 
 {{ block title }}
-Make a deal
+Bargaining phase
 {{ endblock }}
 
 {{ block content }}
 
 <div class="side-by-side">
     <div class="flex">
+        <p> This is <b> round {{ actual_round_number }}</b>. </p>
         <p> <b> Instructions Recap:  </b> </p>
         <p>
             This is a 5-player game.
-            Any subset of the players can form a coalition.
-            The value the coalition can produce depends on its members like so:
+            Any subset of players can form a coalition.
+            The value the coalition produces depends on its members:
             <ul>
                 <li>If Player 1 is not in the coalition, the value is 0.</li>
                 <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
@@ -26,12 +27,14 @@ Make a deal
             </ul>
         </p>
         <p>
-            You can propose as many allocations as you'd like, and change your acceptance decision at any time. 
-            You can only submit positive integer values.
-            The other players will see your proposals and decisions.
+            You bargain with the other players via the chat. 
+            The proposal interface ("Proposed allocations" and "Preferred proposals") is an additional coordination tool and helps you see what offers are on the table.
+            You can propose as many allocations as you like, and change your preferred proposal at any time. 
+            You can only submit positive integer values as allocations.
+            The other players will see your proposed allocations and your preferred proposal.
         </p>
         <p>
-            You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. Please negotiate with the other players below.
+            You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. Please negotiate with the other players in the chat below.
         </p>
 
         {{ if subsession.round_number == 1 }}
@@ -152,7 +155,7 @@ Make a deal
     </div>
     
     <div class="section flex-item vertical-fill">
-        <h3>Past Proposals</h4>
+        <h3>Past proposals</h4>
         <div class="flex-item vertical-fill" style="overflow-y: auto;">
             <table class="offer-table horizontal-rules">
                 <thead>
@@ -176,7 +179,5 @@ Make a deal
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ static 'live_bargaining.js' }}"></script>
-
-{{ next_button}}
 
 {{ endblock }}

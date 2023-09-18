@@ -72,7 +72,6 @@ class Player(BasePlayer):
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
 
 
-# todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
     return {
         1: [0, 30, 60, 80, 100],  # trial
@@ -81,9 +80,6 @@ def prod_fcts():
         4: [0, 45, 80, 90, 100],  # concave
         5: [0, 33, 67, 100],  # dummy
     }
-
-
-# todo: move to constants?
 
 
 class Proposal(ExtraModel):
@@ -261,6 +257,13 @@ def create_acceptance_data(group: Group):
                 "payoffs": [0, 0, 0, 0, 0],
             }
 
+class Info(Page):
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            actual_round_number = player.subsession.round_number - 1
+        )
 
 class WaitForBargaining(WaitPage):
     @staticmethod
@@ -286,6 +289,7 @@ class Bargain(Page):
     def vars_for_template(player: Player):
         return dict(
             p5_is_dummy=len(prod_fcts()[player.round_number]) == 4,
+            actual_round_number = player.subsession.round_number - 1
         )
 
     @staticmethod
@@ -485,4 +489,4 @@ def custom_export(players):
         ]
 
 
-page_sequence = [WaitForBargaining, Bargain, Accept, WaitForAnswers, BargainingResults]
+page_sequence = [Info, WaitForBargaining, Bargain, Accept, WaitForAnswers, BargainingResults]
