@@ -2,17 +2,32 @@ import pickle
 import time
 from datetime import datetime
 
-from otree.api import *
+from otree.api import (
+    BaseConstants,
+    BaseSubsession,
+    BaseGroup,
+    BasePlayer,
+    ExtraModel,
+    Page,
+    WaitPage,
+    models,
+)
 
 doc = """ 
 """
-#todo: add doc
+# todo: add doc
+
 
 def creating_session(subsession):
     num_active_groups = len(subsession.get_groups())
-    if num_active_groups in [6,7]:
+    if num_active_groups in [6, 7]:
         subsession_index = subsession.round_number - 1
-        with open('preparation/group_matrices/group_matrices_' + str(num_active_groups) + '_groups.pkl', 'rb') as file:
+        with open(
+            "preparation/group_matrices/group_matrices_"
+            + str(num_active_groups)
+            + "_groups.pkl",
+            "rb",
+        ) as file:
             group_matrices = pickle.load(file)
         if subsession_index < len(group_matrices):
             subsession.set_group_matrix(group_matrices[subsession_index])
@@ -22,47 +37,54 @@ def creating_session(subsession):
         subsession.group_randomly()
 
     for player in subsession.get_players():
-        for i in range(1,7):
-            setattr(player.participant, 'payoff_round' + str(i), -1)
+        for i in range(1, 7):
+            setattr(player.participant, "payoff_round" + str(i), -1)
 
 
-       
 # todo: adapt role names to framing
 class C(BaseConstants):
-    NAME_IN_URL = 'live_bargaining'
-    PLAYERS_PER_GROUP = 5 
-    NUM_ROUNDS = 5 #todo: adjust for main experiment
+    NAME_IN_URL = "live_bargaining"
+    PLAYERS_PER_GROUP = 5
+    NUM_ROUNDS = 5  # todo: adjust for main experiment
 
-    BIG_ROLE = 'Player 1'
-    SMALL1_ROLE = 'Player 2'
-    SMALL2_ROLE = 'Player 3'
-    SMALL3_ROLE = 'Player 4'
-    SMALL4_ROLE = 'Player 5'
+    BIG_ROLE = "Player 1"
+    SMALL1_ROLE = "Player 2"
+    SMALL2_ROLE = "Player 3"
+    SMALL3_ROLE = "Player 4"
+    SMALL4_ROLE = "Player 5"
 
     TIME_PER_ROUND = 5 * 60
 
-    
+
 class Subsession(BaseSubsession):
-    expiry = models.FloatField(initial = float("inf"))
+    expiry = models.FloatField(initial=float("inf"))  # type: ignore
+
 
 class Group(BaseGroup):
-    last_offer_id = models.IntegerField(initial = 0)
+    last_offer_id = models.IntegerField(initial=0)  # type: ignore
+
 
 class Player(BasePlayer):
-    accepted_offer = models.IntegerField(initial = 0)  # 0 means no offer accepted
-    accept_final_offer = models.StringField(label="Choose which offer to accept")
-    payoff_this_round = models.IntegerField(initial = 0)
+    accepted_offer = models.IntegerField(
+        initial=0  # type: ignore
+    )  # 0 means no offer accepted
+    accept_final_offer = models.StringField(label="Choose which offer to accept")  # type: ignore
+    payoff_this_round = models.IntegerField(initial=0)  # type: ignore
 
-#todo: set values for dummy treatment, possibly adjust values
+
+# todo: set values for dummy treatment, possibly adjust values
 def prod_fcts():
     return {
-                1: [0, 30, 60, 80, 100], # trial
-                2: [0, 25, 50, 75, 100], #linear
-                3: [0, 5, 20, 60, 100], #convex
-                4: [0,  45,  80,  90, 100], #concave
-                5: [0, 33, 67, 100] #dummy
-            } 
-#todo: move to constants?
+        1: [0, 30, 60, 80, 100],  # trial
+        2: [0, 25, 50, 75, 100],  # linear
+        3: [0, 5, 20, 60, 100],  # convex
+        4: [0, 45, 80, 90, 100],  # concave
+        5: [0, 33, 67, 100],  # dummy
+    }
+
+
+# todo: move to constants?
+
 
 class Proposal(ExtraModel):
     timestamp = models.StringField()
@@ -107,61 +129,109 @@ class Proposal(ExtraModel):
             {
                 "offer_id": proposal.offer_id,
                 "player": proposal.player.id_in_group,
-                "members": [proposal.member_1, proposal.member_2, proposal.member_3, proposal.member_4, proposal.member_5],
-                "allocations": [proposal.allocation_1, proposal.allocation_2, proposal.allocation_3, proposal.allocation_4, proposal.allocation_5],
+                "members": [
+                    proposal.member_1,
+                    proposal.member_2,
+                    proposal.member_3,
+                    proposal.member_4,
+                    proposal.member_5,
+                ],
+                "allocations": [
+                    proposal.allocation_1,
+                    proposal.allocation_2,
+                    proposal.allocation_3,
+                    proposal.allocation_4,
+                    proposal.allocation_5,
+                ],
             }
             for proposal in filtered
         ]
-    
+
 
 class Acceptance(ExtraModel):
     timestamp = models.StringField()
     player = models.Link(Player)
     group = models.Link(Group)
-    offer_id = models.TextField()
+    offer_id = models.IntegerField()
 
 
 def check_proposal_validity(player: Player, members, allocations):
-    if len(members) != len(allocations): 
-        return {player.id_in_group: {"type": "error", "content" : "Data is incomplete"}}
-    
+    if len(members) != len(allocations):
+        return {player.id_in_group: {"type": "error", "content": "Data is incomplete"}}
+
     try:
         allocations = [int(val) for val in allocations]
     except (ValueError, TypeError):
-        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid entry for allocation",
+            }
+        }
 
-    if any(allocations[i] > 0 and members[i] == 0 for i in range(len(members))): 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: only members in the coalition can receive positive payoffs"}}
-    
-    if not all(isinstance(val, bool) for val in members): 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for members"}}
+    if any(allocations[i] > 0 and members[i] == 0 for i in range(len(members))):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid allocation: only members in the coalition can receive positive payoffs",
+            }
+        }
 
+    if not all(isinstance(val, bool) for val in members):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid entry for members",
+            }
+        }
 
     prod_fct = prod_fcts()[player.round_number]
     coalition_size = sum(members)
     big_player_included = members[0]  # the big player is always first
 
     if not all(val >= 0 for val in allocations):
-        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid entry for allocation",
+            }
+        }
 
-    if not big_player_included and sum(allocations) > 0: 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Player 1 is not included"}}
+    if not big_player_included and sum(allocations) > 0:
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid allocation: allocation has to be zero when Player 1 is not included",
+            }
+        }
 
     num_small_players = coalition_size - big_player_included
     if len(prod_fct) == 4:  # p5 is a dummy player
         num_small_players -= members[-1]  # the dummy player is always last
 
     if sum(allocations) > prod_fct[num_small_players]:
-        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocations exceed payoff available to this coalition"}}
-    #todo: adapt error message to framing to players
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid allocation: allocations exceed payoff available to this coalition",
+            }
+        }
+    # todo: adapt error message to framing to players
 
 
 def check_acceptance_validity(player: Player, offer_id):
     if not isinstance(offer_id, int):
-        return {player.id_in_group: {"type": "error", "content" : "Invalid offer id"}}
-    if offer_id != 0 and offer_id not in (proposal["offer_id"] for proposal in Proposal.filter_tolist(group=player.group)):
-        return {player.id_in_group: {"type": "error", "content" : "The offer you are trying to accept does not exist"}}
-    
+        return {player.id_in_group: {"type": "error", "content": "Invalid offer id"}}
+    if offer_id != 0 and offer_id not in (
+        proposal["offer_id"] for proposal in Proposal.filter_tolist(group=player.group)
+    ):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "The offer you are trying to accept does not exist",
+            }
+        }
+
 
 def create_acceptance_data(group: Group):
     players = sorted(group.get_players(), key=lambda p: p.id_in_group)
@@ -174,7 +244,11 @@ def create_acceptance_data(group: Group):
         }
     else:
         offer = Proposal.filter_tolist(group=group, offer_id=p1_offer)[0]
-        if all(player.accepted_offer == p1_offer for member, player in zip(offer["members"], players) if member):
+        if all(
+            player.accepted_offer == p1_offer
+            for member, player in zip(offer["members"], players)
+            if member
+        ):
             return {
                 "acceptances": [player.accepted_offer for player in players],
                 "coalition_members": offer["members"],
@@ -187,86 +261,104 @@ def create_acceptance_data(group: Group):
                 "payoffs": [0, 0, 0, 0, 0],
             }
 
-class WaitForBargaining(WaitPage):
 
+class WaitForBargaining(WaitPage):
     @staticmethod
     def after_all_players_arrive(group: Group):
-        group.subsession.expiry = time.time() + C.TIME_PER_ROUND
+        group.subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
 
 
 class Bargain(Page):
-    timer_text = 'Time left for bargaining:'
+    timer_text = "Time left for bargaining:"
 
     @staticmethod
     def get_timeout_seconds(player):
         return player.subsession.expiry - time.time()
 
-
     @staticmethod
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct = prod_fcts()[player.round_number],
+            prod_fct=prod_fcts()[player.round_number],
         )
-    
+
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            p5_is_dummy = len(prod_fcts()[player.round_number]) == 4,
+            p5_is_dummy=len(prod_fcts()[player.round_number]) == 4,
         )
 
     @staticmethod
     def live_method(player: Player, data):
-
-        if 'type' in data and data['type'] == 'propose':
-            error_messages = check_proposal_validity(player=player, members=data['members'], allocations=data['allocations'])
-            if error_messages:
-                return error_messages
-            
-            Proposal.create_fromlist(player=player, members=data['members'], allocations=data['allocations'])
-            return {0: {"type": "proposals_history", "proposals_history": Proposal.filter_tolist(group=player.group)}}
-        
-        if 'type' in data and data['type'] == 'accept':
-            error_messages = check_acceptance_validity(player=player, offer_id=data['offer_id'])
+        if "type" in data and data["type"] == "propose":
+            error_messages = check_proposal_validity(
+                player=player, members=data["members"], allocations=data["allocations"]
+            )
             if error_messages:
                 return error_messages
 
-            offer_id = data['offer_id']
-            Acceptance.create(timestamp=datetime.now().isoformat(), player=player, group=player.group, offer_id=offer_id)
+            Proposal.create_fromlist(
+                player=player, members=data["members"], allocations=data["allocations"]
+            )
+            return {
+                0: {
+                    "type": "proposals_history",
+                    "proposals_history": Proposal.filter_tolist(group=player.group),
+                }
+            }
+
+        if "type" in data and data["type"] == "accept":
+            error_messages = check_acceptance_validity(
+                player=player, offer_id=data["offer_id"]
+            )
+            if error_messages:
+                return error_messages
+
+            offer_id = data["offer_id"]
+            Acceptance.create(
+                timestamp=datetime.now().isoformat(),
+                player=player,
+                group=player.group,
+                offer_id=offer_id,
+            )
             player.accepted_offer = offer_id
-            return_data = create_acceptance_data(group=player.group)
+            return_data = create_acceptance_data(group=player.group)  # type: ignore
             return_data["type"] = "acceptances"
             return {0: return_data}
-        
+
         # Reload page case:
         return {
             player.id_in_group: {
                 "type": "reload",
                 "proposals_history": Proposal.filter_tolist(group=player.group),
-                **create_acceptance_data(group=player.group),
+                **create_acceptance_data(group=player.group),  # type: ignore
             }
         }
 
+
 def accept_final_offer_choices(player):
-    choices = ["Reject all"] + [str(offer["offer_id"]) for offer in Proposal.filter_tolist(group=player.group)]
+    choices = ["Reject all"] + [
+        str(offer["offer_id"]) for offer in Proposal.filter_tolist(group=player.group)
+    ]
     return choices
 
+
 class Accept(Page):
-    timer_text = 'Time left to decide:'
+    timer_text = "Time left to decide:"
     timeout_seconds = 60
 
-    form_model = 'player'
+    form_model = "player"
     form_fields = ["accept_final_offer"]
 
     @staticmethod
     def js_vars(player: Player):
-        acceptance_data = create_acceptance_data(player.group)
+        acceptance_data = create_acceptance_data(player.group)  # type: ignore
         return dict(
             my_id=player.id_in_group,
-            past_offers = Proposal.filter_tolist(group=player.group),
-            acceptances = acceptance_data["acceptances"],
-            coalition_members = acceptance_data["coalition_members"],
-            payoffs = acceptance_data["payoffs"],
+            past_offers=Proposal.filter_tolist(group=player.group),
+            acceptances=acceptance_data["acceptances"],
+            coalition_members=acceptance_data["coalition_members"],
+            payoffs=acceptance_data["payoffs"],
         )
 
 
@@ -280,38 +372,38 @@ def compute_payoffs(group: Group):
                 final_accept_num = int(player.accept_final_offer)
             except (ValueError, TypeError):
                 final_accept_num = 0
-    
+
         player.accepted_offer = final_accept_num
-    
+
     final_payoffs = create_acceptance_data(group)["payoffs"]
 
     for i in range(len(final_payoffs)):
         players[i].payoff_this_round = final_payoffs[i]
         setattr(
             players[i].participant,
-            'payoff_round' + str(group.round_number),
-            final_payoffs[i]
+            "payoff_round" + str(group.round_number),
+            final_payoffs[i],
         )
+
 
 class WaitForAnswers(WaitPage):
     after_all_players_arrive = compute_payoffs
 
-class BargainingResults(Page):
 
+class BargainingResults(Page):
     @staticmethod
     def js_vars(player: Player):
-        acceptance_data = create_acceptance_data(player.group)
+        acceptance_data = create_acceptance_data(player.group)  # type: ignore
         return dict(
             my_id=player.id_in_group,
-            past_offers = Proposal.filter_tolist(group=player.group),
-            acceptances = acceptance_data["acceptances"],
-            coalition_members = acceptance_data["coalition_members"],
-            payoffs = acceptance_data["payoffs"],
+            past_offers=Proposal.filter_tolist(group=player.group),
+            acceptances=acceptance_data["acceptances"],
+            coalition_members=acceptance_data["coalition_members"],
+            payoffs=acceptance_data["payoffs"],
         )
 
 
 def custom_export(players):
-
     yield [
         "timestamp",
         "event_type",
