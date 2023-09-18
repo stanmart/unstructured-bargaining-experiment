@@ -140,6 +140,9 @@ def check_proposal_validity(player: Player, members, allocations):
     coalition_size = sum(members)
     big_player_included = members[0]  # the big player is always first
 
+    if not all(val >= 0 for val in allocations):
+        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
+
     if not big_player_included and sum(allocations) > 0: 
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Player 1 is not included"}}
 
