@@ -22,11 +22,43 @@ class Player(BasePlayer):
         label='What is your gender?',
         widget=widgets.RadioSelect,
     )
-    reflection = models.StringField(
+    degree = models.StringField(
+        choices=[['Bachelor', 'Bachelor'], ['Master', 'Master'], ['PhD', 'PhD'],['Other', 'Other']],
+        label='What is your current degree?',
+        widget=widgets.RadioSelect,
+    )
+    study_field = models.StringField(
+        label = '''
+        What is your field of study?'''
+    )
+    nationality= models.StringField(
+        label = '''
+        What is your nationality?'''
+    )
+    reflection = models.LongStringField(
         label='''
         What was your bargaining strategy and why? What did you think about the behavior of the other players?'''
     )
-    comments = models.StringField(
+
+    #TODO: delete for the main experiment
+    pilot_difficulty = models.StringField(
+        label = '''
+        How would you rate the difficulty level of the game?'''
+    )
+    pilot_explanation = models.StringField(
+        label = '''
+        How well was the game explained? What parts were unclear to you? What would you change in the explanation?'''
+    )
+    pilot_interface = models.StringField(
+        label = '''
+        How well could you work with the bargaining interface? What parts would you change?'''
+    )
+    pilot_time = models.StringField(
+        label = '''
+        Did you feel there was enough time for the bargaining? How much would you have preferred?'''
+    )
+
+    comments = models.LongStringField(
         label='''
         Any additional comments you want to share with us?'''
     )
@@ -50,7 +82,7 @@ def compute_final_payoffs(subsession: Subsession):
 
 class Questions(Page):
     form_model = 'player'
-    form_fields = ['age', 'gender', 'reflection', 'comments']
+    form_fields = ['age', 'gender', 'degree', 'study_field', 'nationality', 'reflection', 'pilot_difficulty', 'pilot_explanation', 'pilot_interface', 'pilot_time', 'comments']
 
 class WaitForAll(WaitPage):
     wait_for_all_groups = True
