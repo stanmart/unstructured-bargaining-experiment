@@ -60,7 +60,7 @@ def prod_fcts():
                 2: [0, 25, 50, 75, 100], #linear
                 3: [0, 5, 20, 60, 100], #convex
                 4: [0,  45,  80,  90, 100], #concave
-                5: [0, 0, 0, 0, 0] #dummy
+                5: [0, 33, 67, 100] #dummy
             } 
 #todo: move to constants?
 
@@ -132,22 +132,26 @@ def check_proposal_validity(player: Player, members, allocations):
 
     if any(allocations[i] > 0 and members[i] == 0 for i in range(len(members))): 
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: only members in the coalition can receive positive payoffs"}}
-
-    if not all(isinstance(val, int) and val >= 0 for val in allocations): 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
     
-    if not all(isinstance(val, int) and (val == 0 or val == 1) for val in members): 
+    if not all(isinstance(val, bool) for val in members): 
         return {player.id_in_group: {"type": "error", "content" : "Invalid entry for members"}}
 
 
     prod_fct = prod_fcts()[player.round_number]
     coalition_size = sum(members)
-    big_player_included = any([player.group.get_player_by_id(i+1).id_in_group == 1 for i in range(len(members)) if members[i]]) #todo: check this works correctly
+    big_player_included = members[0]  # the big player is always first
+
+    if not all(val >= 0 for val in allocations):
+        return {player.id_in_group: {"type": "error", "content" : "Invalid entry for allocation"}}
 
     if not big_player_included and sum(allocations) > 0: 
-        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Big Player is not included"}}
+        return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocation has to be zero when Player 1 is not included"}}
 
-    if big_player_included and sum(allocations) > prod_fct[coalition_size - 1]: 
+    num_small_players = coalition_size - big_player_included
+    if len(prod_fct) == 4:  # p5 is a dummy player
+        num_small_players -= members[-1]  # the dummy player is always last
+
+    if sum(allocations) > prod_fct[num_small_players]:
         return {player.id_in_group: {"type": "error", "content" : "Invalid allocation: allocations exceed payoff available to this coalition"}}
     #todo: adapt error message to framing to players
 
@@ -203,6 +207,12 @@ class Bargain(Page):
         return dict(
             my_id=player.id_in_group,
             prod_fct = prod_fcts()[player.round_number],
+        )
+    
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            p5_is_dummy = len(prod_fcts()[player.round_number]) == 4,
         )
 
     @staticmethod
