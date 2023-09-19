@@ -83,7 +83,8 @@ def prod_fcts():
 
 
 class Proposal(ExtraModel):
-    timestamp = models.StringField()
+    timestamp_iso = models.StringField()
+    timestamp = models.FloatField()
     player = models.Link(Player)
     group = models.Link(Group)
     offer_id = models.IntegerField()
@@ -102,7 +103,8 @@ class Proposal(ExtraModel):
     def create_fromlist(cls, player, members, allocations):
         player.group.last_offer_id += 1
         return cls.create(
-            timestamp=datetime.now().isoformat(),
+            timestamp_iso=datetime.now().isoformat(),
+            timestamp=time.time(),
             player=player,
             group=player.group,
             offer_id=player.group.last_offer_id,
@@ -145,7 +147,8 @@ class Proposal(ExtraModel):
 
 
 class Acceptance(ExtraModel):
-    timestamp = models.StringField()
+    timestamp_iso = models.StringField()
+    timestamp = models.FloatField()
     player = models.Link(Player)
     group = models.Link(Group)
     offer_id = models.IntegerField()
@@ -320,7 +323,8 @@ class Bargain(Page):
 
             offer_id = data["offer_id"]
             Acceptance.create(
-                timestamp=datetime.now().isoformat(),
+                timestamp_iso=datetime.now().isoformat(),
+                timestamp=time.time(),
                 player=player,
                 group=player.group,
                 offer_id=offer_id,
@@ -409,6 +413,7 @@ class BargainingResults(Page):
 
 def custom_export(players):
     yield [
+        "timestamp_iso",
         "timestamp",
         "event_type",
         "session_code",
@@ -438,6 +443,7 @@ def custom_export(players):
         participant = player.participant
         session = player.session
         yield [
+            proposal.timestamp_iso,
             proposal.timestamp,
             "proposal",
             session.code,
@@ -466,6 +472,7 @@ def custom_export(players):
         participant = player.participant
         session = player.session
         yield [
+            acceptance.timestamp_iso,
             acceptance.timestamp,
             "acceptance",
             session.code,
