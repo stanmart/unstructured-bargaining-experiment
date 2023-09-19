@@ -8,10 +8,10 @@ Bargaining phase
 
 {{ block content }}
 
+<b> This is <span style="color: #b70505;">round {{ actual_round_number }}</span>. Instructions Recap: </b> </p>
+
 <div class="side-by-side">
-    <div class="flex">
-        <p> This is <b> round {{ actual_round_number }}</b>. </p>
-        <p> <b> Instructions Recap:  </b> </p>
+    <div>
         <p>
             This is a 5-player game.
             Any subset of players can form a coalition.
@@ -44,8 +44,8 @@ Bargaining phase
         {{ endif }}
        
     </div>
-    <div>
-        <table id="payoff-table">
+    <div style="margin-left: 20px;">
+        <table id="payoff-table" style="margin-bottom: 30px;">
             <colgroup>
                 <col style="width: 50%;">
                 <col style="width: 10%">
@@ -61,7 +61,9 @@ Bargaining phase
                 <th>Coalition's payoff</th>
             </tr>
         </table>
-        <canvas id="payoff-chart"></canvas>
+        <div style="height: 230px; width: 350px">
+            <canvas id="payoff-chart"></canvas>
+        </div>
     </div>
 </div>
 
