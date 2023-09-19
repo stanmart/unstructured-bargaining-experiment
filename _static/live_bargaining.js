@@ -329,6 +329,7 @@ let chart = new Chart(ctx, {
         }]
     },
     options: {
+        responsive: true,
         scales: {
             y: {
                 beginAtZero: true
@@ -348,8 +349,6 @@ let chart = new Chart(ctx, {
         }
     }
 });
-chart.canvas.parentNode.style.height = '200px';
-chart.canvas.parentNode.style.width = '400px';
 
 // Payoff table
 payoffTableHeader = document.getElementById('payoff-table-header');
