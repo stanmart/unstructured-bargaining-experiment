@@ -27,7 +27,7 @@ Bargaining phase
             </ul>
         </p>
         <p>
-            You bargain with the other players via the chat. 
+            You bargain with the other players via the <span style="color: #b70505; font-weight: bold;">chat</span>. 
             The proposal interface ("Proposed allocations" and "Currently preferred proposal") is an additional coordination tool and helps you see what offers are on the table.
             You can propose as many allocations as you like, and change your preferred proposal at any time. 
             You can only submit positive integer values as allocations.
@@ -65,7 +65,38 @@ Bargaining phase
     </div>
 </div>
 
-<div class="section">
+
+<div class="side-by-side" style="height: 500px;">
+
+    <div class="section flex-item vertical-fill highlight-section">
+        <h3 class="highlight-section-title">Chat</h3>
+        {{ chat nickname=player.role }} 
+    </div>
+    
+    <div class="section flex-item vertical-fill">
+        <h3>Past proposals</h4>
+        <div class="flex-item vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules">
+                <thead>
+                    <tr>
+                        <th class="offer-left-col">From</th>
+                        <th class="offer-id-col">ID</th>
+                        <th class="offer-player-col player-1">P1</th>
+                        <th class="offer-player-col player-2">P2</th>
+                        <th class="offer-player-col player-3">P3</th>
+                        <th class="offer-player-col player-4">P4</th>
+                        <th class="offer-player-col player-5">P5</th>
+                    </tr>
+                </thead>
+                <tbody id="past-offers-table"></tbody>
+            </table>
+        </div>
+    </div>
+        
+</div>
+
+
+<div class="section dim-section">
     <h3>Propose allocation</h2>    
     <table class="offer-table">
         <tbody>
@@ -145,35 +176,6 @@ Bargaining phase
         <button type="button" onclick="sendAccept()" id="btn-accept" class="flex-item", style="margin: 20px;">Submit preferred</button>
         <button type="button" onclick="sendRevert()" id="btn-revert" class="flex-item", style="margin: 20px;">Clear preferred</button>
     </div>
-</div>
-
-<div class="side-by-side" style="height: 500px;">
-
-    <div class="section flex-item vertical-fill">
-        <h3>Chat</h3>
-        {{ chat nickname=player.role }} 
-    </div>
-    
-    <div class="section flex-item vertical-fill">
-        <h3>Past proposals</h4>
-        <div class="flex-item vertical-fill" style="overflow-y: auto;">
-            <table class="offer-table horizontal-rules">
-                <thead>
-                    <tr>
-                        <th class="offer-left-col">From</th>
-                        <th class="offer-id-col">ID</th>
-                        <th class="offer-player-col player-1">P1</th>
-                        <th class="offer-player-col player-2">P2</th>
-                        <th class="offer-player-col player-3">P3</th>
-                        <th class="offer-player-col player-4">P4</th>
-                        <th class="offer-player-col player-5">P5</th>
-                    </tr>
-                </thead>
-                <tbody id="past-offers-table"></tbody>
-            </table>
-        </div>
-    </div>
-        
 </div>
 
 
