@@ -272,8 +272,8 @@ class WaitForBargaining(WaitPage):
     wait_for_all_groups = True
     
     @staticmethod
-    def after_all_players_arrive(group: Group):
-        group.subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
+    def after_all_players_arrive(subsession: BaseSubsession):
+        subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
 
 
 class Bargain(Page):
