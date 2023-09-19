@@ -354,8 +354,6 @@ def accept_final_offer_choices(player):
 
 
 class Accept(Page):
-    timer_text = "Time left to decide:"
-    timeout_seconds = 60
 
     form_model = "player"
     form_fields = ["accept_final_offer"]
