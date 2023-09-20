@@ -135,3 +135,15 @@ input {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+.highlight {
+    background-color:rgb(51, 169, 0);
+    animation-name:highlight-animation;
+    animation-fill-mode:forwards;
+    animation-duration:5s;
+    animation-delay:0s;
+  }
+  @keyframes highlight-animation {
+    0% {background-color: rgb(51, 169, 0);}
+    100% { background-color:transparent;}
+  }

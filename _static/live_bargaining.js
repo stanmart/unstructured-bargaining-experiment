@@ -225,25 +225,26 @@ function updateTotalShared() {
 }
 
 function updatePastOffers(newPastOffers) {
-    if (newPastOffers.length < pastOffers.length) {
+    let numOldOffers = pastOffers.length;
+
+    if (newPastOffers.length < numOldOffers ||
+        !(JSON.stringify(newPastOffers.slice(0, numOldOffers)) === JSON.stringify(pastOffers))) {
         pastOffersTable.innerHTML = '';
+        acceptDropdown.innerHTML = '';
         pastOffers = [];
+
+        default_option = document.createElement("option");
+        default_option.text = '';
+        default_option.disabled = true;
+        default_option.selected = true;
+        acceptDropdown.add(default_option);
+
+        numOldOffers = 0;
     }
-    if (!(JSON.stringify(newPastOffers.slice(0, pastOffers.length)) === JSON.stringify(pastOffers))) {
-        pastOffersTable.innerHTML = '';
-        pastOffers = [];
-    }
+
     pastOffers = newPastOffers
-    pastOffersTable.innerHTML = '';
-    acceptDropdown.innerHTML = '';
 
-    default_option = document.createElement("option");
-    default_option.text = '';
-    default_option.disabled = true;
-    default_option.selected = true;
-    acceptDropdown.add(default_option);
-
-    newPastOffers.forEach(function (offer) {
+    newPastOffers.slice(numOldOffers).forEach(function (offer) {
         let option = document.createElement("option");
         option.text = offer.offer_id;
         acceptDropdown.add(option);
@@ -274,6 +275,14 @@ function updatePastOffers(newPastOffers) {
             }
         }
 
+        row.classList.add("highlight");
+        let timeout = setTimeout(
+            function () {
+                row.classList.remove("highlight");
+            },
+            5000
+        )
+
     });
 }
 
@@ -281,6 +290,9 @@ function updateAcceptances(acceptances, coalition_members, payoffs) {
     for (let i = 0; i < 5; i++) {
         let thisAccepted = document.getElementById(`accepted-${i + 1}`);
         let thisPayoff = document.getElementById(`payoff-${i + 1}`);
+
+        let oldThisAccepted = thisAccepted.innerHTML;
+        let oldThisPayoff = thisPayoff.innerHTML;
 
         if (acceptances[i] === 0) {
             thisAccepted.innerHTML = '—';
@@ -299,7 +311,27 @@ function updateAcceptances(acceptances, coalition_members, payoffs) {
             thisAccepted.style.color = 'black';
             thisAccepted.style.fontWeight = 'normal';
         }
-    } 
+
+        if (oldThisAccepted !== thisAccepted.innerHTML) {
+            thisAccepted.classList.add("highlight");
+            let timeout = setTimeout(
+                function () {
+                    thisAccepted.classList.remove("highlight");
+                },
+                5000
+            )
+        }
+
+        if (oldThisPayoff !== thisPayoff.innerHTML) {
+            thisPayoff.classList.add("highlight");
+            let timeout = setTimeout(
+                function () {
+                    thisPayoff.classList.remove("highlight");
+                },
+                5000
+            )
+        }
+    }
 }
 
 
