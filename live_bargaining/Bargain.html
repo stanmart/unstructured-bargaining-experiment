@@ -174,7 +174,9 @@ Bargaining phase
     </table>
     <div class="side-by-side">
         <div class="flex-item" style="margin-top: 20px; font-weight: bold;">Choose preferred proposal <span class="red-highlight">(ID)</span>:</div>
-        <select id="offer-select" class="flex-item", style="margin: 20px;"></select>
+        <select id="offer-select" class="flex-item", style="margin: 20px;">
+            <option disabled selected></option>
+        </select>
         <button type="button" onclick="sendAccept()" id="btn-accept" class="flex-item", style="margin: 20px;">Submit preferred</button>
         <button type="button" onclick="sendRevert()" id="btn-revert" class="flex-item", style="margin: 20px;">Clear preferred</button>
     </div>
