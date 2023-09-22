@@ -251,15 +251,13 @@ function updatePastOffers(newPastOffers) {
 
         let row = pastOffersTable.insertRow();
 
-        let from = row.insertCell();
-        from.className = "offer-left-col";
-        from.innerHTML = `P${offer.player}`;
-        from.style.fontWeight = 'bold';
-
         let id = row.insertCell();
         id.className = "offer-id-col";
         id.innerHTML = offer.offer_id;
-        id.style.fontWeight = 'bold';
+
+        let from = row.insertCell();
+        from.className = "offer-proposer-col";
+        from.innerHTML = `P${offer.player}`;
 
         for (let i = 0; i < 5; i++) {
             let cell = row.insertCell();
@@ -345,6 +343,19 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
     thisPlayerHeaders[i].style.color = '#056fb7';
 }
 
+// Timer
+
+let timer = document.getElementsByClassName('otree-timer')[0];
+timer.getElementsByTagName('p')[0].innerHTML += ' — no more communication possible after time expires';
+document.addEventListener("DOMContentLoaded", function (event) {
+    $('.otree-timer__time-left').on('update.countdown', function (event) {
+        if (event.offset.totalSeconds <= 30) {
+            timer.style.backgroundColor = '#b70505';
+            timer.style.color = 'white';
+        }
+    });
+});
+
 // Payoff chart
 const ctx = document.getElementById('payoff-chart');
 
@@ -401,3 +412,5 @@ prod_fct.forEach(function (payoff, i) {
     valueCell.innerHTML = payoff;
     valueCell.style.textAlign = 'center';
 });
+
+

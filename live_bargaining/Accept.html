@@ -41,14 +41,14 @@ Choose a proposal
     </table>
 </div>
  
-<div class="section" style="height:400px;">
+<div class="section vertical-fill" style="height:400px;">
     <h3>All proposals</h4>
-    <div class="flex-item vertical-fill" style="overflow-y: auto;">
-        <table class="offer-table horizontal-rules">
+    <div class="vertical-fill" style="overflow-y: auto;">
+        <table class="offer-table horizontal-rules shaded-rows">
             <thead>
                 <tr>
-                    <th class="offer-left-col">From</th>
                     <th class="offer-id-col">ID</th>
+                    <th class="offer-proposer-col">From</th>
                     <th class="offer-player-col player-1">P1</th>
                     <th class="offer-player-col player-2">P2</th>
                     <th class="offer-player-col player-3">P3</th>
@@ -64,7 +64,7 @@ Choose a proposal
 <div class="section">
     <h3>Make your final choice</h3>
 
-    Choose an offer to accept:
+    Choose an <span class="red-highlight">offer ID</span> to accept:
     {{ form.accept_final_offer }}
 
     Remember that all members of a proposed coalition must accept it for it to be implemented. In the case of disagreement, the payoff is zero.

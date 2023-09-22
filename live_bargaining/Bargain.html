@@ -8,7 +8,7 @@ Bargaining phase
 
 {{ block content }}
 
-<b> This is <span style="color: #b70505;">round {{ actual_round_number }}</span>. Instructions Recap: </b> </p>
+<b> This is <span class="red-highlight">round {{ actual_round_number }}</span>. Instructions Recap: </b> </p>
 
 <div class="side-by-side">
     <div>
@@ -20,14 +20,14 @@ Bargaining phase
                 <li>If Player 1 is not in the coalition, the value is 0.</li>
                 <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
                 {{ if p5_is_dummy }}
-                <li><span style="color: #b70505; font-weight: bold;">  Note that in this round, unlike in previous rounds, the coalition value does not depend on whether Player 5 is in the coalition or not.</span></li>
+                <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the coalition value does not depend on whether Player 5 is in the coalition or not.</span></li>
                 {{ endif }}
                 <!-- The line below might be more suitable for the final experiment -->
                 <!-- <li style="display: none;" class="dummy-instruction">The shareable coalition value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->
             </ul>
         </p>
         <p>
-            You bargain with the other players via the <span style="color: #b70505; font-weight: bold;">chat</span>. 
+            You bargain with the other players via the <span class="red-highlight">chat</span>. 
             The proposal interface ("Proposed allocations" and "Currently preferred proposal") is an additional coordination tool and helps you see what offers are on the table.
             You can propose as many allocations as you like, and change your preferred proposal at any time. 
             You can only submit positive integer values as allocations.
@@ -39,7 +39,7 @@ Bargaining phase
 
         {{ if subsession.round_number == 1 }}
             <p>
-                <span style="color: #b70505; font-weight: bold;"> Note: This is the trial round. Its payoffs do not count for your final payoffs.</span>
+                <span class="red-highlight"> Note: This is the trial round. Its payoffs do not count for your final payoffs.</span>
             </p>
         {{ endif }}
        
@@ -70,19 +70,19 @@ Bargaining phase
 
 <div class="side-by-side" style="height: 500px;">
 
-    <div class="section flex-item vertical-fill highlight-section" style="width: 200px;">
+    <div class="section vertical-fill highlight-section" style="width: 200px;">
         <h3 class="highlight-section-title">Chat</h3>
         {{ chat nickname=player.role }} 
     </div>
     
-    <div class="section flex-item vertical-fill">
+    <div class="section vertical-fill">
         <h3>Past proposals</h4>
-        <div class="flex-item vertical-fill" style="overflow-y: auto;">
-            <table class="offer-table horizontal-rules">
+        <div class="vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules shaded-rows">
                 <thead>
                     <tr>
-                        <th class="offer-left-col">From</th>
                         <th class="offer-id-col">ID</th>
+                        <th class="offer-proposer-col">From</th>
                         <th class="offer-player-col player-1">P1</th>
                         <th class="offer-player-col player-2">P2</th>
                         <th class="offer-player-col player-3">P3</th>
@@ -144,7 +144,7 @@ Bargaining phase
 
 <div class="section">
     <h3>Currently preferred proposal</h2>    
-    <table class="offer-table">
+    <table class="offer-table shaded-rows">
         <tbody>
             <tr>
                 <th></th>
@@ -155,7 +155,7 @@ Bargaining phase
                 <th class="offer-player-col player-5">Player 5</th>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">Preferred proposal ID</th>
+                <th class="offer-left-col">Preferred proposal <span class="red-highlight">ID</span></th>
                 <td class="offer-player-col" id="accepted-1" class="allocation">—</td>
                 <td class="offer-player-col" id="accepted-2" class="allocation">—</td>
                 <td class="offer-player-col" id="accepted-3" class="allocation">—</td>
@@ -173,8 +173,10 @@ Bargaining phase
         </tbody>
     </table>
     <div class="side-by-side">
-        <div class="flex-item" style="margin-top: 20px; font-weight: bold;">Choose preferred proposal (ID):</div>
-        <select id="offer-select" class="flex-item", style="margin: 20px;"></select>
+        <div class="flex-item" style="margin-top: 20px; font-weight: bold;">Choose preferred proposal <span class="red-highlight">(ID)</span>:</div>
+        <select id="offer-select" class="flex-item", style="margin: 20px;">
+            <option disabled selected></option>
+        </select>
         <button type="button" onclick="sendAccept()" id="btn-accept" class="flex-item", style="margin: 20px;">Submit preferred</button>
         <button type="button" onclick="sendRevert()" id="btn-revert" class="flex-item", style="margin: 20px;">Clear preferred</button>
     </div>

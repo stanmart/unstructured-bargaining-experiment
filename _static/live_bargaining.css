@@ -65,6 +65,12 @@ input {
     text-align: left;
 }
 
+.offer-proposer-col {
+    width: 15%;
+    text-align: center;
+    font-weight: bold;
+}
+
 .offer-player-col {
     width: 14%;
     text-align: center;
@@ -77,7 +83,9 @@ input {
 
 .offer-id-col {
     width: 15%;
-    text-align: center;
+    text-align: left;
+    color: #b70505;
+    font-weight: bold;
 }
 
 .coalition-member {
@@ -100,9 +108,13 @@ input {
     width: 100%;
 }
 
+table.shaded-rows tbody tr:nth-child(odd) {
+    background-color:#eeeeee;
+}
+
 .horizontal-rules tr {
     border-bottom: 1px solid black;
-    border-top: none; 
+    border-top: none;
 }
 
 .otree-chat__nickname {
@@ -115,7 +127,7 @@ input {
 
 #payoff-table tr {
     border-bottom: 1px solid black;
-    border-top: 1px solid black; 
+    border-top: 1px solid black;
 }
 
 .payoff {
@@ -131,19 +143,47 @@ input {
     padding-bottom: 5px;
 }
 
-.otree-timer > p {
+.otree-timer>p {
     margin-top: 0px;
     margin-bottom: 0px;
 }
 
 .highlight {
-    background-color:rgb(51, 169, 0);
-    animation-name:highlight-animation;
-    animation-fill-mode:forwards;
-    animation-duration:5s;
-    animation-delay:0s;
-  }
-  @keyframes highlight-animation {
-    0% {background-color: rgb(51, 169, 0);}
-    100% { background-color:transparent;}
-  }
+    background-color: rgb(51, 169, 0);
+    animation-fill-mode: forwards;
+    animation-duration: 5s;
+    animation-delay: 0s;
+}
+
+tr.highlight:nth-child(odd) {
+    animation-name: highlight-animation-odd;
+}
+
+tr.highlight:nth-child(even) {
+    animation-name: highlight-animation-even;
+}
+
+@keyframes highlight-animation-odd {
+    0% {
+        background-color: rgb(51, 169, 0);
+    }
+
+    100% {
+        background-color: #eeeeee;
+    }
+}
+
+@keyframes highlight-animation-even {
+    0% {
+        background-color: rgb(51, 169, 0);
+    }
+
+    100% {
+        background-color: white;
+    }
+}
+
+.red-highlight {
+    color: #b70505;
+    font-weight: bold;
+}
