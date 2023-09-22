@@ -251,15 +251,13 @@ function updatePastOffers(newPastOffers) {
 
         let row = pastOffersTable.insertRow();
 
-        let from = row.insertCell();
-        from.className = "offer-left-col";
-        from.innerHTML = `P${offer.player}`;
-        from.style.fontWeight = 'bold';
-
         let id = row.insertCell();
         id.className = "offer-id-col";
         id.innerHTML = offer.offer_id;
-        id.style.fontWeight = 'bold';
+
+        let from = row.insertCell();
+        from.className = "offer-proposer-col";
+        from.innerHTML = `P${offer.player}`;
 
         for (let i = 0; i < 5; i++) {
             let cell = row.insertCell();
