@@ -68,7 +68,9 @@ class Player(BasePlayer):
     accepted_offer = models.IntegerField(
         initial=0  # type: ignore
     )  # 0 means no offer accepted
-    accept_final_offer = models.StringField(label="Choose which offer to accept")  # type: ignore
+    accept_final_offer = models.StringField(
+        label="Choose which offer to accept"
+    )  # type: ignore
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
 
 
@@ -172,7 +174,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: only members in the coalition can receive positive payoffs",
+                "content": "Invalid allocation: only members in the coalition can receive positive payoffs",  # noqa: E501
             }
         }
 
@@ -200,7 +202,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: allocation has to be zero when Player 1 is not included",
+                "content": "Invalid allocation: allocation has to be zero when Player 1 is not included",  # noqa: E501
             }
         }
 
@@ -212,7 +214,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: allocations exceed payoff available to this coalition",
+                "content": "Invalid allocation: allocations exceed payoff available to this coalition",  # noqa: E501
             }
         }
     # todo: adapt error message to framing to players
@@ -233,7 +235,7 @@ def check_acceptance_validity(player: Player, offer_id):
 
 
 def create_acceptance_data(group: Group):
-    players = sorted(group.get_players(), key=lambda p: p.id_in_group)
+    players: list[Player] = sorted(group.get_players(), key=lambda p: p.id_in_group)
     p1_offer = players[0].accepted_offer
     if players[0].accepted_offer == 0:  # P1 not in any coalition
         return {
@@ -260,17 +262,16 @@ def create_acceptance_data(group: Group):
                 "payoffs": [0, 0, 0, 0, 0],
             }
 
-class Info(Page):
 
+class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
-        return dict(
-            actual_round_number = player.subsession.round_number - 1
-        )
+        return dict(actual_round_number=player.subsession.round_number - 1)
+
 
 class WaitForBargaining(WaitPage):
     wait_for_all_groups = True
-    
+
     @staticmethod
     def after_all_players_arrive(subsession: BaseSubsession):
         subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
@@ -280,8 +281,8 @@ class Bargain(Page):
     timer_text = "Time left for bargaining:"
 
     @staticmethod
-    def get_timeout_seconds(player):
-        return player.subsession.expiry - time.time()
+    def get_timeout_seconds(player: Player):
+        return player.subsession.expiry - time.time()  # type: ignore
 
     @staticmethod
     def js_vars(player: Player):
@@ -294,7 +295,7 @@ class Bargain(Page):
     def vars_for_template(player: Player):
         return dict(
             p5_is_dummy=len(prod_fcts()[player.round_number]) == 4,
-            actual_round_number = player.subsession.round_number - 1
+            actual_round_number=player.subsession.round_number - 1,
         )
 
     @staticmethod
@@ -354,7 +355,6 @@ def accept_final_offer_choices(player):
 
 
 class Accept(Page):
-
     form_model = "player"
     form_fields = ["accept_final_offer"]
 
@@ -496,4 +496,11 @@ def custom_export(players):
         ]
 
 
-page_sequence = [Info, WaitForBargaining, Bargain, Accept, WaitForAnswers, BargainingResults]
+page_sequence = [
+    Info,
+    WaitForBargaining,
+    Bargain,
+    Accept,
+    WaitForAnswers,
+    BargainingResults,
+]
