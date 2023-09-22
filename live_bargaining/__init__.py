@@ -267,6 +267,13 @@ class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(actual_round_number=player.subsession.round_number - 1)
+    
+    @staticmethod
+    def js_vars(player: Player):
+        return dict(
+            my_id=player.id_in_group,
+            prod_fct=prod_fcts()[player.round_number],
+        )
 
 
 class WaitForBargaining(WaitPage):

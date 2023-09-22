@@ -1,3 +1,7 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block content }}
 
 {{ if subsession.round_number == 1}}
@@ -12,6 +16,31 @@
     </p>
 {{ endif }}
 
+<div style="width: 350px; align-content: center;">
+    <table id="payoff-table" style="margin-bottom: 30px;">
+        <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+        </colgroup>
+        <tr id="payoff-table-header">
+            <th id="payoff-table-header-title">P1 + this many others</th>
+        </tr>
+        <tr id="payoff-table-values">
+            <th>Coalition's payoff</th>
+        </tr>
+    </table>
+    <div style="height: 230px; width: 350px">
+        <canvas id="payoff-chart"></canvas>
+    </div>
+</div>
 
 {{ next_button}}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ static 'info.js' }}"></script>
+
 {{ endblock }}
