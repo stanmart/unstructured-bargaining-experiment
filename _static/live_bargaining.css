@@ -188,3 +188,56 @@ tr.highlight:nth-child(even) {
     color: #b70505;
     font-weight: bold;
 }
+
+#popup-full {
+    transition: opacity 300ms;
+    opacity: 0;
+    visibility: hidden;
+    background: rgba(0,0,0, 0.6);
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    z-index: 30;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#popup-full.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height:200px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 1000;
+    border-width: 5px;
+}
+
+#btn-close-popup {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.success h3 {
+    color: green;
+}
+
+.success > div {
+    border-color: green;
+}
+
+.error h3 {
+    color: #b70505;
+}
+
+.error > div {
+    border-color: #b70505;
+}

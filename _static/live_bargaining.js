@@ -24,6 +24,27 @@ let pastOffers = []
 let prod_fct = js_vars.prod_fct;
 let P5IsDummy = prod_fct.length == 4;
 
+let popupFull = document.getElementById('popup-full');
+let popupTitle = document.getElementById('popup-title');
+let popupContent = document.getElementById('popup-content');
+
+closePopup = function () {
+    popupFull.classList.remove('show');
+}
+
+openPopup = function (content, type) {
+    // popupFull.style.visibility = "visible";
+    popupContent.innerHTML = content;
+    if (type === 'error') {
+        popupFull.classList = 'error';
+        popupTitle.innerHTML = 'Error';
+    } else {
+        popupFull.classList = 'success';
+        popupTitle.innerHTML = 'Success';
+    }
+   popupFull.classList.add('show');
+}
+
 isMember1.addEventListener('change', function () {
     allocation1.disabled = !isMember1.checked;
     allocation1.value = 0;
@@ -131,11 +152,11 @@ allocation5.addEventListener("keyup", function (event) {
 
 function sendOffer() {
     if (totalSharedValue > 0 && !isMember1.checked) {
-        alert('Invalid allocation: allocation has to be zero when Player 1 is not included');
+        openPopup('Invalid allocation: allocation has to be zero when Player 1 is not included', 'error');
         return;
     }
     if (totalSharedValue > totalShareableValue) {
-        alert('Invalid allocation: allocations exceed payoff available to this coalition');
+        openPopup('Invalid allocation: allocations exceed payoff available to this coalition', 'error');
         return;
     }
     members = [
@@ -153,19 +174,19 @@ function sendOffer() {
         allocation5.value,
     ];
     liveSend({ 'type': 'propose', 'members': members, 'allocations': allocations })
-    alert('Offer submitted successfully');
+    openPopup('Offer submitted successfully', 'success');
 }
 
 function sendAccept() {
 
     if (acceptDropdown.value === '') {
-        alert('You must select an offer to accept');
+        openPopup('You must select an offer to accept', 'error');
         return;
     }
     
     acceptedOffer = parseInt(acceptDropdown.value);
     liveSend({ 'type': 'accept', 'offer_id': acceptedOffer })
-    alert(`Offer ${acceptDropdown.value} marked as preferred`);
+    openPopup(`Offer ${acceptDropdown.value} marked as preferred`, 'success');
     return;
 
 }
@@ -173,14 +194,14 @@ function sendAccept() {
 function sendRevert() {
 
     liveSend({ 'type': 'accept', 'offer_id': 0 })
-    alert(`Preferred offer cleared`);
+    openPopup(`Preferred offer cleared`, 'success');
 
 }
 
 function liveRecv(data) {
 
     if (data['type'] === 'error') {
-        alert(data['content']);
+        openPopup(data['content'], 'error');
         return;
     }
 
