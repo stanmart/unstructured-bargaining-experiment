@@ -1,0 +1,72 @@
+{{ block title }}
+Instructions 2/4
+{{ endblock }}
+
+
+{{ block content }}
+<p>
+    <h4><b> The bargaining interface:</b> </h4>
+    This is a screenshot of the bargaining interface:
+    <img src="{{ static 'bargaining_interface.jpg' }}" width="800"/>
+    <p> The elements of the bargaining interface are as follows: </p>
+    <ul>
+        <li> 
+            At the top, you will see the timer with the remaining time left for bargaining. 
+            You will also see the values that each subgroup generates in this round, as well as a brief recap of the instructions as a reminder.  
+        </li>
+        <li> 
+            <b>"Chat"</b>: 
+            <b>You will bargain over a text chat, you can do so in any way you like.</b>  
+            There is only one group chat for everyone in the group, private chats are not possible.  </li>
+        <li> 
+            <b>"Propose allocation"</b>: 
+            During the bargaining, players can make proposals in the proposal interface to help coordination. 
+            You can propose as many proposals as you like.
+            For each proposal, select the players in the subgroup, and then enter which amount they get below. 
+            On the right you see at the top which value this subgroup generates and below how much you have already allocated to its members.
+            <ul> 
+                <li> 
+                    <p> <u> Example 1: </u>  </p>
+                    <img src="{{ static 'submit_offer_leave_money_on_the_table.jpg' }}" width="600"/>
+                    <p>
+                        Player 4 proposes a subgroup with Players 1-4, where Player 1 gets 40, and Player 2-4 each get 13. 
+                        Note that not all of the value of a subgroup has to be divided up. 
+                    </p>
+                </li>
+                <li> 
+                    <p> <u> Example 2: </u>  </p>
+                    <img src="{{ static 'submit_offer_only_subgroup.jpg' }}" width="560"/>
+                    <p>
+                        Player 2 proposes a subgroup with Players 1-3, with the value of that subgroup shared equally.
+                    </p>
+                    
+                </li>
+            </ul>
+
+        </li>
+        <li>
+            <b> "Past proposals"</b>:
+            All proposals will be logged here. 
+            In the first two rows, you see the ID of the proposal (used for easier reference) and who made the proposal. 
+            Players not included in the proposed subgroup are marked with "-", for the players in the proposed subgroup their proposed allocated amount is shown.
+        </li>
+        <li>
+            <b> "Currently preferred proposal"</b>:
+            In the bottom row you can indicate which proposal you currently prefer, using the proposal ID given in "Past proposals". 
+            Note that this is just for coordination purposes: This just indicates which proposal a player currently prefers and can be changed at any time.
+            (Just submit a new ID, or alternatively click "Clear preferred" if you want to leave this blank.)
+            In the first two rows, you see the preferred proposals of each player and which payment this would result in, if everyone actually chose their preferred proposal.
+            <p> <img src="{{ static 'choose_preferred.jpg' }}" width="600"/> </p>
+        </li>
+        <li> 
+            <b> Note that communication between players is only possible during the five minutes of the bargaining phase. </b>
+            Once the five minutes are up, you will not be able to communicate anymore.
+            A new page will open and you will have to enter which proposal you are choosing as your final answer. 
+        </li>
+    </ul>
+    
+</p>
+
+
+{{ next_button }}
+{{ endblock }}

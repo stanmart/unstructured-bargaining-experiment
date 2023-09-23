@@ -1,0 +1,32 @@
+{{ block title }}
+Instructions 4/4
+{{ endblock }}
+
+{{ block content}}
+<p> 
+    <h4> <b> The bargaining outcomes </b> </h4>
+    Once all players have made their decision, you will see the resulting bargaining outcome on this page. 
+    You will see which player chose which proposal ID and the resulting payment. 
+    (For reference all proposals will be displayed again.)
+    <ul> 
+        <li> 
+            <p> <u> Example 1: </u>  </p>
+            <img src="{{ static 'bargaining_outcome.jpg' }}" width="500"/>
+            <p> Player 1, 4 and 5 successfully agreed on a subgroup and an allocation. Their payments are 30, 10 and 10, respectively. </p>
+        </li>
+        <li> 
+            <p> <u> Example 2: </u>  </p>
+            <img src="{{ static 'bargaining_outcome_failed.jpg' }}" width="500"/>
+            <p> There was no agreement within a subgroup, so all players get 0. </p>
+            
+        </li>
+    </ul>
+</p>
+
+
+If you have any questions, please raise your hand now and an experimenter will come to you. 
+
+Otherwise, you can proceed to the trial round.
+
+{{ next_button }}
+{{ endblock }}

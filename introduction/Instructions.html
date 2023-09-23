@@ -1,66 +1,53 @@
 {{ block title }}
-Instructions
+Instructions 1/4
 {{ endblock }}
+
 
 {{ block content }}
 
-<p> In this experiment you will play first a trial round and then five regular rounds of the following bargaining game: </p>
+<p> In this experiment you will play first a trial round (round 0) and then four regular rounds (round 1-4) of the following bargaining game: </p>
 
 <p>
-    <b> The general structure: </b> 
-    You will bargain in groups of five ("Player 1/2/3/4/5"). Each bargaining round will last <b>five minutes</b>.  
-    <br>
+    <h4> The general structure: </h4> 
+    You will play a bargaining game in groups of five ("Player 1/2/3/4/5"). Each bargaining round will last <b>five minutes</b>.  
     The game will be the same for each group.
     After each bargaining round, the groups will be reshuffled. 
     It will be done in such a way that you are unlikely to play with the same participants more than once.
-    Furthermore, for each round the reshuffling and your assigned Player number will not depend in any way on how you play.
+    Player numbers will also be reshuffled.
+    Also note that the reshuffling and your player number will not depend in any way on how you play.
 </p>
 
 <p>
-    <b> The game: </b>
-    (Recall that you will bargain in a group of five.)
-    Any subset of players in the group can form a coalition. 
-    Each coalition generates some value (denoted in CHF).
-    The value the coalition generates depends on its members:
+    <h4> The game: </h4>
+    Any subset of the five players in the group can form a subgroup. 
+    Each subgroup generates some value (denoted in CHF).
+    The value the subgroup generates depends on its members:
     <ul>
-        <li>If Player 1 is not in the coalition, the value is 0.</li>
-        <li>If Player 1 is in the coalition, the value is increasing in the number of members (see table and graph below for an example).</li>
-        <li> Only in round 5: The coalition value does not depend on whether Player 5 is in the coalition or not.</li>
+        <li>If Player 1 is not in the subgroup, the value is 0.</li>
+        <li>If Player 1 is in the subgroup, the value is increasing in the number of members (see table and graph below for an example).</li>
+        <li> <b> Only in round 4:</b> The subgroup value does not depend on whether Player 5 is in the subgroup or not.</li>
     </ul>
+    <img src="{{ static 'payoff_function.png' }}" width = 400/>
+   <p>  Note that the value each subgroup generates can vary from round to round. </p>
+   
 
-    <img src="{{ static 'screenshot_coalition_payoffs.png' }}"/>
+    
 </p>
 <p>
-    You will have two decisions to make: which players form a coalition and how the value of that coalition is allocated among its members. 
-    You can only submit positive integer values as allocations.
+    Every player has to two decisions to make: which players form a subgroup and how the value of that subgroup is allocated among its members. 
+    You can only submit positive integer values as allocations. 
+    At the end of the bargaining, each player submits their answer.
 </p>
-
 <p>
-    <b> The bargaining interface:</b>
-    <b>You will bargain over a text chat, you can do so in any way you like.</b> 
-    There is only one group chat for everyone in the group, private chats are not possible. 
-    During the bargaining, players can make proposals in the proposal interface to help coordination ("Propose allocation"). They can propose as many proposals as they like.
-    All proposals will be logged under "Past proposals". 
-    Players can indicate their currently most preferred proposal under "Currently preferred proposal", using the Proposal ID given in "Past proposals".
-    Note that this is just for coordination purposes: "Currently preferred proposal" is not binding, it only indicates current preferences and can be changed at any time.
-    At the end of the five minutes, a new page will open and you will have to enter which proposal you are choosing as your final answer (at this stage, communication will not be possible anymore). 
-    You will also have the possibility to reject all offers. 
-    The payoffs of that round will be based on those final answers.
+    The payments of this round are then computed as follows: 
+            <b> Only if <u> all members of a proposed subgroup </u> agree on the same allocation will the bargaining be successful.  </b>
+            The subgroup members will then be paid according to the agreed-upon allocation, everyone else gets 0.
+            <b> Otherwise, everyone in the group gets 0 in this round. </b>
 </p>
-
 <p> 
-    <b> The payment: </b>
-    You will receive a payment at the end of the experiment. 
-    <ul>
-        <li>The payoffs <b>in a given individual round</b> are computed as follows: 
-            Only if all members of a proposed coalition agree on the same allocation will the value of that coalition be paid out. It will then be paid out according to the agreed-upon allocation.
-            Otherwise, everyone in the group gets 0 in this round. </li>
-        <li>Your <b>final payoffs</b>    at the end of the experiment will then be computed as the show-up fee of CHF 10 plus your bargaining payoff randomly drawn from one of the (non-trial) rounds you played. </li>
-    </ul>
+    You will receive money at the end of the experiment. 
+    Your payment at the end of the experiment will consist of the the show-up fee of CHF 10 plus your payment randomly drawn from one of the (non-trial) rounds you played.
 </p>
-
-If you have any questions, please raise your hand now and an experimenter will come to you. 
-
 
 {{ next_button}}
 {{ endblock }}
