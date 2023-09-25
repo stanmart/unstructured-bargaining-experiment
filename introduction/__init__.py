@@ -22,11 +22,17 @@ class Player(BasePlayer):
 # FUNCTIONS
 
 # PAGES
-class Introduction(Page):
-    pass
 
 class Instructions(Page):
     pass
 
+class Instructions2(Page):
+    pass
 
-page_sequence = [Instructions]
+class Instructions3(Page):
+    pass
+
+class Instructions4(Page):
+    pass
+
+page_sequence = [Instructions, Instructions2, Instructions3, Instructions4]

@@ -1,17 +1,49 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block content }}
 
 {{ if subsession.round_number == 1}}
-    <p> You will now play one <b> trial round </b>. 
-        The results of this round will not be relevant for your payoffs at the end.
+    <p> You will now play <b> round 0</b>. This is the <b> trial round</b>. 
+        The results of this round will not be relevant for your final payment at the end.
     </p> 
     <p> If you have any questions during or after this round, please raise your hand and an experimenter will come to you.</p> 
 {{ else }}
     <p> 
         You will now play <b>round {{ actual_round_number}}</b> of the actual game. 
-        The results of this round will be relevant for your payoffs at the end.
+        The results of this round will be relevant for your final payment at the end.
     </p>
 {{ endif }}
+In this round you are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span> and the group values are as follows:   
 
+    <p> 
+        <div style="width: 350px; align-content: center;">
+            <table id="payoff-table" style="margin-bottom: 30px;">
+                <colgroup>
+                    <col style="width: 50%;">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                </colgroup>
+                <tr id="payoff-table-header">
+                    <th id="payoff-table-header-title">P1 + this many others</th>
+                </tr>
+                <tr id="payoff-table-values">
+                    <th>Group's value</th>
+                </tr>
+            </table>
+            <div style="height: 230px; width: 350px">
+                <canvas id="payoff-chart"></canvas>
+            </div>
+        </div>
+    </p>
 
 {{ next_button}}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ static 'info.js' }}"></script>
+
 {{ endblock }}

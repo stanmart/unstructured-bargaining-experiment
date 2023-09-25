@@ -41,7 +41,6 @@ def creating_session(subsession):
             setattr(player.participant, "payoff_round" + str(i), -1)
 
 
-# todo: adapt role names to framing
 class C(BaseConstants):
     NAME_IN_URL = "live_bargaining"
     PLAYERS_PER_GROUP = 5
@@ -174,7 +173,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: only members in the coalition can receive positive payoffs",  # noqa: E501
+                "content": "Invalid allocation: only members in the subgroup can receive positive amounts",  # noqa: E501
             }
         }
 
@@ -214,10 +213,9 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: allocations exceed payoff available to this coalition",  # noqa: E501
+                "content": "Invalid allocation: allocations exceed value available to this subgroup",  # noqa: E501
             }
         }
-    # todo: adapt error message to framing to players
 
 
 def check_acceptance_validity(player: Player, offer_id):
@@ -267,6 +265,13 @@ class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(actual_round_number=player.subsession.round_number - 1)
+    
+    @staticmethod
+    def js_vars(player: Player):
+        return dict(
+            my_id=player.id_in_group,
+            prod_fct=prod_fcts()[player.round_number],
+        )
 
 
 class WaitForBargaining(WaitPage):

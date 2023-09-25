@@ -8,38 +8,42 @@ Bargaining phase
 
 {{ block content }}
 
-<b> This is <span class="red-highlight">round {{ actual_round_number }}</span>. Instructions Recap: </b> </p>
+<b> Brief recap of the instructions: </b> 
 
 <div class="side-by-side">
     <div>
-        <p>
-            This is a 5-player game.
-            Any subset of players can form a coalition.
-            The value the coalition produces depends on its members:
-            <ul>
-                <li>If Player 1 is not in the coalition, the value is 0.</li>
-                <li>Otherwise, it is increasing in the number of members (see table and graph on the right).</li>
-                {{ if p5_is_dummy }}
-                <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the coalition value does not depend on whether Player 5 is in the coalition or not.</span></li>
-                {{ endif }}
-                <!-- The line below might be more suitable for the final experiment -->
-                <!-- <li style="display: none;" class="dummy-instruction">The shareable coalition value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->
-            </ul>
-        </p>
-        <p>
-            You bargain with the other players via the <span class="red-highlight">chat</span>. 
-            The proposal interface ("Proposed allocations" and "Currently preferred proposal") is an additional coordination tool and helps you see what offers are on the table.
-            You can propose as many allocations as you like, and change your preferred proposal at any time. 
-            You can only submit positive integer values as allocations.
-            The other players will see your proposed allocations and your currently preferred proposal.
-        </p>
-        <p>
-            You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. Please negotiate with the other players in the chat below.
-        </p>
+        <ul> 
+            <li> 
+                Any subset of players can form a group, the value of that group is 0 if Player 1 is not in the group. 
+                Otherwise, it is increasing in the number of group members according to the graph on the right.
+            </li> 
+            
+            {{ if p5_is_dummy }}
+            <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the group value does not depend on whether Player 5 is in the subgroup or not.</span></li>
+            {{ endif }}
+            <!-- The line below might be more suitable for the final experiment -->
+            <!-- <li style="display: none;" class="dummy-instruction">The shareable group value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->
+                
+            <li> 
+                Use the <span class="red-highlight">chat</span> below for bargaining. The other interfaces are additional coordination tools. 
+                You can propose as many allocations as you like and change your currently preferred proposal any time. </li>
+            <li> 
+                You have five minutes to bargain. <b> After the five minutes end, you will not be able to communicate with each other anymore. </b> 
+            </li>
 
+            <li> 
+                <span class="red-highlight"> Only if <u> all members of a proposed group </u> agree on the same allocation will the bargaining be successful and the proposed allocation be paid out. </span>
+                <span class="red-highlight"> Otherwise, everyone gets 0 in this round.</b> </span>
+            </li>
+
+        </ul>
+        
+        <b> This is <span class="red-highlight">round {{ actual_round_number }}</span>. You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. 
+            
+        
         {{ if subsession.round_number == 1 }}
             <p>
-                <span class="red-highlight"> Note: This is the trial round. Its payoffs do not count for your final payoffs.</span>
+                <span class="red-highlight"> Note: This is the trial round. Its outcomes do not count for your final payment.</span>
             </p>
         {{ endif }}
        
@@ -58,7 +62,7 @@ Bargaining phase
                 <th id="payoff-table-header-title">P1 + this many others</th>
             </tr>
             <tr id="payoff-table-values">
-                <th>Coalition's payoff</th>
+                <th>Group's value</th>
             </tr>
         </table>
         <div style="height: 230px; width: 350px">
@@ -112,7 +116,7 @@ Bargaining phase
                 <th style="text-align: right;">Total</th>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">In coalition</th>
+                <th class="offer-left-col">In group</th>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-1"></td>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-2"></td>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-3"></td>
@@ -163,7 +167,7 @@ Bargaining phase
                 <td class="offer-player-col" id="accepted-5" class="allocation">—</td>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">Implied payoff</th>
+                <th class="offer-left-col">Implied payment</th>
                 <td class="offer-player-col" class="payoff" id="payoff-1">0</td>
                 <td class="offer-player-col" class="payoff" id="payoff-2">0</td>
                 <td class="offer-player-col" class="payoff" id="payoff-3">0</td>
