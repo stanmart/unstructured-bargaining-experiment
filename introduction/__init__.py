@@ -1,8 +1,8 @@
-from otree.api import *
+from otree.api import BaseConstants, BaseSubsession, BaseGroup, BasePlayer, Page
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'introduction'
+    NAME_IN_URL = "introduction"
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
@@ -29,13 +29,13 @@ class Welcome(Page):
 class Instructions(Page):
     pass
 
-class Instructions2(Page):
+
+class Proposal(Page):
     pass
 
-class Instructions3(Page):
+
+class Coalitions(Page):
     pass
 
-class Instructions4(Page):
-    pass
 
-page_sequence = [Welcome, Instructions, Instructions2, Instructions3, Instructions4]
+page_sequence = [Welcome, Instructions, Proposal, Coalitions]
