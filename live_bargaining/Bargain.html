@@ -14,15 +14,15 @@ Bargaining phase
     <div>
         <ul> 
             <li> 
-                Any subset of players can form a subgroup, the value of that subgroup is 0 if Player 1 is not in the subgroup. 
-                Otherwise, it is increasing in the number of subgroup members according to the graph on the right.
+                Any subset of players can form a group, the value of that group is 0 if Player 1 is not in the group. 
+                Otherwise, it is increasing in the number of group members according to the graph on the right.
             </li> 
             
             {{ if p5_is_dummy }}
-            <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the subgroup value does not depend on whether Player 5 is in the subgroup or not.</span></li>
+            <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the group value does not depend on whether Player 5 is in the subgroup or not.</span></li>
             {{ endif }}
             <!-- The line below might be more suitable for the final experiment -->
-            <!-- <li style="display: none;" class="dummy-instruction">The shareable subgroup value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->
+            <!-- <li style="display: none;" class="dummy-instruction">The shareable group value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->
                 
             <li> 
                 Use the <span class="red-highlight">chat</span> below for bargaining. The other interfaces are additional coordination tools. 
@@ -32,8 +32,8 @@ Bargaining phase
             </li>
 
             <li> 
-                <span class="red-highlight"> Only if <u> all members of a proposed subgroup </u> agree on the same allocation will the bargaining be successful and the proposed allocation be paid out. </span>
-                <span class="red-highlight"> Otherwise, everyone in the group gets 0 in this round.</b> </span>
+                <span class="red-highlight"> Only if <u> all members of a proposed group </u> agree on the same allocation will the bargaining be successful and the proposed allocation be paid out. </span>
+                <span class="red-highlight"> Otherwise, everyone gets 0 in this round.</b> </span>
             </li>
 
         </ul>
@@ -62,7 +62,7 @@ Bargaining phase
                 <th id="payoff-table-header-title">P1 + this many others</th>
             </tr>
             <tr id="payoff-table-values">
-                <th>Subgroup's value</th>
+                <th>Group's value</th>
             </tr>
         </table>
         <div style="height: 230px; width: 350px">
@@ -116,7 +116,7 @@ Bargaining phase
                 <th style="text-align: right;">Total</th>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">In subgroup</th>
+                <th class="offer-left-col">In group</th>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-1"></td>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-2"></td>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-3"></td>

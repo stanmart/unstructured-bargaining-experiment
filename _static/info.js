@@ -9,7 +9,7 @@ let chart = new Chart(ctx, {
     data: {
         labels: Array.from(Array(prod_fct.length).keys()),
         datasets: [{
-            label: "Subgroup's value",
+            label: "Group's value",
             data: prod_fct,
             borderWidth: 1,
             borderColor: "#056fb7",
@@ -24,7 +24,7 @@ let chart = new Chart(ctx, {
             },
             x: {
                 title: {
-                    text: "P1 + this many others in subgroup" + (P5IsDummy ? " (excluding P5)" : ""),
+                    text: "P1 + this many others in group" + (P5IsDummy ? " (excluding P5)" : ""),
                     display: true
                 }
             }

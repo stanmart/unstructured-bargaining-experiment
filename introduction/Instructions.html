@@ -9,44 +9,48 @@ Instructions 1/4
 
 <p>
     <h4> The general structure: </h4> 
-    You will play a bargaining game in groups of five ("Player 1/2/3/4/5"). Each bargaining round will last <b>five minutes</b>.  
-    The game will be the same for each group.
-    After each bargaining round, the groups will be reshuffled. 
+    You will play a bargaining game. In every round, you will play with four other participants. Each of you will be assigned a different player number ("Player 1/2/3/4/5"). Each bargaining round lasts exactly <b>five minutes</b>.  
+    After each bargaining round, we will reshuffle the participants and you will play with different participants than before.
     It will be done in such a way that you are unlikely to play with the same participants more than once.
     Player numbers will also be reshuffled.
-    Also note that the reshuffling and your player number will not depend in any way on how you play.
+    The reshuffling and your player number will not depend in any way on how you play.
 </p>
 
 <p>
     <h4> The game: </h4>
-    Any subset of the five players in the group can form a subgroup. 
-    Each subgroup generates some value (denoted in CHF).
-    The value the subgroup generates depends on its members:
+    Any combination of the five players can form a group. 
+    Each group generates some value (denoted in CHF).
+    The value the group generates depends on its members:
     <ul>
-        <li>If Player 1 is not in the subgroup, the value is 0.</li>
-        <li>If Player 1 is in the subgroup, the value is increasing in the number of members (see table and graph below for an example).</li>
-        <li> <b> Only in round 4:</b> The subgroup value does not depend on whether Player 5 is in the subgroup or not.</li>
+        <li>If Player 1 is not in the group, the value is 0.</li>
+        <li>If Player 1 is in the group, the value is increasing in the number of members (see table and graph below for an example).</li>
+        <li> <b> Only in round 4:</b> The group value does not depend on whether Player 5 is in the group or not.</li>
     </ul>
-    <img src="{{ static 'payoff_function.png' }}" width = 400/>
-   <p>  Note that the value each subgroup generates can vary from round to round. </p>
+    <img src="{{ static 'payoff_graph_2.png' }}" width = 400/>
+   <p>  Note that the value each group generates can vary from round to round. </p>
    
 
     
 </p>
 <p>
-    Every player has to two decisions to make: which players form a subgroup and how the value of that subgroup is allocated among its members. 
+    Every player has to two decisions to make: which players form a group and how the value of that group is allocated among its members. 
     You can only submit positive integer values as allocations. 
     At the end of the bargaining, each player submits their answer.
 </p>
 <p>
     The payments of this round are then computed as follows: 
-            <b> Only if <u> all members of a proposed subgroup </u> agree on the same allocation will the bargaining be successful.  </b>
-            The subgroup members will then be paid according to the agreed-upon allocation, everyone else gets 0.
-            <b> Otherwise, everyone in the group gets 0 in this round. </b>
+            <b> Only if <u> all members of a proposed group </u> agree on the same allocation will the bargaining be successful.  </b>
+            The group members will then be paid according to the agreed-upon allocation, everyone else gets 0.
+            <b> Otherwise, everyone gets 0 in this round. </b>
 </p>
 <p> 
     You will receive money at the end of the experiment. 
-    Your payment at the end of the experiment will consist of the the show-up fee of CHF 10 plus your payment randomly drawn from one of the (non-trial) rounds you played.
+    Your payment at the end of the experiment will consist of a participation fee of CHF 10 for showing up plus your payment randomly drawn from one of the (non-trial) rounds you played.
+</p>
+------------
+<p> 
+    These are all the rules of the game. 
+    On the following pages, you will see an explanation of how this game is implemented (i.e. an explanation of the bargaining interface) as well as a couple of examples for illustration.
 </p>
 
 {{ next_button}}
