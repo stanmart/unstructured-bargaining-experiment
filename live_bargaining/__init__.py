@@ -173,7 +173,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: only members in the subgroup can receive positive amounts",  # noqa: E501
+                "content": "Invalid allocation: only members in the group can receive positive amounts",  # noqa: E501
             }
         }
 
@@ -213,7 +213,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: allocations exceed value available to this subgroup",  # noqa: E501
+                "content": "Invalid allocation: allocations exceed value available to this group",  # noqa: E501
             }
         }
 
