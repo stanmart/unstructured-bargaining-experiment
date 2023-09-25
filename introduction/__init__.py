@@ -31,7 +31,12 @@ class Instructions(Page):
 
 
 class Proposal(Page):
-    pass
+    
+    def js_vars(self):
+        return dict(
+            prod_fct = [0, 30, 60, 80, 100],
+            my_id = 1,
+        )
 
 
 class Coalitions(Page):

@@ -1,3 +1,7 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block title }}
 Instructions 2/4
 {{ endblock }}
@@ -67,6 +71,122 @@ Instructions 2/4
     </ul>
     
 </p>
+
+<div class="side-by-side" style="height: 400px;">
+
+    <div class="section">
+        <h3>Payoff function</h3>
+        <table id="payoff-table" style="margin-bottom: 30px;">
+            <colgroup>
+                <col style="width: 50%;">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+            </colgroup>
+            <tr id="payoff-table-header">
+                <th id="payoff-table-header-title">P1 + this many others</th>
+            </tr>
+            <tr id="payoff-table-values">
+                <th>Group's value</th>
+            </tr>
+        </table>
+        <div style="height: 230px; width: 350px">
+            <canvas id="payoff-chart"></canvas>
+        </div>
+    </div>
+    
+    <div class="section vertical-fill">
+        <h3>Past proposals</h4>
+        <div class="vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules shaded-rows">
+                <thead>
+                    <tr>
+                        <th class="offer-id-col">ID</th>
+                        <th class="offer-proposer-col">From</th>
+                        <th class="offer-player-col player-1">P1</th>
+                        <th class="offer-player-col player-2">P2</th>
+                        <th class="offer-player-col player-3">P3</th>
+                        <th class="offer-player-col player-4">P4</th>
+                        <th class="offer-player-col player-5">P5</th>
+                    </tr>
+                </thead>
+                <tbody id="past-offers-table"></tbody>
+            </table>
+        </div>
+    </div>
+        
+</div>
+
+
+<div class="section dim-section">
+    <h3>Propose allocation</h2>    
+    <table class="offer-table">
+        <tbody>
+            <tr>
+                <th></th>
+                <th class="offer-player-col player-1">Player 1</th>
+                <th class="offer-player-col player-2">Player 2</th>
+                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-4">Player 4</th>
+                <th class="offer-player-col player-5">Player 5</th>
+                <th style="text-align: right;">Total</th>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">In group</th>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-1"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-2"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-3"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-4"></td>
+                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-5"></td>
+                <td class="offer-total-col"><div class="allocation-total" id="total-shareable">0</div></td>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Allocation</th>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4"></td>
+                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5"></td>
+                <td class="offer-total-col"><div class="allocation-total" id="total-shared">0</div></td>
+            </tr>
+        </tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;"><button type="button" onclick="sendOffer()" id="btn-propose" style="width: 100%">Submit</button></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <p>Please try to make the following proposals before continuing:</p>
+    <ul>
+        <li id="proposal-grand-coalition">Every player is included</li>
+        <li id="proposal-sub-coalition">Not every player is included</li>
+        <li id="proposal-efficient">The whole value is divided</li>
+        <li id="proposal-inefficient">Not the whole value is divided</li>
+        <li id="proposal-invalid">You divide more than the maximum</li>
+    </ul>
+</div>
+
+
+<div id="popup-full">
+    <div id="popup" class="section">
+        <h3 id="popup-title">Warning</h3>
+        <p id="popup-content"></p>
+        <button type="button" onclick="closePopup()" id="btn-close-popup">Close</button>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ static 'proposal_demo.js' }}"></script>
 
 
 {{ next_button }}
