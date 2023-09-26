@@ -294,6 +294,7 @@ function updateTasks(newOffer) {
         let next_buttons = document.getElementsByClassName('otree-btn-next');
         for (let i = 0; i < next_buttons.length; i++) {
             next_buttons[i].style.visibility = '';
+            next_buttons[i].disabled = false;
         }
         openPopup('You have completed all tasks. Please click "Next" to continue.', 'success');
     }
@@ -367,4 +368,11 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < next_buttons.length; i++) {
         next_buttons[i].style.visibility = 'hidden';
     }
+
+    $('html').bind('keypress', function(e) {
+        if(e.keyCode === 13 || e.key == 'Enter') {
+           return false;
+        }
+     });
+
 })
