@@ -5,53 +5,28 @@ Instructions 1/4
 
 {{ block content }}
 
-<p> In this experiment you will play first a trial round (round 0) and then four regular rounds (round 1-4) of the following bargaining game: </p>
-
-<p>
-    <h4> The general structure: </h4> 
-    You will play a bargaining game. In every round, you will play with four other participants. Each of you will be assigned a different player number ("Player 1/2/3/4/5"). Each bargaining round lasts exactly <b>five minutes</b>.  
-    After each bargaining round, we will reshuffle the participants and you will play with different participants than before.
-    It will be done in such a way that you are unlikely to play with the same participants more than once.
-    Player numbers will also be reshuffled.
-    The reshuffling and your player number will not depend in any way on how you play.
-</p>
-
-<p>
-    <h4> The game: </h4>
-    Any combination of the five players can form a group. 
-    Each group generates some value (denoted in CHF).
-    The value the group generates depends on its members:
-    <ul>
-        <li>If Player 1 is not in the group, the value is 0.</li>
-        <li>If Player 1 is in the group, the value is increasing in the number of members (see table and graph below for an example).</li>
-        <li> <b> Only in round 4:</b> The group value does not depend on whether Player 5 is in the group or not.</li>
-    </ul>
-    <img src="{{ static 'payoff_graph_2.png' }}" width = 400/>
-   <p>  Note that the value each group generates can vary from round to round. </p>
-   
-
-    
-</p>
-<p>
-    Every player has to two decisions to make: which players form a group and how the value of that group is allocated among its members. 
-    You can only submit positive integer values as allocations. 
-    At the end of the bargaining, each player submits their answer.
-</p>
-<p>
-    The payments of this round are then computed as follows: 
-            <b> Only if <u> all members of a proposed group </u> agree on the same allocation will the bargaining be successful.  </b>
-            The group members will then be paid according to the agreed-upon allocation, everyone else gets 0.
-            <b> Otherwise, everyone gets 0 in this round. </b>
-</p>
 <p> 
-    You will receive money at the end of the experiment. 
-    Your payment at the end of the experiment will consist of a participation fee of CHF 10 for showing up plus your payment randomly drawn from one of the (non-trial) rounds you played.
+    You play with four other players. 
+    Your goal is to form a group, with any and how many players as you like.
 </p>
-------------
+
 <p> 
-    These are all the rules of the game. 
-    On the following pages, you will see an explanation of how this game is implemented (i.e. an explanation of the bargaining interface) as well as a couple of examples for illustration.
+    The group will receive a budget which can be distributed freely among its group members. 
+    The size of the budget depends on the size of the group and who is in the group (more details on this on the next page).
+</p>
+
+<p> 
+    You have <b> five minutes </b> to discuss and bargain in a <b> chat</b> with all four other players about which group you want to form and how you want to distribute its budget among its group members.    
+</p>
+
+<p> 
+    Each round you will play with different participants. (Who you play with will not depend on your decisions and payoffs in the previous rounds.)
+</p>
+
+<p> 
+    On the next pages we will explain the rules and the experiment interface in more detail. 
 </p>
 
 {{ next_button}}
+
 {{ endblock }}

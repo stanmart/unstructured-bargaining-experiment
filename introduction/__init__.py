@@ -46,5 +46,8 @@ class Coalitions(Page):
             my_id = 1,
         )
 
+class Payment(Page):
+    pass
 
-page_sequence = [Welcome, Instructions, Proposal, Coalitions]
+
+page_sequence = [Welcome, Instructions, Proposal, Coalitions, Payment]

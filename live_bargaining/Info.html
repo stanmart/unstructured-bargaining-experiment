@@ -6,18 +6,24 @@
 
 {{ if subsession.round_number == 1}}
     <p> You will now play <b> round 0</b>. This is the <b> trial round</b>. 
-        The results of this round will not be relevant for your final payment at the end.
+        The results of this round will not be relevant for your payment at the end.
+        If you have any questions during or after this round, please raise your hand and an experimenter will come to you.
     </p> 
-    <p> If you have any questions during or after this round, please raise your hand and an experimenter will come to you.</p> 
 {{ else }}
     <p> 
         You will now play <b>round {{ actual_round_number}}</b> of the actual game. 
-        The results of this round will be relevant for your final payment at the end.
+        The results of this round will be relevant for your payment at the end.
     </p>
 {{ endif }}
-In this round you are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span> and the group values are as follows:   
 
-    <p> 
+{{ if subsession.round_number == 5}}
+<p> <span style="color: #b70505; font-weight: bold;"> In this round, unlike in previous rounds, adding Player 5 has no impact on the budget. </span> </p>
+{{ endif }}
+
+<p> In this round you are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. </p>
+<p> <b> Note that the budget size each group gets can differ from the previous round. </b>
+    In this round, budgets are determined as follows:
+
         <div style="width: 350px; align-content: center;">
             <table id="payoff-table" style="margin-bottom: 30px;">
                 <colgroup>
@@ -32,14 +38,20 @@ In this round you are <span style="color: #056fb7; font-weight: bold;">Player {{
                     <th id="payoff-table-header-title">P1 + this many others</th>
                 </tr>
                 <tr id="payoff-table-values">
-                    <th>Group's value</th>
+                    <th>Group's budget</th>
                 </tr>
             </table>
             <div style="height: 230px; width: 350px">
                 <canvas id="payoff-chart"></canvas>
             </div>
         </div>
-    </p>
+</p>
+
+<p> <span style="color: #b70505; font-weight: bold;"> 
+    You will now have exactly five minutes to discuss and bargain with the other players. 
+    After the five minutes end, communication will not be possible anymore.
+</span> </p>
+
 
 {{ next_button}}
 

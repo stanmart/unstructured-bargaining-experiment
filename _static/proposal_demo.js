@@ -31,7 +31,6 @@ let tasks ={
     "sub-coalition": false,
     "efficient": false,
     "inefficient": false,
-    "invalid": false,
 }
 
 closePopup = function () {
@@ -182,12 +181,10 @@ function sendOffer() {
 
     if (totalSharedValue > 0 && !isMember1.checked) {
         openPopup('Invalid allocation: allocation has to be zero when Player 1 is not included', 'error');
-        updateTasks(newOffer);
         return;
     }
     if (totalSharedValue > totalShareableValue) {
         openPopup('Invalid allocation: allocations exceed value available to this coalition', 'error');
-        updateTasks(newOffer);
         return;
     }
 
@@ -270,33 +267,28 @@ function updatePastOffers(newPastOffers) {
 
 function updateTasks(newOffer) {
 
-    if (totalSharedValue > totalShareableValue) {
-        tasks["invalid"] = true;
-        document.getElementById('proposal-invalid').style.color = 'green';
-        
-    } else {
 
-        if (newOffer.members.every((member) => member)) {
-            tasks["grand-coalition"] = true;
-            document.getElementById('proposal-grand-coalition').style.color = 'green';
-        }
 
-        if (!(newOffer.members.every((member) => member))) {
-            tasks["sub-coalition"] = true;
-            document.getElementById('proposal-sub-coalition').style.color = 'green';
-        }
-
-        if (totalShareableValue == totalSharedValue) {
-            tasks["efficient"] = true;
-            document.getElementById('proposal-efficient').style.color = 'green';
-        }
-
-        if (totalShareableValue > totalSharedValue) {
-            tasks["inefficient"] = true;
-            document.getElementById('proposal-inefficient').style.color = 'green';
-        }
-
+    if (newOffer.members.every((member) => member)) {
+        tasks["grand-coalition"] = true;
+        document.getElementById('proposal-grand-coalition').style.color = 'green';
     }
+
+    if (!(newOffer.members.every((member) => member))) {
+        tasks["sub-coalition"] = true;
+        document.getElementById('proposal-sub-coalition').style.color = 'green';
+    }
+
+    if (totalShareableValue == totalSharedValue) {
+        tasks["efficient"] = true;
+        document.getElementById('proposal-efficient').style.color = 'green';
+    }
+
+    if (totalShareableValue > totalSharedValue) {
+        tasks["inefficient"] = true;
+        document.getElementById('proposal-inefficient').style.color = 'green';
+    }
+
 
     if (Object.values(tasks).every(element => element)) {
         let next_buttons = document.getElementsByClassName('otree-btn-next');
@@ -305,7 +297,6 @@ function updateTasks(newOffer) {
         }
         openPopup('You have completed all tasks. Please click "Next" to continue.', 'success');
     }
-
 }
 
 document.addEventListener("DOMContentLoaded", function() {
