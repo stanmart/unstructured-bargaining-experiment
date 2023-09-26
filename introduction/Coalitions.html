@@ -1,32 +1,205 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block title }}
-Instructions 4/4
+Instructions 3/4
 {{ endblock }}
 
 {{ block content}}
+
+<p> We will now discuss how the group is formed at the end of the round. </p>
+
+<h4> Group formation </h4>
 <p> 
-    <h4> <b> The bargaining outcomes </b> </h4>
-    Once all players have made their decision, you will see the resulting bargaining outcome on this page. 
-    You will see which player chose which proposal ID and the resulting payment. 
-    (For reference all proposals will be displayed again.)
-    <ul> 
-        <li> 
-            <p> <u> Example 1: </u>  </p>
-            <img src="{{ static 'bargaining_outcome.jpg' }}" width="500"/>
-            <p> Player 1, 4 and 5 successfully agreed on a group and an allocation. Their payments are 30, 10 and 10, respectively. </p>
-        </li>
-        <li> 
-            <p> <u> Example 2: </u>  </p>
-            <img src="{{ static 'bargaining_outcome_failed.jpg' }}" width="500"/>
-            <p> There was no agreement within a group because Player 1 rejected all proposals. As a result, all players get 0. </p>
-            
-        </li>
-    </ul>
+    At the end of the five minutes of discussion and bargaining, a new page will open up. 
+    Here you have to submit your final answer on which group you want to form and how you want to distribute its budget. 
+    You can either choose one of the proposals made or reject all proposals. 
 </p>
 
+<p> 
+    Once all players have submitted their answers, the final outcome and the payoffs of this round are determined as follows: 
+    <span style="color: #b70505; font-weight: bold;"> 
+        Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful.
+    </span>
+    The group is then successfully formed and its members' payoffs are then determined by the agreed-upon proposal. 
+    All other players get 0. 
+    <span style="color: #b70505; font-weight: bold;"> If there is no such agreement, all five players get 0. </span>
+</p>
+<p> Note that because Player 1 has to be included for a group to receive a budget, there will be one group at most.</p>
 
-If you have any questions, please raise your hand now and an experimenter will come to you. 
+<hr>
 
-Otherwise, you can proceed to the trial round.
+<h5> Try it yourself </h5>
+
+<div>
+    <p>
+        To get a better idea about how group formation works, you will now try out various combinations of acceptance decisions.
+        This is just for illustration purposes: in the actual experiment, you will not be able to modify the choices of other players.
+    </p>
+    <p>
+        Here is an example of a game where five proposals were made.
+        As before, "All proposals" is a table of offers. 
+        
+        In the "Choose a proposal" interface you can set which proposal ID each player accepts (or whether they rejected all, by choosing "-"). 
+        In the row below you see which payoffs these choices would lead to.
+
+    </p>
+    <p> 
+        Please try to set accepted proposal IDs such that the following happen (once you satisfy a criterion, it turns green):
+    </p>
+    <ul>
+        <li id="grand-coalition">All players form a group</li>
+        <li id="sub-coalition">At most four players form a group</li>
+        <li id="no-coalition">No group is formed</li>
+    </ul>
+</div>
+
+
+    <div class="section vertical-fill">
+        <h3>All proposals</h3>
+        <div class="vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules shaded-rows">
+                <thead>
+                    <tr>
+                        <th class="offer-id-col">ID</th>
+                        <th class="offer-proposer-col">From</th>
+                        <th class="offer-player-col player-1">P1</th>
+                        <th class="offer-player-col player-2">P2</th>
+                        <th class="offer-player-col player-3">P3</th>
+                        <th class="offer-player-col player-4">P4</th>
+                        <th class="offer-player-col player-5">P5</th>
+                    </tr>
+                </thead>
+                <tbody id="past-offers-table"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+    <div class="section">
+        <h3>Choose a proposal </h2>    
+        <table class="offer-table">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th class="offer-player-col player-1">Player 1</th>
+                    <th class="offer-player-col player-2">Player 2</th>
+                    <th class="offer-player-col player-3">Player 3</th>
+                    <th class="offer-player-col player-4">Player 4</th>
+                    <th class="offer-player-col player-5">Player 5</th>
+                </tr>
+                <tr style="height: 3em;">
+                    <th class="offer-left-col">Accepted proposal <span class="red-highlight">ID</span></th>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-1" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-2" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-3" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-4" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-5" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                </tr>
+                <tr style="height: 3em;">
+                    <th class="offer-left-col">Implied payoff</th>
+                    <td class="offer-player-col" class="payoff" id="payoff-1">0</td>
+                    <td class="offer-player-col" class="payoff" id="payoff-2">0</td>
+                    <td class="offer-player-col" class="payoff" id="payoff-3">0</td>
+                    <td class="offer-player-col" class="payoff" id="payoff-4">0</td>
+                    <td class="offer-player-col" class="payoff" id="payoff-5">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<hr>
+
+<h4> Currently preferred proposal </h4>
+
+<p> 
+    During the five minutes of discussion and bargaining you can indicate which proposal you currently prefer and see which proposals other players currently prefer (see below for how the interface looks).
+    This is to help coordination among players. 
+</p>
+
+<p> 
+    This interface works very similarly to the "Choose a proposal" interface above. 
+    The main differences are that 1) you can only make a choice for yourself (the choices of other players are fixed) and 2) this just indicates which proposal a player <i> currently </i> prefers and can be changed at any time.
+    (Just submit a new ID, or alternatively click "Clear preferred" if you want to leave this blank.)    
+</p>
+
+<hr>
+
+<h5> Try it yourself </h5>
+
+<div>
+    <p>Please perform the following tasks:</p>
+    <ul>
+        <li id="task-submit-preferred">Submit a preferred proposal</li>
+        <li id="task-clear-preferred">Clear your preferred proposal</li>
+    </ul>
+</div>
+
+
+<div class="section">
+    <h3>Currently preferred proposal</h2>    
+    <table class="offer-table">
+        <tbody>
+            <tr>
+                <th></th>
+                <th class="offer-player-col player-1">Player 1</th>
+                <th class="offer-player-col player-2">Player 2</th>
+                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-4">Player 4</th>
+                <th class="offer-player-col player-5">Player 5</th>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Preferred proposal <span class="red-highlight">ID</span></th>
+                <td class="offer-player-col" id="preferred-1" class="allocation">—</td>
+                <td class="offer-player-col" id="preferred-2" class="allocation">—</td>
+                <td class="offer-player-col" id="preferred-3" class="allocation">—</td>
+                <td class="offer-player-col" id="preferred-4" class="allocation">—</td>
+                <td class="offer-player-col" id="preferred-5" class="allocation">—</td>
+            </tr>
+            <tr style="height: 3em;">
+                <th class="offer-left-col">Implied payment</th>
+                <td class="offer-player-col" class="payoff" id="payoff-1-preferred">0</td>
+                <td class="offer-player-col" class="payoff" id="payoff-2-preferred">0</td>
+                <td class="offer-player-col" class="payoff" id="payoff-3-preferred">0</td>
+                <td class="offer-player-col" class="payoff" id="payoff-4-preferred">0</td>
+                <td class="offer-player-col" class="payoff" id="payoff-5-preferred">0</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="side-by-side">
+        <div class="flex-item" style="margin-top: 20px; font-weight: bold;">Choose preferred proposal <span class="red-highlight">(ID)</span>:</div>
+        <select id="offer-select" class="flex-item", style="margin: 20px;">
+            <option disabled selected></option>
+        </select>
+        <button type="button" onclick="sendAccept()" id="btn-accept" class="flex-item", style="margin: 20px;">Submit preferred</button>
+        <button type="button" onclick="sendRevert()" id="btn-revert" class="flex-item", style="margin: 20px;">Clear preferred</button>
+    </div>
+</div>
+
+<div id="popup-full">
+    <div id="popup" class="section">
+        <h3 id="popup-title">Warning</h3>
+        <p id="popup-content"></p>
+        <button type="button" onclick="closePopup()" id="btn-close-popup">Close</button>
+    </div>
+</div>
+
+
+<script src="{{ static 'coalitions_demo.js' }}"></script>
+
 
 {{ next_button }}
 {{ endblock }}

@@ -7,10 +7,10 @@ Your participant id is: <b>{{participant.code}}</b>
     <p>
         Thank you for participating in this experiment!
     </p>
-    <p> Your final payment is computed as follows:
+    <p> Your payment is computed as follows:
         <ul>
-            <li> Payment from a randomly drawn round (round {{subsession.payment_round}}): {{ player.payoff }}</li>
-            <li> Participation fee: {{ player.session.config.participation_fee }}</li>
+            <li> Payoff from a randomly drawn round (round {{subsession.payment_round}}): {{ player.payoff }}</li>
+            <li> Base payment: {{ player.session.config.participation_fee }}</li>
         </ul>
         Total: <b>{{ player.participant.final_payoff }}</b>
     </p>

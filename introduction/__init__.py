@@ -31,11 +31,23 @@ class Instructions(Page):
 
 
 class Proposal(Page):
-    pass
+
+    def js_vars(self):
+        return dict(
+            prod_fct = [0, 30, 60, 80, 100],
+            my_id = 1,
+        )
 
 
 class Coalitions(Page):
+
+    def js_vars(self):
+        return dict(
+            my_id = 1,
+        )
+
+class Payment(Page):
     pass
 
 
-page_sequence = [Welcome, Instructions, Proposal, Coalitions]
+page_sequence = [Welcome, Instructions, Proposal, Coalitions, Payment]

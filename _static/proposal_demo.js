@@ -10,8 +10,6 @@ let allocation3 = document.getElementById('allocation-3');
 let allocation4 = document.getElementById('allocation-4');
 let allocation5 = document.getElementById('allocation-5');
 
-let acceptDropdown = document.getElementById('offer-select');
-
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
 
@@ -27,6 +25,13 @@ let P5IsDummy = prod_fct.length == 4;
 let popupFull = document.getElementById('popup-full');
 let popupTitle = document.getElementById('popup-title');
 let popupContent = document.getElementById('popup-content');
+
+let tasks ={
+    "grand-coalition": false,
+    "sub-coalition": false,
+    "efficient": false,
+    "inefficient": false,
+}
 
 closePopup = function () {
     popupFull.classList.remove('show');
@@ -151,6 +156,29 @@ allocation5.addEventListener("keyup", function (event) {
 });
 
 function sendOffer() {
+    let newPastOffers = pastOffers.slice();
+
+    let members = [
+        isMember1.checked,
+        isMember2.checked,
+        isMember3.checked,
+        isMember4.checked,
+        isMember5.checked,
+    ];
+    let allocations = [
+        allocation1.value,
+        allocation2.value,
+        allocation3.value,
+        allocation4.value,
+        allocation5.value,
+    ];
+    let newOffer = {
+        'offer_id': newPastOffers.length + 1,
+        'player': js_vars.my_id,
+        'members': members,
+        'allocations': allocations,
+    };
+
     if (totalSharedValue > 0 && !isMember1.checked) {
         openPopup('Invalid allocation: allocation has to be zero when Player 1 is not included', 'error');
         return;
@@ -159,67 +187,11 @@ function sendOffer() {
         openPopup('Invalid allocation: allocations exceed value available to this coalition', 'error');
         return;
     }
-    members = [
-        isMember1.checked,
-        isMember2.checked,
-        isMember3.checked,
-        isMember4.checked,
-        isMember5.checked,
-    ];
-    allocations = [
-        allocation1.value,
-        allocation2.value,
-        allocation3.value,
-        allocation4.value,
-        allocation5.value,
-    ];
-    liveSend({ 'type': 'propose', 'members': members, 'allocations': allocations })
+
+    newPastOffers.push(newOffer);
+    updatePastOffers(newPastOffers);
     openPopup('Offer submitted successfully', 'success');
-}
-
-function sendAccept() {
-
-    if (acceptDropdown.value === '') {
-        openPopup('You must select an offer to accept', 'error');
-        return;
-    }
-    
-    acceptedOffer = parseInt(acceptDropdown.value);
-    liveSend({ 'type': 'accept', 'offer_id': acceptedOffer })
-    openPopup(`Offer ${acceptDropdown.value} marked as preferred`, 'success');
-    return;
-
-}
-
-function sendRevert() {
-
-    liveSend({ 'type': 'accept', 'offer_id': 0 })
-    openPopup(`Preferred offer cleared`, 'success');
-
-}
-
-function liveRecv(data) {
-
-    if (data['type'] === 'error') {
-        openPopup(data['content'], 'error');
-        return;
-    }
-
-    if (data['type'] === 'proposals_history') {
-        updatePastOffers(data['proposals_history']);
-        return;
-    }
-
-    if (data['type'] === 'acceptances') {
-        updateAcceptances(data['acceptances'], data['coalition_members'], data['payoffs']);
-        return;
-    }
-
-    if (data['type'] === 'reload') {
-        updatePastOffers(data['proposals_history']);
-        updateAcceptances(data['acceptances'], data['coalition_members'], data['payoffs']);
-    }
-
+    updateTasks(newOffer);
 }
 
 function updateTotalShareable() {
@@ -251,25 +223,13 @@ function updatePastOffers(newPastOffers) {
     if (newPastOffers.length < numOldOffers ||
         !(JSON.stringify(newPastOffers.slice(0, numOldOffers)) === JSON.stringify(pastOffers))) {
         pastOffersTable.innerHTML = '';
-        acceptDropdown.innerHTML = '';
         pastOffers = [];
-
-        default_option = document.createElement("option");
-        default_option.text = '';
-        default_option.disabled = true;
-        default_option.selected = true;
-        acceptDropdown.add(default_option);
-
         numOldOffers = 0;
     }
 
     pastOffers = newPastOffers
 
     newPastOffers.slice(numOldOffers).forEach(function (offer) {
-        let option = document.createElement("option");
-        option.text = offer.offer_id;
-        acceptDropdown.add(option);
-
         let row = pastOffersTable.insertRow();
 
         let id = row.insertCell();
@@ -305,137 +265,114 @@ function updatePastOffers(newPastOffers) {
     });
 }
 
-function updateAcceptances(acceptances, coalition_members, payoffs) {
-    for (let i = 0; i < 5; i++) {
-        let thisAccepted = document.getElementById(`accepted-${i + 1}`);
-        let thisPayoff = document.getElementById(`payoff-${i + 1}`);
+function updateTasks(newOffer) {
 
-        let oldThisAccepted = thisAccepted.innerHTML;
-        let oldThisPayoff = thisPayoff.innerHTML;
 
-        if (acceptances[i] === 0) {
-            thisAccepted.innerHTML = '—';
-        } else {
-            thisAccepted.innerHTML = acceptances[i];
-        }
-        thisPayoff.innerHTML = payoffs[i];
-        if (coalition_members[i]) {
-            thisPayoff.style.color = 'green';
-            thisPayoff.style.fontWeight = 'bold';
-            thisAccepted.style.color = 'green';
-            thisAccepted.style.fontWeight = 'bold';
-        } else {
-            thisPayoff.style.color = 'black';
-            thisPayoff.style.fontWeight = 'normal';
-            thisAccepted.style.color = 'black';
-            thisAccepted.style.fontWeight = 'normal';
-        }
 
-        if (oldThisAccepted !== thisAccepted.innerHTML) {
-            thisAccepted.classList.add("highlight");
-            let timeout = setTimeout(
-                function () {
-                    thisAccepted.classList.remove("highlight");
-                },
-                5000
-            )
-        }
+    if (newOffer.members.every((member) => member)) {
+        tasks["grand-coalition"] = true;
+        document.getElementById('proposal-grand-coalition').style.color = 'green';
+    }
 
-        if (oldThisPayoff !== thisPayoff.innerHTML) {
-            thisPayoff.classList.add("highlight");
-            let timeout = setTimeout(
-                function () {
-                    thisPayoff.classList.remove("highlight");
-                },
-                5000
-            )
+    if (!(newOffer.members.every((member) => member))) {
+        tasks["sub-coalition"] = true;
+        document.getElementById('proposal-sub-coalition').style.color = 'green';
+    }
+
+    if (totalShareableValue == totalSharedValue) {
+        tasks["efficient"] = true;
+        document.getElementById('proposal-efficient').style.color = 'green';
+    }
+
+    if (totalShareableValue > totalSharedValue) {
+        tasks["inefficient"] = true;
+        document.getElementById('proposal-inefficient').style.color = 'green';
+    }
+
+
+    if (Object.values(tasks).every(element => element)) {
+        let next_buttons = document.getElementsByClassName('otree-btn-next');
+        for (let i = 0; i < next_buttons.length; i++) {
+            next_buttons[i].style.visibility = '';
+            next_buttons[i].disabled = false;
         }
+        openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    // Setup
+    let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
+    for (let i = 0; i < thisPlayerHeaders.length; i++) {
+        thisPlayerHeaders[i].style.color = '#056fb7';
+    }
 
-// Setup
-window.addEventListener('DOMContentLoaded', (event) => {
-    liveSend({});
-});
-document.getElementById(`accepted-${js_vars.my_id}`).disabled = false;
-let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
-for (let i = 0; i < thisPlayerHeaders.length; i++) {
-    thisPlayerHeaders[i].style.color = '#056fb7';
-}
+    // Payoff chart
+    const ctx = document.getElementById('payoff-chart');
 
-// Timer
-
-let timer = document.getElementsByClassName('otree-timer')[0];
-timer.getElementsByTagName('p')[0].innerHTML += ' — no more communication possible after time expires';
-document.addEventListener("DOMContentLoaded", function (event) {
-    $('.otree-timer__time-left').on('update.countdown', function (event) {
-        if (event.offset.totalSeconds <= 30) {
-            timer.style.backgroundColor = '#b70505';
-            timer.style.color = 'white';
+    let chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Array.from(Array(prod_fct.length).keys()),
+            datasets: [{
+                label: "Group's value",
+                data: prod_fct,
+                borderWidth: 1,
+                borderColor: "#056fb7",
+                backgroundColor: "#5994c7"
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    title: {
+                        text: "P1 + this many others in group" + (P5IsDummy ? " (excluding P5)" : ""),
+                        display: true
+                    }
+                }
+            },
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+            }
         }
     });
-});
 
-// Payoff chart
-const ctx = document.getElementById('payoff-chart');
+    // Payoff table
+    payoffTableHeader = document.getElementById('payoff-table-header');
+    payoffTableRow = document.getElementById('payoff-table-values');
 
-let chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: Array.from(Array(prod_fct.length).keys()),
-        datasets: [{
-            label: "Group's value",
-            data: prod_fct,
-            borderWidth: 1,
-            borderColor: "#056fb7",
-            backgroundColor: "#5994c7"
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true
-            },
-            x: {
-                title: {
-                    text: "P1 + this many others in group" + (P5IsDummy ? " (excluding P5)" : ""),
-                    display: true
-                }
-            }
-        },
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
+    if (P5IsDummy) {
+        let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
+        coalitionSizeHeader.innerHTML += " (excluding P5)";
+    }
+
+    prod_fct.forEach(function (payoff, i) {
+        let headerCell = document.createElement("th");
+        headerCell.innerHTML = i;
+        headerCell.style.textAlign = 'center';
+        payoffTableHeader.appendChild(headerCell)
+
+        let valueCell = payoffTableRow.insertCell();
+        valueCell.innerHTML = payoff;
+        valueCell.style.textAlign = 'center';
+    });
+
+    let next_buttons = document.getElementsByClassName('otree-btn-next');
+    for (let i = 0; i < next_buttons.length; i++) {
+        next_buttons[i].style.visibility = 'hidden';
+    }
+
+    $('html').bind('keypress', function(e) {
+        if(e.keyCode === 13 || e.key == 'Enter') {
+           return false;
         }
-    }
-});
+     });
 
-// Payoff table
-payoffTableHeader = document.getElementById('payoff-table-header');
-payoffTableRow = document.getElementById('payoff-table-values');
-
-if (P5IsDummy) {
-    let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
-    coalitionSizeHeader.innerHTML += " (excluding P5)";
-}
-
-prod_fct.forEach(function (payoff, i) {
-    let headerCell = document.createElement("th");
-    headerCell.innerHTML = i;
-    headerCell.style.textAlign = 'center';
-    payoffTableHeader.appendChild(headerCell)
-
-    let valueCell = payoffTableRow.insertCell();
-    valueCell.innerHTML = payoff;
-    valueCell.style.textAlign = 'center';
-});
-
-$('html').bind('keypress', function(e) {
-    if(e.keyCode === 13 || e.key == 'Enter') {
-       return false;
-    }
- });
+})
