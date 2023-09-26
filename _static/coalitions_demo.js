@@ -291,4 +291,11 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < next_buttons.length; i++) {
         next_buttons[i].style.visibility = 'hidden';
     }
+
+    $('html').bind('keypress', function(e) {
+        if(e.keyCode === 13 || e.key == 'Enter') {
+           return false;
+        }
+     });
+
 })

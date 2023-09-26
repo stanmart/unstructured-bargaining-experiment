@@ -434,4 +434,8 @@ prod_fct.forEach(function (payoff, i) {
     valueCell.style.textAlign = 'center';
 });
 
-
+$('html').bind('keypress', function(e) {
+    if(e.keyCode === 13 || e.key == 'Enter') {
+       return false;
+    }
+ });
