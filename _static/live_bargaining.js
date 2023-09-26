@@ -152,11 +152,11 @@ allocation5.addEventListener("keyup", function (event) {
 
 function sendOffer() {
     if (totalSharedValue > 0 && !isMember1.checked) {
-        openPopup('Invalid allocation: allocation has to be zero when Player 1 is not included', 'error');
+        openPopup('Invalid proposal: the budget is zero when Player 1 is not included in the group', 'error');
         return;
     }
     if (totalSharedValue > totalShareableValue) {
-        openPopup('Invalid allocation: allocations exceed value available to this coalition', 'error');
+        openPopup('Invalid proposal: total amount exceeds the budget available to this group', 'error');
         return;
     }
     members = [
@@ -174,13 +174,13 @@ function sendOffer() {
         allocation5.value,
     ];
     liveSend({ 'type': 'propose', 'members': members, 'allocations': allocations })
-    openPopup('Offer submitted successfully', 'success');
+    openPopup('Proposal submitted successfully', 'success');
 }
 
 function sendAccept() {
 
     if (acceptDropdown.value === '') {
-        openPopup('You must select an offer to accept', 'error');
+        openPopup('You must select a proposal to accept', 'error');
         return;
     }
     
@@ -194,7 +194,7 @@ function sendAccept() {
 function sendRevert() {
 
     liveSend({ 'type': 'accept', 'offer_id': 0 })
-    openPopup(`Preferred offer cleared`, 'success');
+    openPopup(`Preferred proposal cleared`, 'success');
 
 }
 

@@ -170,7 +170,7 @@ function sendAccept() {
     if (preferredDropdwon.value !== '') {
         preferredOffers[0] = parseInt(preferredDropdwon.value);
         updatePayoffsPreferred();
-        openPopup(`Offer ${preferredDropdwon.value} marked as preferred`, 'success');
+        openPopup(`Proposal ${preferredDropdwon.value} marked as preferred`, 'success');
 
         tasks_coordination["send-preferred"] = true
         document.getElementById('task-submit-preferred').style.color = 'green';
@@ -181,7 +181,7 @@ function sendAccept() {
 function sendRevert() {
     preferredOffers[0] = 0;
     updatePayoffsPreferred();
-    openPopup(`Offer ${preferredDropdwon.value} marked as preferred`, 'success');
+    openPopup(`Proposal ${preferredDropdwon.value} marked as preferred`, 'success');
 
     tasks_coordination["clear-preferred"] = true
     document.getElementById('task-clear-preferred').style.color = 'green';
