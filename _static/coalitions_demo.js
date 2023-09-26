@@ -273,7 +273,7 @@ function checkCompletion() {
         for (let i = 0; i < next_buttons.length; i++) {
             next_buttons[i].style.visibility = '';
         }
-        openPopup('You have completed all tasks. Please click "Next" to continue.', 'success');
+        openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
 }
 

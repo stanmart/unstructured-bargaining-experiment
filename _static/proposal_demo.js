@@ -296,7 +296,7 @@ function updateTasks(newOffer) {
             next_buttons[i].style.visibility = '';
             next_buttons[i].disabled = false;
         }
-        openPopup('You have completed all tasks. Please click "Next" to continue.', 'success');
+        openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
 }
 
