@@ -173,7 +173,7 @@ function sendAccept() {
         openPopup(`Proposal ${preferredDropdwon.value} marked as preferred`, 'success');
 
         tasks_coordination["send-preferred"] = true
-        document.getElementById('task-submit-preferred').style.color = 'green';
+        acceptTask(document.getElementById('task-submit-preferred'));
         checkCompletion()
     }
 }
@@ -184,7 +184,7 @@ function sendRevert() {
     openPopup(`Proposal ${preferredDropdwon.value} marked as preferred`, 'success');
 
     tasks_coordination["clear-preferred"] = true
-    document.getElementById('task-clear-preferred').style.color = 'green';
+    acceptTask(document.getElementById('task-clear-preferred'));
     checkCompletion()
 }
 
@@ -251,13 +251,13 @@ function updateCoalitionTasks(coalitionFormed, members) {
 
     if (coalitionFormed === 0) {
         tasks_coalitions['no-coalition'] = true;
-        document.getElementById('no-coalition').style.color = 'green';
+        acceptTask(document.getElementById('no-coalition'));
     } else if (members.every((member) => member)) {
         tasks_coalitions['grand-coalition'] = true;
-        document.getElementById('grand-coalition').style.color = 'green';
+        acceptTask(document.getElementById('grand-coalition'));
     } else {
         tasks_coalitions['sub-coalition'] = true;
-        document.getElementById('sub-coalition').style.color = 'green';
+        acceptTask(document.getElementById('sub-coalition'));
     }
 
     checkCompletion()
@@ -274,6 +274,14 @@ function checkCompletion() {
             next_buttons[i].style.visibility = '';
         }
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
+    }
+}
+
+function acceptTask(element) {
+    element.style.color = 'green';
+    checkmarks = element.getElementsByClassName('checkmark');
+    for (let i = 0; i < checkmarks.length; i++) {
+        checkmarks[i].style.visibility = '';
     }
 }
 

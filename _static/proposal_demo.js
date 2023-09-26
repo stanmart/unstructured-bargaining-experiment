@@ -267,26 +267,24 @@ function updatePastOffers(newPastOffers) {
 
 function updateTasks(newOffer) {
 
-
-
     if (newOffer.members.every((member) => member)) {
         tasks["grand-coalition"] = true;
-        document.getElementById('proposal-grand-coalition').style.color = 'green';
+        acceptTask(document.getElementById('proposal-grand-coalition'));
     }
 
     if (!(newOffer.members.every((member) => member))) {
         tasks["sub-coalition"] = true;
-        document.getElementById('proposal-sub-coalition').style.color = 'green';
+        acceptTask(document.getElementById('proposal-sub-coalition'));
     }
 
     if (totalShareableValue == totalSharedValue) {
         tasks["efficient"] = true;
-        document.getElementById('proposal-efficient').style.color = 'green';
+        acceptTask(document.getElementById('proposal-efficient'));
     }
 
     if (totalShareableValue > totalSharedValue) {
         tasks["inefficient"] = true;
-        document.getElementById('proposal-inefficient').style.color = 'green';
+        acceptTask(document.getElementById('proposal-inefficient'));
     }
 
 
@@ -297,6 +295,14 @@ function updateTasks(newOffer) {
             next_buttons[i].disabled = false;
         }
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
+    }
+}
+
+function acceptTask(element) {
+    element.style.color = 'green';
+    checkmarks = element.getElementsByClassName('checkmark');
+    for (let i = 0; i < checkmarks.length; i++) {
+        checkmarks[i].style.visibility = '';
     }
 }
 
