@@ -14,25 +14,27 @@ Bargaining phase
     <div>
         <ul> 
             <li> 
-                Any subset of players can form a group, the value of that group is 0 if Player 1 is not in the group. 
-                Otherwise, it is increasing in the number of group members according to the graph on the right.
+                Any subset of players can form a group. 
+                A group needs to include Player 1 to receive any budget. 
+                The more members a group has, the bigger the budget.  
+                You see the budget sizes for this particular round on the right.
             </li> 
             
             {{ if p5_is_dummy }}
-            <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the group value does not depend on whether Player 5 is in the group or not.</span></li>
+            <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the group's budget does not depend on whether Player 5 is in the group or not.</span></li>
             {{ endif }}
             <!-- The line below might be more suitable for the final experiment -->
-            <!-- <li style="display: none;" class="dummy-instruction">The shareable group value does not depend on Player 5's inclusion. They can still be included in any allocation.</li> -->
+            <!-- <li style="display: none;" class="dummy-instruction">The group's budget does not depend on Player 5's inclusion. They can still be included in any group.</li> -->
                 
             <li> 
                 Use the <span class="red-highlight">chat</span> below for bargaining. The other interfaces are additional coordination tools. 
-                You can propose as many allocations as you like and change your currently preferred proposal any time. </li>
+                You can make as many proposals as you like and change your currently preferred proposal any time. </li>
             <li> 
                 You have five minutes to bargain. <b> After the five minutes end, you will not be able to communicate with each other anymore. </b> 
             </li>
 
             <li> 
-                <span class="red-highlight"> Only if <u> all members of a proposed group </u> agree on the same allocation will the bargaining be successful and the proposed allocation be paid out. </span>
+                <span class="red-highlight"> Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful. </span>
                 <span class="red-highlight"> Otherwise, everyone gets 0 in this round.</b> </span>
             </li>
 
@@ -43,7 +45,7 @@ Bargaining phase
         
         {{ if subsession.round_number == 1 }}
             <p>
-                <span class="red-highlight"> Note: This is the trial round. Its outcomes do not count for your final payment.</span>
+                <span class="red-highlight"> Note: This is the trial round. Its outcomes do not count for your payment at the end of the experiment.</span>
             </p>
         {{ endif }}
        
@@ -62,7 +64,7 @@ Bargaining phase
                 <th id="payoff-table-header-title">P1 + this many others</th>
             </tr>
             <tr id="payoff-table-values">
-                <th>Group's value</th>
+                <th>Group's budget</th>
             </tr>
         </table>
         <div style="height: 230px; width: 350px">
@@ -103,7 +105,7 @@ Bargaining phase
 
 
 <div class="section dim-section">
-    <h3>Propose allocation</h2>    
+    <h3> Make a proposal</h2>    
     <table class="offer-table">
         <tbody>
             <tr>
@@ -125,7 +127,7 @@ Bargaining phase
                 <td class="offer-total-col"><div class="allocation-total" id="total-shareable">0</div></td>
             </tr>
             <tr style="height: 3em;">
-                <th class="offer-left-col">Allocation</th>
+                <th class="offer-left-col"> Player's amount</th>
                 <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1"></td>
                 <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2"></td>
                 <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3"></td>
