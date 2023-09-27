@@ -60,3 +60,8 @@ populateAcceptances(
     js_vars.coalition_members,
     js_vars.payoffs
 )
+
+let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
+for (let i = 0; i < thisPlayerHeaders.length; i++) {
+    thisPlayerHeaders[i].style.color = '#056fb7';
+}
