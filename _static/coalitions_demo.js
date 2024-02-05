@@ -249,16 +249,20 @@ function computePayoffs(choices) {
 
 function updateCoalitionTasks(choices, coalitionFormed, members) {
 
+    let task;
     if (coalitionFormed === 0) {
         tasks_coalitions['no-coalition'] = true;
-        acceptTask(document.getElementById('no-coalition'));
+        task = document.getElementById('no-coalition');
     } else if (members.every((member) => member)) {
         tasks_coalitions['grand-coalition'] = true;
-        acceptTask(document.getElementById('grand-coalition'));
+        task = document.getElementById('grand-coalition');
     } else if (coalitionFormed !== 0 && new Set(choices).size > 1) {
         tasks_coalitions['sub-coalition'] = true;
-        acceptTask(document.getElementById('sub-coalition'));
+        task = document.getElementById('sub-coalition');
     }
+
+    acceptTask(task);
+    openPopup("Task completed: " + task.innerHTML, 'success');
 
     checkCompletion()
 
