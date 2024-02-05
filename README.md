@@ -15,15 +15,11 @@ It is recommended to use a virtual environment for the project (either through `
 
 Create the environment
 ```bash
-    conda create unstructured-bargaining-experiment
+    conda create --name unstructured-bargaining-experiment -y python pip
 ```
 Activate the environment:
 ```bash
     conda activate unstructured-bargaining-experiment
-```
-Deactivate the environment:
-```bash
-    conda deactivate
 ```
 
 </details>
@@ -33,15 +29,11 @@ Deactivate the environment:
 
 Create the environment
 ```bash
-    conda create --prefix=venv -y
+    conda create --prefix=venv -y python pip
 ```
 Activate the environment:
 ```bash
     conda activate ./venv
-```
-Deactivate the environment:
-```bash
-    conda deactivate
 ```
 
 </details>
@@ -57,10 +49,6 @@ Activate the environment:
 ```bash
     source venv/bin/activate  # Linux/Mac
     venv/Script/activate  # Windows
-```
-Deactivate the environment:
-```bash
-    deactivate
 ```
 
 </details>
