@@ -13,10 +13,6 @@ let preferredDropdwon = document.getElementById('offer-select')
 let allocationDropdowns = document.getElementsByClassName('allocation-dropdown');
 let offerSelect = document.getElementById('offer-select');
 
-for (let i = 0; i < allocationDropdowns.length; i++) {
-    allocationDropdowns[i].addEventListener('change', updatePayoffsCoalitions);
-}
-
 let tasks_coalitions = {
     "grand-coalition": false,
     "sub-coalition": false,
