@@ -162,7 +162,7 @@ function updatePayoffsCoalitions() {
     } else {
         coalitionFormed = 0;
     }
-    updateCoalitionTasks(coalitionFormed, results.members)
+    updateCoalitionTasks(choices, coalitionFormed, results.members)
 
 }
 
@@ -247,7 +247,7 @@ function computePayoffs(choices) {
 
 }
 
-function updateCoalitionTasks(coalitionFormed, members) {
+function updateCoalitionTasks(choices, coalitionFormed, members) {
 
     if (coalitionFormed === 0) {
         tasks_coalitions['no-coalition'] = true;
@@ -255,7 +255,7 @@ function updateCoalitionTasks(coalitionFormed, members) {
     } else if (members.every((member) => member)) {
         tasks_coalitions['grand-coalition'] = true;
         acceptTask(document.getElementById('grand-coalition'));
-    } else {
+    } else if (coalitionFormed !== 0 && new Set(choices).size > 1) {
         tasks_coalitions['sub-coalition'] = true;
         acceptTask(document.getElementById('sub-coalition'));
     }
