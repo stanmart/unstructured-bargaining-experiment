@@ -32,7 +32,8 @@ class Instructions(Page):
 
 class Proposal(Page):
 
-    def js_vars(self):
+    @staticmethod
+    def js_vars(player: Player):
         return dict(
             prod_fct = [0, 30, 60, 80, 100],
             my_id = 1,
@@ -41,7 +42,8 @@ class Proposal(Page):
 
 class Coalitions(Page):
 
-    def js_vars(self):
+    @staticmethod
+    def js_vars(player: Player):
         return dict(
             my_id = 1,
         )
