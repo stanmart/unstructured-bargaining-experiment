@@ -67,9 +67,7 @@ class Player(BasePlayer):
     accepted_offer = models.IntegerField(
         initial=0  # type: ignore
     )  # 0 means no offer accepted
-    accept_final_offer = models.StringField(
-        label="Choose which offer to accept"
-    )  # type: ignore
+    accept_final_offer = models.StringField(label="Choose which offer to accept")  # type: ignore
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
 
 
@@ -265,7 +263,7 @@ class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(actual_round_number=player.subsession.round_number - 1)
-    
+
     @staticmethod
     def js_vars(player: Player):
         return dict(

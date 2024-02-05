@@ -2,8 +2,8 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='live_bargaining',
-        app_sequence=['introduction', 'live_bargaining', 'survey'],
+        name="live_bargaining",
+        app_sequence=["introduction", "live_bargaining", "survey"],
         num_demo_participants=5,
     ),
 ]
@@ -17,30 +17,38 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=10.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['payoff_round1', 'payoff_round2', 'payoff_round3', 'payoff_round4', 'payoff_round5', 'payoff_round6', 'final_payoff']
+PARTICIPANT_FIELDS = [
+    "payoff_round1",
+    "payoff_round2",
+    "payoff_round3",
+    "payoff_round4",
+    "payoff_round5",
+    "payoff_round6",
+    "final_payoff",
+]
 SESSION_FIELDS = []
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = "en"
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'CHF'
+REAL_WORLD_CURRENCY_CODE = "CHF"
 USE_POINTS = False
 
-ADMIN_USERNAME = 'admin'
+ADMIN_USERNAME = "admin"
 # for security, best to set admin password in an environment variable
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+ADMIN_PASSWORD = environ.get("OTREE_ADMIN_PASSWORD")
 
 DEMO_PAGE_INTRO_HTML = """ """
 
-SECRET_KEY = '5644004254536'
+SECRET_KEY = "5644004254536"
 
 ROOMS = [
     dict(
-        name='blu',
-        display_name='BLU Econ Lab',
-        participant_label_file='_rooms/blu.txt',
-        use_secure_urls=True
+        name="blu",
+        display_name="BLU Econ Lab",
+        participant_label_file="_rooms/blu.txt",
+        use_secure_urls=True,
     ),
 ]

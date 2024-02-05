@@ -28,9 +28,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    age = models.IntegerField(
-        label="What is your age?", min=13, max=125
-    )  # type: ignore
+    age = models.IntegerField(label="What is your age?", min=13, max=125)  # type: ignore
     gender = models.StringField(
         choices=[["Male", "Male"], ["Female", "Female"], ["Other", "Other"]],
         label="What is your gender?",
