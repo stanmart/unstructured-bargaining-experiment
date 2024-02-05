@@ -1,7 +1,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fbargaining-experiment-b57fff22feef.herokuapp.com%2Fdemo&logo=heroku)](https://bargaining-experiment-b57fff22feef.herokuapp.com/demo)
 [![Checks](https://github.com/stanmart/unstructured-bargaining-experiment/actions/workflows/ci.yml/badge.svg)](https://github.com/stanmart/unstructured-bargaining-experiment/actions/workflows/ci.yml)
 [![oTree](https://img.shields.io/badge/powered_by-oTree-blue?logo=python)](https://www.otree.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
 
 # unstructured-bargaining-experiment
 An otree experiment for testing unstructured bargaining in a specific context.
