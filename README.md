@@ -1,4 +1,4 @@
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fbargaining-experiment-b57fff22feef.herokuapp.com%2Fdemo&logo=heroku)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fbargaining-experiment-b57fff22feef.herokuapp.com%2Fdemo&logo=heroku)](https://bargaining-experiment-b57fff22feef.herokuapp.com/demo)
 [![Checks](https://github.com/stanmart/unstructured-bargaining-experiment/actions/workflows/ci.yml/badge.svg)](https://github.com/stanmart/unstructured-bargaining-experiment/actions/workflows/ci.yml)
 
 # unstructured-bargaining-experiment
