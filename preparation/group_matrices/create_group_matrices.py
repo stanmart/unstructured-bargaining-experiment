@@ -2,6 +2,7 @@ import pickle
 import warnings
 import pandas as pd
 
+
 class Groups:
     def __init__(self, num_players, num_groups):
         self.was_first = [False] * num_players
@@ -9,7 +10,7 @@ class Groups:
         self.results = []
 
     def add_round(self, allocation):
-        is_trial_round = (len(self.results)==0)
+        is_trial_round = len(self.results) == 0
         self.results.append([[] for _ in range(self.num_groups)])
         for player, group in enumerate(allocation):
             group_id = int(group.lstrip("Group ")) - 1
@@ -27,10 +28,15 @@ class Groups:
         for round in range(len(self.results)):
             for group in range(len(self.results[round])):
                 for player in range(len(self.results[round][group])):
-                    self.results[round][group][player] = self.results[round][group][player] + 1
+                    self.results[round][group][player] = (
+                        self.results[round][group][player] + 1
+                    )
 
-for num_groups in [6,7]:
-    golfers = pd.read_csv("golfer_solution_" + str(num_groups) + "_groups.csv", index_col=0)
+
+for num_groups in [6, 7]:
+    golfers = pd.read_csv(
+        "golfer_solution_" + str(num_groups) + "_groups.csv", index_col=0
+    )
     golfers.index = [int(name.lstrip("Player ")) - 1 for name in golfers.index]
     golfers.columns = [int(name.lstrip("Round ")) - 1 for name in golfers.columns]
 
@@ -39,5 +45,5 @@ for num_groups in [6,7]:
         groups.add_round(golfers.loc[:, round])
     groups.adjust_indices()
 
-    with open("group_matrices_"+ str(num_groups) +"_groups.pkl", "wb") as f:
+    with open("group_matrices_" + str(num_groups) + "_groups.pkl", "wb") as f:
         pickle.dump(groups.results, f)
