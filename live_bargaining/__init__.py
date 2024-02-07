@@ -67,7 +67,6 @@ class Player(BasePlayer):
     accepted_offer = models.IntegerField(
         initial=0  # type: ignore
     )  # 0 means no offer accepted
-    accept_final_offer = models.StringField(label="Choose which offer to accept")  # type: ignore
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
 
 
@@ -350,42 +349,8 @@ class Bargain(Page):
         }
 
 
-def accept_final_offer_choices(player):
-    choices = ["Reject all"] + [
-        str(offer["offer_id"]) for offer in Proposal.filter_tolist(group=player.group)
-    ]
-    return choices
-
-
-class Accept(Page):
-    form_model = "player"
-    form_fields = ["accept_final_offer"]
-
-    @staticmethod
-    def js_vars(player: Player):
-        acceptance_data = create_acceptance_data(player.group)  # type: ignore
-        return dict(
-            my_id=player.id_in_group,
-            past_offers=Proposal.filter_tolist(group=player.group),
-            acceptances=acceptance_data["acceptances"],
-            coalition_members=acceptance_data["coalition_members"],
-            payoffs=acceptance_data["payoffs"],
-        )
-
-
 def compute_payoffs(group: Group):
     players = sorted(group.get_players(), key=lambda p: p.id_in_group)
-    for player in players:
-        if player.accepted_offer in ["", "Reject all"]:
-            final_accept_num = 0
-        else:
-            try:
-                final_accept_num = int(player.accept_final_offer)
-            except (ValueError, TypeError):
-                final_accept_num = 0
-
-        player.accepted_offer = final_accept_num
-
     final_payoffs = create_acceptance_data(group)["payoffs"]
 
     for i in range(len(final_payoffs)):
@@ -503,7 +468,6 @@ page_sequence = [
     Info,
     WaitForBargaining,
     Bargain,
-    Accept,
     WaitForAnswers,
     BargainingResults,
 ]
