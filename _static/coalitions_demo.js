@@ -13,10 +13,6 @@ let preferredDropdwon = document.getElementById('offer-select')
 let allocationDropdowns = document.getElementsByClassName('allocation-dropdown');
 let offerSelect = document.getElementById('offer-select');
 
-for (let i = 0; i < allocationDropdowns.length; i++) {
-    allocationDropdowns[i].addEventListener('change', updatePayoffsCoalitions);
-}
-
 let tasks_coalitions = {
     "grand-coalition": false,
     "sub-coalition": false,
@@ -162,7 +158,7 @@ function updatePayoffsCoalitions() {
     } else {
         coalitionFormed = 0;
     }
-    updateCoalitionTasks(coalitionFormed, results.members)
+    updateCoalitionTasks(choices, coalitionFormed, results.members)
 
 }
 
@@ -247,18 +243,22 @@ function computePayoffs(choices) {
 
 }
 
-function updateCoalitionTasks(coalitionFormed, members) {
+function updateCoalitionTasks(choices, coalitionFormed, members) {
 
+    let task;
     if (coalitionFormed === 0) {
         tasks_coalitions['no-coalition'] = true;
-        acceptTask(document.getElementById('no-coalition'));
+        task = document.getElementById('no-coalition');
     } else if (members.every((member) => member)) {
         tasks_coalitions['grand-coalition'] = true;
-        acceptTask(document.getElementById('grand-coalition'));
-    } else {
+        task = document.getElementById('grand-coalition');
+    } else if (coalitionFormed !== 0 && new Set(choices).size > 1) {
         tasks_coalitions['sub-coalition'] = true;
-        acceptTask(document.getElementById('sub-coalition'));
+        task = document.getElementById('sub-coalition');
     }
+
+    acceptTask(task);
+    openPopup("Task completed: " + task.innerHTML, 'success');
 
     checkCompletion()
 
