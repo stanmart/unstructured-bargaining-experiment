@@ -1,5 +1,3 @@
-from random import randint
-
 from otree.api import (
     BaseConstants,
     BaseSubsession,
@@ -20,7 +18,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    payment_round = models.IntegerField()
+    number_of_bargaining_rounds = models.IntegerField()
 
 
 class Group(BaseGroup):
@@ -88,13 +86,13 @@ def compute_final_payoffs(subsession: Subsession):
     player0_payoffs = [
         players[0].participant.vars["payoff_round" + str(i)] for i in range(2, 7)
     ]
-    number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)
-    subsession.payment_round = randint(2, number_of_bargaining_rounds)  # type: ignore
+    subsession.number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)  # type: ignore
 
     for player in players:
-        player.payoff = getattr(
-            player.participant, "payoff_round" + str(subsession.payment_round)
-        )
+        payoffs = []
+        for i in range(2, 2 + subsession.number_of_bargaining_rounds):
+            payoffs.append(getattr(player.participant, "payoff_round" + str(i)))
+        player.payoff = round(sum(payoffs) / subsession.number_of_bargaining_rounds)
         player.participant.final_payoff = (
             player.participant.payoff_plus_participation_fee()
         )
