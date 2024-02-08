@@ -126,7 +126,14 @@ class WaitForAll(WaitPage):
 
 
 class Completion(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            "all_payoffs": [
+                f"Round {i - 1}: CHF{getattr(player.participant, 'payoff_round' + str(i)):.2f}"
+                for i in range(2, 2 + player.subsession.number_of_bargaining_rounds)  # type: ignore
+            ]
+        }
 
 
 page_sequence = [Questions, WaitForAll, Completion]

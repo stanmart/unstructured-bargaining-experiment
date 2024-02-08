@@ -10,6 +10,11 @@ Your participant id is: <b>{{participant.code}}</b>
     <p> Your payment is computed as follows:
         <ul>
             <li> Average payoff from the {{ subsession.number_of_bargaining_rounds }} bargaining rounds: {{ player.payoff }}</li>
+            <ul>
+                {{ for payoff in all_payoffs }}
+                    <li> {{ payoff }} </li>
+                {{ endfor }}
+            </ul>
             <li> Base payment: {{ player.session.config.participation_fee }}</li>
         </ul>
         Total: <b>{{ player.participant.final_payoff }}</b>
