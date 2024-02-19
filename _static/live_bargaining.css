@@ -213,7 +213,7 @@ tr.highlight:nth-child(even) {
     top: 50%;
     left: 50%;
     width: 400px;
-    height:200px;
+    min-height:200px;
     transform: translate(-50%, -50%);
     background-color: white;
     z-index: 1000;
