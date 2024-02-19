@@ -184,7 +184,7 @@ function sendAccept() {
 function sendRevert() {
     preferredOffers[0] = 0;
     updatePayoffsPreferred();
-    openPopup(`Proposal ${preferredDropdwon.value} marked as preferred`, 'success');
+    openPopup('Preferred proposal cleared', 'success');
 
     tasks_coordination["clear-preferred"] = true
     acceptTask(document.getElementById('task-clear-preferred'));
@@ -262,6 +262,8 @@ function updateCoalitionTasks(choices, coalitionFormed, members) {
     } else if (coalitionFormed !== 0 && new Set(choices).size > 1) {
         tasks_coalitions['sub-coalition'] = true;
         task = document.getElementById('sub-coalition');
+    } else {
+        return;
     }
 
     acceptTask(task);

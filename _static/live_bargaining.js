@@ -194,7 +194,7 @@ function sendAccept() {
 function sendRevert() {
 
     liveSend({ 'type': 'accept', 'offer_id': 0 })
-    openPopup(`Preferred proposal cleared`, 'success');
+    openPopup('Preferred proposal cleared', 'success');
 
 }
 
