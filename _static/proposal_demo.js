@@ -267,25 +267,31 @@ function updatePastOffers(newPastOffers) {
 
 function updateTasks(newOffer) {
 
+    let completedTasks = [];
+
     if (newOffer.members.every((member) => member)) {
         tasks["grand-coalition"] = true;
-        acceptTask(document.getElementById('proposal-grand-coalition'));
+        completedTasks.push(document.getElementById('proposal-grand-coalition'));
     }
 
     if (!(newOffer.members.every((member) => member))) {
         tasks["sub-coalition"] = true;
-        acceptTask(document.getElementById('proposal-sub-coalition'));
+        completedTasks.push(document.getElementById('proposal-sub-coalition'));
     }
 
     if (totalShareableValue == totalSharedValue) {
         tasks["efficient"] = true;
-        acceptTask(document.getElementById('proposal-efficient'));
+        completedTasks.push(document.getElementById('proposal-efficient'));
     }
 
     if (totalShareableValue > totalSharedValue) {
         tasks["inefficient"] = true;
-        acceptTask(document.getElementById('proposal-inefficient'));
+        completedTasks.push(document.getElementById('proposal-inefficient'));
     }
+
+    completedTasks.forEach((element) => acceptTask(element));
+    let taskList = completedTasks.map((element) => `<li>${element.innerHTML}</li>`).join('');
+    openPopup(`This proposal satisfies the following tasks:<br><ul>${taskList}</ul>`, 'success');
 
 
     if (Object.values(tasks).every(element => element)) {
