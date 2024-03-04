@@ -1,3 +1,5 @@
+from math import ceil
+
 from otree.api import (
     BaseConstants,
     BaseGroup,
@@ -85,7 +87,7 @@ def compute_final_payoffs(subsession: Subsession):
     players = subsession.get_players()
     # get number of (non-trial) bargaining rounds
     for player in players:
-        player.participant.payoff = cu(round(player.participant.payoff))
+        player.participant.payoff = cu(ceil(player.participant.payoff))
         player.participant.final_payoff = (
             player.participant.payoff_plus_participation_fee()
         )
