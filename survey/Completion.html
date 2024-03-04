@@ -9,7 +9,7 @@ Your participant id is: <b>{{participant.code}}</b>
     </p>
     <p> Your payment is computed as follows:
         <ul>
-            <li> Average payoff from the {{ subsession.number_of_bargaining_rounds }} bargaining rounds: {{ player.payoff }}</li>
+            <li> Average payoff from the {{ num_of_rounds }} bargaining rounds: {{ player.participant.payoff }}</li>
             <ul>
                 {{ for payoff in all_payoffs }}
                     <li> {{ payoff }} </li>

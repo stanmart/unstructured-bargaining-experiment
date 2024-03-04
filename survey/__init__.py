@@ -1,12 +1,13 @@
 from otree.api import (
     BaseConstants,
-    BaseSubsession,
-    models,
     BaseGroup,
     BasePlayer,
+    BaseSubsession,
     Page,
-    widgets,
     WaitPage,
+    cu,
+    models,
+    widgets,
 )
 
 
@@ -18,7 +19,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    number_of_bargaining_rounds = models.IntegerField()
+    pass
 
 
 class Group(BaseGroup):
@@ -83,16 +84,8 @@ class Player(BasePlayer):
 def compute_final_payoffs(subsession: Subsession):
     players = subsession.get_players()
     # get number of (non-trial) bargaining rounds
-    player0_payoffs = [
-        players[0].participant.vars["payoff_round" + str(i)] for i in range(2, 7)
-    ]
-    subsession.number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)  # type: ignore
-
     for player in players:
-        payoffs = []
-        for i in range(2, 2 + subsession.number_of_bargaining_rounds):
-            payoffs.append(getattr(player.participant, "payoff_round" + str(i)))
-        player.payoff = round(sum(payoffs) / subsession.number_of_bargaining_rounds)
+        player.participant.payoff = cu(round(player.participant.payoff))
         player.participant.final_payoff = (
             player.participant.payoff_plus_participation_fee()
         )
@@ -130,9 +123,11 @@ class Completion(Page):
     def vars_for_template(player: Player):
         return {
             "all_payoffs": [
-                f"Round {i - 1}: CHF{getattr(player.participant, 'payoff_round' + str(i)):.2f}"
-                for i in range(2, 2 + player.subsession.number_of_bargaining_rounds)  # type: ignore
-            ]
+                f"Round {i}: CHF{round_payoff:.2f}"
+                for i, round_payoff in enumerate(player.participant.payoff_list)  # type: ignore
+                if i > 0
+            ],
+            "num_of_rounds": len(player.participant.payoff_list) - 1,
         }
 
 

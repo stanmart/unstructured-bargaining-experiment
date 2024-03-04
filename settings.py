@@ -18,13 +18,8 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 PARTICIPANT_FIELDS = [
-    "payoff_round1",
-    "payoff_round2",
-    "payoff_round3",
-    "payoff_round4",
-    "payoff_round5",
-    "payoff_round6",
     "final_payoff",
+    "payoff_list",
 ]
 SESSION_FIELDS = []
 
