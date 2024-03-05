@@ -56,6 +56,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+    start_time = models.FloatField(initial=float("inf"))  # type: ignore
     expiry = models.FloatField(initial=float("inf"))  # type: ignore
 
 
@@ -68,6 +69,7 @@ class Player(BasePlayer):
         initial=0  # type: ignore
     )  # 0 means no offer accepted
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
+    end_time = models.FloatField(initial=float("inf"))  # type: ignore
 
 
 def prod_fcts():
@@ -283,6 +285,7 @@ class WaitForBargaining(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(subsession: BaseSubsession):  # type: ignore
+        subsession.start_time = time.time()  # type: ignore
         subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
 
 
@@ -361,6 +364,10 @@ class Bargain(Page):
                     **create_acceptance_data(group=player.group),  # type: ignore
                 }
             }
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.end_time = time.time()  # type: ignore
 
 
 def compute_payoffs(group: Group):
