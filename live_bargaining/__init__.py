@@ -152,6 +152,13 @@ class Acceptance(ExtraModel):
     offer_id = models.IntegerField()
 
 
+class PageLoad(ExtraModel):
+    timestamp_iso = models.StringField()
+    timestamp = models.FloatField()
+    player = models.Link(Player)
+    group = models.Link(Group)
+
+
 def check_proposal_validity(player: Player, members, allocations):
     if len(members) != len(allocations):
         return {player.id_in_group: {"type": "error", "content": "Data is incomplete"}}
@@ -319,7 +326,7 @@ class Bargain(Page):
                 }
             }
 
-        if "type" in data and data["type"] == "accept":
+        elif "type" in data and data["type"] == "accept":
             error_messages = check_acceptance_validity(
                 player=player, offer_id=data["offer_id"]
             )
@@ -339,14 +346,21 @@ class Bargain(Page):
             return_data["type"] = "acceptances"
             return {0: return_data}
 
-        # Reload page case:
-        return {
-            player.id_in_group: {
-                "type": "reload",
-                "proposals_history": Proposal.filter_tolist(group=player.group),
-                **create_acceptance_data(group=player.group),  # type: ignore
+        else:
+            # (re)load page case:
+            PageLoad.create(
+                timestamp_iso=datetime.now().isoformat(),
+                timestamp=time.time(),
+                player=player,
+                group=player.group,
+            )
+            return {
+                player.id_in_group: {
+                    "type": "reload",
+                    "proposals_history": Proposal.filter_tolist(group=player.group),
+                    **create_acceptance_data(group=player.group),  # type: ignore
+                }
             }
-        }
 
 
 def compute_payoffs(group: Group):
@@ -461,6 +475,35 @@ def custom_export(players):
             "",
             "",
             acceptance.offer_id,
+        ]
+
+    page_loads = PageLoad.filter()
+    for page_load in page_loads:
+        player = page_load.player
+        participant = player.participant
+        session = player.session
+        yield [
+            page_load.timestamp_iso,
+            page_load.timestamp,
+            "page_load",
+            session.code,
+            participant.code,
+            player.round_number,
+            player.id,
+            player.id_in_group,
+            player.group.id,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
         ]
 
 
