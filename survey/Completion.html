@@ -1,14 +1,20 @@
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block title }}
 The End
 {{ endblock }}
 
 {{ block content }}
-Your participant id is: <b>{{participant.code}}</b>
     <p>
-        Thank you for participating in this experiment!
+        <b>Thank you for participating in this experiment!</b>
     </p>
-    <p> Your payment is computed as follows:
-        <ul>
+
+    <div class="section">
+        <h4 class="red-highlight">Final steps</h3>
+        <p> Your payment is computed as follows:
+          <ul>
             <li> Average payoff from the {{ num_of_rounds }} bargaining rounds: {{ player.participant.payoff }}</li>
             <ul>
                 {{ for payoff in all_payoffs }}
@@ -16,8 +22,14 @@ Your participant id is: <b>{{participant.code}}</b>
                 {{ endfor }}
             </ul>
             <li> Base payment: {{ player.session.config.participation_fee }}</li>
-        </ul>
+          </ul>
         Total: <b>{{ player.participant.final_payoff }}</b>
-    </p>
+        </p>
+            <li> Please write down the following participant ID your payment form: <b class="red-highlight">{{ participant.code }}</b> </li>
+            <li> Please write down the name of your computer (BLU???) on your payment form </li>
+            <li> Leave the payment amount empty. It will be filled by the experimenters. </li>
+            <li> If you have any questions, notify the experimenters. Otherwise, please wait for further instructions.</li>
+        
+    </div>
 
 {{ endblock }}
