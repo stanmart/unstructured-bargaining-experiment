@@ -1,14 +1,15 @@
-from random import randint
+from math import ceil
 
 from otree.api import (
     BaseConstants,
-    BaseSubsession,
-    models,
     BaseGroup,
     BasePlayer,
+    BaseSubsession,
     Page,
-    widgets,
     WaitPage,
+    cu,
+    models,
+    widgets,
 )
 
 
@@ -20,7 +21,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    payment_round = models.IntegerField()
+    pass
 
 
 class Group(BaseGroup):
@@ -85,16 +86,8 @@ class Player(BasePlayer):
 def compute_final_payoffs(subsession: Subsession):
     players = subsession.get_players()
     # get number of (non-trial) bargaining rounds
-    player0_payoffs = [
-        players[0].participant.vars["payoff_round" + str(i)] for i in range(2, 7)
-    ]
-    number_of_bargaining_rounds = sum(elem >= 0 for elem in player0_payoffs)
-    subsession.payment_round = randint(2, number_of_bargaining_rounds)  # type: ignore
-
     for player in players:
-        player.payoff = getattr(
-            player.participant, "payoff_round" + str(subsession.payment_round)
-        )
+        player.participant.payoff = cu(ceil(player.participant.payoff))
         player.participant.final_payoff = (
             player.participant.payoff_plus_participation_fee()
         )
@@ -128,7 +121,16 @@ class WaitForAll(WaitPage):
 
 
 class Completion(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            "all_payoffs": [
+                f"Round {i}: CHF{round_payoff:.2f}"
+                for i, round_payoff in enumerate(player.participant.payoff_list)  # type: ignore
+                if i > 0
+            ],
+            "num_of_rounds": len(player.participant.payoff_list) - 1,
+        }
 
 
 page_sequence = [Questions, WaitForAll, Completion]

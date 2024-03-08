@@ -4,9 +4,9 @@ from datetime import datetime
 
 from otree.api import (
     BaseConstants,
-    BaseSubsession,
     BaseGroup,
     BasePlayer,
+    BaseSubsession,
     ExtraModel,
     Page,
     WaitPage,
@@ -37,8 +37,7 @@ def creating_session(subsession):
         subsession.group_randomly()
 
     for player in subsession.get_players():
-        for i in range(1, 7):
-            setattr(player.participant, "payoff_round" + str(i), -1)
+        player.participant.vars["payoff_list"] = []
 
 
 class C(BaseConstants):
@@ -355,11 +354,12 @@ def compute_payoffs(group: Group):
 
     for i in range(len(final_payoffs)):
         players[i].payoff_this_round = final_payoffs[i]
-        setattr(
-            players[i].participant,
-            "payoff_round" + str(group.round_number),
-            final_payoffs[i],
-        )
+        players[i].participant.vars["payoff_list"].append(players[i].payoff_this_round)
+
+        if group.round_number == 1:
+            players[i].payoff = 0
+        else:
+            players[i].payoff = players[i].payoff_this_round / (C.NUM_ROUNDS - 1)
 
 
 class WaitForAnswers(WaitPage):
@@ -376,6 +376,12 @@ class BargainingResults(Page):
             acceptances=acceptance_data["acceptances"],
             coalition_members=acceptance_data["coalition_members"],
             payoffs=acceptance_data["payoffs"],
+        )
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            payoff_to_display=f"CHF {player.payoff_this_round:.2f}",
         )
 
 

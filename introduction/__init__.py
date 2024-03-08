@@ -1,4 +1,4 @@
-from otree.api import BaseConstants, BaseSubsession, BaseGroup, BasePlayer, Page
+from otree.api import BaseConstants, BaseGroup, BasePlayer, BaseSubsession, Page
 
 
 class C(BaseConstants):
