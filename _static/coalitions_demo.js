@@ -24,6 +24,8 @@ tasks_coordination = {
     "clear-preferred": false,
 }
 
+let canContinue = false;
+
 exampleOffers = [
     {
         'offer_id': 1,
@@ -65,7 +67,12 @@ closePopup = function () {
 
 openPopup = function (content, type) {
     // popupFull.style.visibility = "visible";
-    popupContent.innerHTML = content;
+    if (popupFull.classList.contains('show')) {
+        new_content = popupContent.innerHTML + `<p>${content}</p>`;
+    } else {
+        new_content = `<p>${content}</p>`;
+    }
+    popupContent.innerHTML = new_content;
     if (type === 'error') {
         popupFull.classList = 'error';
         popupTitle.innerHTML = 'Error';
@@ -177,7 +184,7 @@ function sendAccept() {
 function sendRevert() {
     preferredOffers[0] = 0;
     updatePayoffsPreferred();
-    openPopup(`Proposal ${preferredDropdwon.value} marked as preferred`, 'success');
+    openPopup('Preferred proposal cleared', 'success');
 
     tasks_coordination["clear-preferred"] = true
     acceptTask(document.getElementById('task-clear-preferred'));
@@ -255,6 +262,8 @@ function updateCoalitionTasks(choices, coalitionFormed, members) {
     } else if (coalitionFormed !== 0 && new Set(choices).size > 1) {
         tasks_coalitions['sub-coalition'] = true;
         task = document.getElementById('sub-coalition');
+    } else {
+        return;
     }
 
     acceptTask(task);
@@ -268,11 +277,12 @@ function checkCompletion() {
     let coalitionTasksComplete = Object.values(tasks_coalitions).every(element => element);
     let coordinationTasksComplete = Object.values(tasks_coordination).every(element => element);
 
-    if (coalitionTasksComplete === true && coordinationTasksComplete === true) {
+    if (coalitionTasksComplete === true && coordinationTasksComplete === true && canContinue === false) {
         let next_buttons = document.getElementsByClassName('otree-btn-next');
         for (let i = 0; i < next_buttons.length; i++) {
             next_buttons[i].style.visibility = '';
         }
+        canContinue = true;
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
 }

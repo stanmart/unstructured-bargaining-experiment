@@ -33,13 +33,20 @@ let tasks ={
     "inefficient": false,
 }
 
+let canContinue = false;
+
 closePopup = function () {
     popupFull.classList.remove('show');
 }
 
 openPopup = function (content, type) {
     // popupFull.style.visibility = "visible";
-    popupContent.innerHTML = content;
+    if (popupFull.classList.contains('show')) {
+        new_content = popupContent.innerHTML + `<p>${content}</p>`;
+    } else {
+        new_content = `<p>${content}</p>`;
+    }
+    popupContent.innerHTML = new_content;
     if (type === 'error') {
         popupFull.classList = 'error';
         popupTitle.innerHTML = 'Error';
@@ -267,33 +274,40 @@ function updatePastOffers(newPastOffers) {
 
 function updateTasks(newOffer) {
 
+    let completedTasks = [];
+
     if (newOffer.members.every((member) => member)) {
         tasks["grand-coalition"] = true;
-        acceptTask(document.getElementById('proposal-grand-coalition'));
+        completedTasks.push(document.getElementById('proposal-grand-coalition'));
     }
 
     if (!(newOffer.members.every((member) => member))) {
         tasks["sub-coalition"] = true;
-        acceptTask(document.getElementById('proposal-sub-coalition'));
+        completedTasks.push(document.getElementById('proposal-sub-coalition'));
     }
 
     if (totalShareableValue == totalSharedValue) {
         tasks["efficient"] = true;
-        acceptTask(document.getElementById('proposal-efficient'));
+        completedTasks.push(document.getElementById('proposal-efficient'));
     }
 
     if (totalShareableValue > totalSharedValue) {
         tasks["inefficient"] = true;
-        acceptTask(document.getElementById('proposal-inefficient'));
+        completedTasks.push(document.getElementById('proposal-inefficient'));
     }
 
+    completedTasks.forEach((element) => acceptTask(element));
+    let taskList = completedTasks.map((element) => `<li>${element.innerHTML}</li>`).join('');
+    openPopup(`This proposal satisfies the following tasks:<br><ul>${taskList}</ul>`, 'success');
 
-    if (Object.values(tasks).every(element => element)) {
+
+    if (Object.values(tasks).every(element => element) && !canContinue) {
         let next_buttons = document.getElementsByClassName('otree-btn-next');
         for (let i = 0; i < next_buttons.length; i++) {
             next_buttons[i].style.visibility = '';
             next_buttons[i].disabled = false;
         }
+        canContinue = true;
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
 }
