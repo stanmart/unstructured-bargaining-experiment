@@ -55,6 +55,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+    start_time = models.FloatField(initial=float("inf"))  # type: ignore
     expiry = models.FloatField(initial=float("inf"))  # type: ignore
 
 
@@ -67,6 +68,7 @@ class Player(BasePlayer):
         initial=0  # type: ignore
     )  # 0 means no offer accepted
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
+    end_time = models.FloatField(initial=float("inf"))  # type: ignore
 
 
 def prod_fcts():
@@ -149,6 +151,13 @@ class Acceptance(ExtraModel):
     player = models.Link(Player)
     group = models.Link(Group)
     offer_id = models.IntegerField()
+
+
+class PageLoad(ExtraModel):
+    timestamp_iso = models.StringField()
+    timestamp = models.FloatField()
+    player = models.Link(Player)
+    group = models.Link(Group)
 
 
 def check_proposal_validity(player: Player, members, allocations):
@@ -275,6 +284,7 @@ class WaitForBargaining(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(subsession: BaseSubsession):  # type: ignore
+        subsession.start_time = time.time()  # type: ignore
         subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
 
 
@@ -318,7 +328,7 @@ class Bargain(Page):
                 }
             }
 
-        if "type" in data and data["type"] == "accept":
+        elif "type" in data and data["type"] == "accept":
             error_messages = check_acceptance_validity(
                 player=player, offer_id=data["offer_id"]
             )
@@ -338,14 +348,25 @@ class Bargain(Page):
             return_data["type"] = "acceptances"
             return {0: return_data}
 
-        # Reload page case:
-        return {
-            player.id_in_group: {
-                "type": "reload",
-                "proposals_history": Proposal.filter_tolist(group=player.group),
-                **create_acceptance_data(group=player.group),  # type: ignore
+        else:
+            # (re)load page case:
+            PageLoad.create(
+                timestamp_iso=datetime.now().isoformat(),
+                timestamp=time.time(),
+                player=player,
+                group=player.group,
+            )
+            return {
+                player.id_in_group: {
+                    "type": "reload",
+                    "proposals_history": Proposal.filter_tolist(group=player.group),
+                    **create_acceptance_data(group=player.group),  # type: ignore
+                }
             }
-        }
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.end_time = time.time()  # type: ignore
 
 
 def compute_payoffs(group: Group):
@@ -467,6 +488,35 @@ def custom_export(players):
             "",
             "",
             acceptance.offer_id,
+        ]
+
+    page_loads = PageLoad.filter()
+    for page_load in page_loads:
+        player = page_load.player
+        participant = player.participant
+        session = player.session
+        yield [
+            page_load.timestamp_iso,
+            page_load.timestamp,
+            "page_load",
+            session.code,
+            participant.code,
+            player.round_number,
+            player.id,
+            player.id_in_group,
+            player.group.id,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
         ]
 
 
