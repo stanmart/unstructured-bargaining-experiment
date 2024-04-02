@@ -174,7 +174,10 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
-    if any(allocations[i] > 0 and members[i] == 0 for i in range(len(members))):
+    if any(
+        allocation > 0 and member == 0
+        for allocation, member in zip(allocations, members)
+    ):
         return {
             player.id_in_group: {
                 "type": "error",
@@ -373,14 +376,14 @@ def compute_payoffs(group: Group):
     players = sorted(group.get_players(), key=lambda p: p.id_in_group)
     final_payoffs = create_acceptance_data(group)["payoffs"]
 
-    for i in range(len(final_payoffs)):
-        players[i].payoff_this_round = final_payoffs[i]
-        players[i].participant.vars["payoff_list"].append(players[i].payoff_this_round)
+    for player, final_payoff in zip(players, final_payoffs):
+        player.payoff_this_round = final_payoff
+        player.participant.vars["payoff_list"].append(player.payoff_this_round)
 
         if group.round_number == 1:
-            players[i].payoff = 0
+            player.payoff = 0
         else:
-            players[i].payoff = players[i].payoff_this_round / (C.NUM_ROUNDS - 1)
+            player.payoff = player.payoff_this_round / (C.NUM_ROUNDS - 1)
 
 
 class WaitForAnswers(WaitPage):
