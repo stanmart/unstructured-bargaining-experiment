@@ -23,7 +23,7 @@ let popupFull = document.getElementById('popup-full');
 let popupTitle = document.getElementById('popup-title');
 let popupContent = document.getElementById('popup-content');
 
-let tasks ={
+let tasks = {
     "grand-coalition": false,
     "sub-coalition": false,
     "efficient": false,
@@ -51,7 +51,7 @@ openPopup = function (content, type) {
         popupFull.classList = 'success';
         popupTitle.innerHTML = 'Success';
     }
-   popupFull.classList.add('show');
+    popupFull.classList.add('show');
 }
 
 for (let i = 0; i < numPlayers; i++) {
@@ -225,7 +225,7 @@ function acceptTask(element) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // Setup
     let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
     for (let i = 0; i < thisPlayerHeaders.length; i++) {
@@ -294,10 +294,10 @@ document.addEventListener("DOMContentLoaded", function() {
         next_buttons[i].style.visibility = 'hidden';
     }
 
-    $('html').bind('keypress', function(e) {
-        if(e.keyCode === 13 || e.key == 'Enter') {
-           return false;
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode === 13 || e.key == 'Enter') {
+            return false;
         }
-     });
+    });
 
 })
