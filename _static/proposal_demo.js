@@ -1,14 +1,11 @@
-let isMember1 = document.getElementById('is-member-1');
-let isMember2 = document.getElementById('is-member-2');
-let isMember3 = document.getElementById('is-member-3');
-let isMember4 = document.getElementById('is-member-4');
-let isMember5 = document.getElementById('is-member-5');
+let numPlayers = 3;
 
-let allocation1 = document.getElementById('allocation-1');
-let allocation2 = document.getElementById('allocation-2');
-let allocation3 = document.getElementById('allocation-3');
-let allocation4 = document.getElementById('allocation-4');
-let allocation5 = document.getElementById('allocation-5');
+let isMemberCheckboxes = Array.from(Array(numPlayers).keys()).map(
+    i => document.getElementById(`is-member-${i + 1}`)
+);
+let allocationTextBoxes = Array.from(Array(numPlayers).keys()).map(
+    i => document.getElementById(`allocation-${i + 1}`)
+);
 
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
@@ -20,7 +17,7 @@ let totalSharedValue = 0;
 let pastOffers = []
 
 let prod_fct = js_vars.prod_fct;
-let P5IsDummy = prod_fct.length == 4;
+let lastPlayerIsDummy = prod_fct.length == numPlayers - 1;
 
 let popupFull = document.getElementById('popup-full');
 let popupTitle = document.getElementById('popup-title');
@@ -57,128 +54,34 @@ openPopup = function (content, type) {
    popupFull.classList.add('show');
 }
 
-isMember1.addEventListener('change', function () {
-    allocation1.disabled = !isMember1.checked;
-    allocation1.value = 0;
-    updateTotalShareable();
-    updateTotalShared();
-    if (!allocation1.disabled) {
-        allocation1.select()
-    }
-});
-
-isMember2.addEventListener('change', function () {
-    allocation2.disabled = !isMember2.checked;
-    allocation2.value = 0;
-    updateTotalShareable();
-    updateTotalShared();
-    if (!allocation2.disabled) {
-        allocation2.select()
-    }
-});
-
-isMember3.addEventListener('change', function () {
-    allocation3.disabled = !isMember3.checked;
-    allocation3.value = 0;
-    updateTotalShareable();
-    updateTotalShared();
-    if (!allocation3.disabled) {
-        allocation3.select()
-    }
-});
-
-isMember4.addEventListener('change', function () {
-    allocation4.disabled = !isMember4.checked;
-    allocation4.value = 0;
-    updateTotalShareable();
-    updateTotalShared();
-    if (!allocation4.disabled) {
-        allocation4.select()
-    }
-});
-
-isMember5.addEventListener('change', function () {
-    allocation5.disabled = !isMember5.checked;
-    allocation5.value = 0;
-    updateTotalShareable();
-    updateTotalShared();
-    if (!allocation5.disabled) {
-        allocation5.select()
-    }
-});
-
-allocation1.addEventListener('change', function () {
-    allocation1.value = Math.floor(Math.max(0, allocation1.value));
-    updateTotalShared();
-});
-allocation1.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-        allocation1.value = Math.floor(Math.max(0, allocation1.value));
+for (let i = 0; i < numPlayers; i++) {
+    isMemberCheckboxes[i].addEventListener('change', function () {
+        allocationTextBoxes[i].disabled = !isMemberCheckboxes[i].checked;
+        allocationTextBoxes[i].value = 0;
+        updateTotalShareable();
         updateTotalShared();
-    }
-});
+        if (!allocationTextBoxes[i].disabled) {
+            allocationTextBoxes[i].select()
+        }
+    });
 
-allocation2.addEventListener('change', function () {
-    allocation2.value = Math.floor(Math.max(0, allocation2.value));
-    updateTotalShared();
-});
-allocation2.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-        allocation2.value = Math.floor(Math.max(0, allocation2.value));
+    allocationTextBoxes[i].addEventListener('change', function () {
+        allocationTextBoxes[i].value = Math.floor(Math.max(0, allocationTextBoxes[i].value));
         updateTotalShared();
-    }
-});
-
-allocation3.addEventListener('change', function () {
-    allocation3.value = Math.floor(Math.max(0, allocation3.value));
-    updateTotalShared();
-});
-allocation3.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-        allocation3.value = Math.floor(Math.max(0, allocation3.value));
-        updateTotalShared();
-    }
-});
-
-allocation4.addEventListener('change', function () {
-    allocation4.value = Math.floor(Math.max(0, allocation4.value));
-    updateTotalShared();
-});
-allocation4.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-        allocation4.value = Math.floor(Math.max(0, allocation4.value));
-        updateTotalShared();
-    }
-});
-
-allocation5.addEventListener('change', function () {
-    allocation5.value = Math.floor(Math.max(0, allocation5.value));
-    updateTotalShared();
-});
-allocation5.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-        allocation5.value = Math.floor(Math.max(0, allocation5.value));
-        updateTotalShared();
-    }
-});
+    });
+    allocationTextBoxes[i].addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            allocationTextBoxes[i].value = Math.floor(Math.max(0, allocationTextBoxes[i].value));
+            updateTotalShared();
+        }
+    });
+}
 
 function sendOffer() {
     let newPastOffers = pastOffers.slice();
 
-    let members = [
-        isMember1.checked,
-        isMember2.checked,
-        isMember3.checked,
-        isMember4.checked,
-        isMember5.checked,
-    ];
-    let allocations = [
-        allocation1.value,
-        allocation2.value,
-        allocation3.value,
-        allocation4.value,
-        allocation5.value,
-    ];
+    let members = isMemberCheckboxes.map((checkbox) => checkbox.checked);
+    let allocations = allocationTextBoxes.map((textbox) => parseInt(textbox.value));
     let newOffer = {
         'offer_id': newPastOffers.length + 1,
         'player': js_vars.my_id,
@@ -186,7 +89,7 @@ function sendOffer() {
         'allocations': allocations,
     };
 
-    if (totalSharedValue > 0 && !isMember1.checked) {
+    if (totalSharedValue > 0 && !members[0]) {
         openPopup('Invalid proposal: the budget is zero when Player 1 is not included in the group', 'error');
         return;
     }
@@ -202,10 +105,12 @@ function sendOffer() {
 }
 
 function updateTotalShareable() {
-    if (isMember1.checked) {
-        let numMembers = isMember2.checked + isMember3.checked + isMember4.checked;
-        if (!P5IsDummy) {
-            numMembers += isMember5.checked;
+    if (isMemberCheckboxes[0].checked) {
+        let numMembers = isMemberCheckboxes.slice(1, isMemberCheckboxes.length - 1).reduce(
+            (acc, curr) => acc + curr.checked, 0
+        );
+        if (!lastPlayerIsDummy) {
+            numMembers += isMemberCheckboxes[isMemberCheckboxes.length - 1].checked;
         }
         totalShareableValue = prod_fct[numMembers];
     } else {
@@ -215,13 +120,13 @@ function updateTotalShareable() {
 }
 
 function updateTotalShared() {
-    totalSharedValue = parseInt(allocation1.value) + parseInt(allocation2.value) + parseInt(allocation3.value) + parseInt(allocation4.value) + parseInt(allocation5.value);
+    totalSharedValue = allocationTextBoxes.reduce((acc, curr) => acc + (curr.disabled ? 0 : parseInt(curr.value)), 0);
     totalShared.innerHTML = totalSharedValue;
     if (totalSharedValue > totalShareableValue) {
         totalShared.style.color = 'red';
     } else {
         totalShared.style.color = 'black';
-    } 
+    }
 }
 
 function updatePastOffers(newPastOffers) {
@@ -247,7 +152,7 @@ function updatePastOffers(newPastOffers) {
         from.className = "offer-proposer-col";
         from.innerHTML = `P${offer.player}`;
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < numPlayers; i++) {
             let cell = row.insertCell();
             cell.className = "offer-player-col";
             if (!offer.members[i]) {
@@ -350,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 },
                 x: {
                     title: {
-                        text: "P1 + this many others in group" + (P5IsDummy ? " (excluding P5)" : ""),
+                        text: "P1 + this many others in group" + (lastPlayerIsDummy ? ` (excluding P${numPlayers})` : ""),
                         display: true
                     }
                 }
@@ -368,9 +273,9 @@ document.addEventListener("DOMContentLoaded", function() {
     payoffTableHeader = document.getElementById('payoff-table-header');
     payoffTableRow = document.getElementById('payoff-table-values');
 
-    if (P5IsDummy) {
+    if (lastPlayerIsDummy) {
         let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
-        coalitionSizeHeader.innerHTML += " (excluding P5)";
+        coalitionSizeHeader.innerHTML += ` (excluding P${numPlayers})`;
     }
 
     prod_fct.forEach(function (payoff, i) {

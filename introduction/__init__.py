@@ -36,7 +36,7 @@ class Proposal(Page):
     @staticmethod
     def js_vars(player: Player):
         return dict(
-            prod_fct=[0, 30, 60, 80, 100],
+            prod_fct=[0, 50, 100],
             my_id=1,
         )
 
