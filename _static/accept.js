@@ -1,3 +1,5 @@
+let numPlayers = 3;
+
 let pastOffersTable = document.getElementById('past-offers-table');
 
 function populatePastOffers(pastOffers) {
@@ -12,7 +14,7 @@ function populatePastOffers(pastOffers) {
         from.className = "offer-proposer-col";
         from.innerHTML = `P${offer.player}`;
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < numPlayers; i++) {
             let cell = row.insertCell();
             cell.className = "offer-player-col";
             if (!offer.members[i]) {
@@ -30,7 +32,7 @@ function populatePastOffers(pastOffers) {
 }
 
 function populateAcceptances(acceptances, coalition_members, payoffs) {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < numPlayers; i++) {
         let thisAccepted = document.getElementById(`accepted-${i + 1}`);
         let thisPayoff = document.getElementById(`payoff-${i + 1}`);
 
