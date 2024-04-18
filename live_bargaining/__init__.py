@@ -294,7 +294,7 @@ class Bargain(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            p5_is_dummy=len(prod_fcts()[player.round_number])
+            last_player_is_dummy=len(prod_fcts()[player.round_number])
             == C.PLAYERS_PER_GROUP - 1,
             actual_round_number=player.subsession.round_number - 1,
         )

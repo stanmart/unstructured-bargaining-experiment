@@ -1,5 +1,7 @@
+let numPlayers = 3;
+
 let prod_fct = js_vars.prod_fct;
-let P5IsDummy = prod_fct.length == 4;
+let lastPlayerIsDummy = prod_fct.length == numPlayers - 1;
 
 // Payoff chart
 const ctx = document.getElementById('payoff-chart');
@@ -24,7 +26,7 @@ let chart = new Chart(ctx, {
             },
             x: {
                 title: {
-                    text: "P1 + this many others in group" + (P5IsDummy ? " (excluding P5)" : ""),
+                    text: "P1 + this many others in group" + (lastPlayerIsDummy ? ` (excluding P${numPlayers})` : ""),
                     display: true
                 }
             }
@@ -42,9 +44,9 @@ let chart = new Chart(ctx, {
 payoffTableHeader = document.getElementById('payoff-table-header');
 payoffTableRow = document.getElementById('payoff-table-values');
 
-if (P5IsDummy) {
+if (lastPlayerIsDummy) {
     let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
-    coalitionSizeHeader.innerHTML += " (excluding P5)";
+    coalitionSizeHeader.innerHTML += ` (excluding P${numPlayers})`;
 }
 
 prod_fct.forEach(function (payoff, i) {
