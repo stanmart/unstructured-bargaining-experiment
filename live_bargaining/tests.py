@@ -154,7 +154,10 @@ def test_invalid_input(method):
 
 
 def call_live_method(method, **kwargs):
-    print(f"Round {kwargs['round_number']}: ", end="")
+    print(
+        f"Session {kwargs['group'].session.config['name']}, round {kwargs['round_number']}: ",
+        end="",
+    )
 
     if kwargs["round_number"] == 1:
         print("Testing invalid input")
