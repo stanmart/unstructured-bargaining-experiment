@@ -40,4 +40,4 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt
     - run: echo "$PWD/venv/bin" >> $GITHUB_PATH
-    - run: timeout 30 otree devserver & otree test bargaining_test 2> stderr.log || cat stderr.log; rm stderr.log; pkill otree
+    - run: timeout 30 otree devserver & otree test bargaining_test 2> stderr.log || cat stderr.log; pkill otree
