@@ -324,11 +324,6 @@ let chart = new Chart(ctx, {
 payoffTableHeader = document.getElementById('payoff-table-header');
 payoffTableRow = document.getElementById('payoff-table-values');
 
-if (lastPlayerIsDummy) {
-    let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
-    coalitionSizeHeader.innerHTML += ` (excluding P${numPlayers})`;
-}
-
 prod_fct.forEach(function (payoff, i) {
     let headerCell = document.createElement("th");
     headerCell.innerHTML = prod_fct_labels[i];

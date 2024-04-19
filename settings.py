@@ -1,15 +1,64 @@
 from os import environ
 
+# Note: session config is not as flexible as it seems.
+# The production function must be of length 2 and 3.
+# 3 assumes that P1 is the big player and P2 and P3 are the small players.
+# 2 assumes that P1 and P2 symmetric P3 is a dummy player.
+
 SESSION_CONFIGS = [
     dict(
-        name="live_bargaining",
+        name="treatment_y_10",
         app_sequence=["introduction", "live_bargaining", "survey"],
         num_demo_participants=3,
+        seconds_per_round=5 * 60,
+        prod_fct={
+            "{P2,\xa0P3}": 0,
+            "{P1,\xa0P2},\n{P1,\xa0P3}": 10,
+            "Everyone": 100,
+        },
+    ),
+    dict(
+        name="treatment_y_30",
+        app_sequence=["introduction", "live_bargaining", "survey"],
+        num_demo_participants=3,
+        seconds_per_round=5 * 60,
+        prod_fct={
+            "{P2,\xa0P3}": 0,
+            "{P1,\xa0P2}, {P1,\xa0P3}": 10,
+            "Everyone": 100,
+        },
+    ),
+    dict(
+        name="treatment_y_90",
+        app_sequence=["introduction", "live_bargaining", "survey"],
+        num_demo_participants=3,
+        seconds_per_round=5 * 60,
+        prod_fct={
+            "{P2,\xa0P3}": 0,
+            "{P1,\xa0P2}, {P1,\xa0P3}": 10,
+            "Everyone": 100,
+        },
+    ),
+    dict(
+        name="treatment_dummy_player",
+        app_sequence=["introduction", "live_bargaining", "survey"],
+        num_demo_participants=3,
+        seconds_per_round=5 * 60,
+        prod_fct={
+            "{P1,\xa0P3}, {P2,\xa0P3}": 0,
+            "{P1,\xa0P2}, Everyone": 100,
+        },
     ),
     dict(
         name="bargaining_test",
         app_sequence=["live_bargaining"],
         num_demo_participants=3,
+        seconds_per_round=5 * 60,
+        prod_fct={
+            "{P2,\xa0P3}": 0,
+            "{P1,\xa0P2}, {P1,\xa0P3}": 30,
+            "Everyone": 100,
+        },
     ),
 ]
 
