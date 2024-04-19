@@ -50,8 +50,8 @@ def test_invalid_input(method):
         2,
         {
             "type": "propose",
-            "members": [True, True, False],
-            "allocations": [50, 50, 0],
+            "members": [True, False, True],
+            "allocations": [50, 0, 50],
         },
     )
     expect(
