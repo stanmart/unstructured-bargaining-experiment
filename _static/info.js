@@ -1,6 +1,7 @@
 let numPlayers = 3;
 
 let prod_fct = js_vars.prod_fct;
+let prod_fct_labels = js_vars.prod_fct_labels;
 let lastPlayerIsDummy = prod_fct.length == numPlayers - 1;
 
 // Payoff chart
@@ -9,7 +10,7 @@ const ctx = document.getElementById('payoff-chart');
 let chart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: Array.from(Array(prod_fct.length).keys()),
+        labels: prod_fct_labels,
         datasets: [{
             label: "Group's value",
             data: prod_fct,
@@ -26,7 +27,7 @@ let chart = new Chart(ctx, {
             },
             x: {
                 title: {
-                    text: "P1 + this many others in group" + (lastPlayerIsDummy ? ` (excluding P${numPlayers})` : ""),
+                    text: "Group members",
                     display: true
                 }
             }
@@ -51,7 +52,7 @@ if (lastPlayerIsDummy) {
 
 prod_fct.forEach(function (payoff, i) {
     let headerCell = document.createElement("th");
-    headerCell.innerHTML = i;
+    headerCell.innerHTML = prod_fct_labels[i];
     headerCell.style.textAlign = 'center';
     payoffTableHeader.appendChild(headerCell)
 

@@ -69,14 +69,11 @@ class Player(BasePlayer):
     end_time = models.FloatField(initial=float("inf"))  # type: ignore
 
 
-def prod_fcts():
-    return {
-        1: [0, 50, 100],  # trial
-        2: [0, 10, 100],  # linear
-        3: [0, 30, 100],  # convex
-        4: [0, 90, 100],  # concave
-        5: [0, 100],  # dummy
-    }
+PROD_FCT = {
+    "{P2, P3}": 0,
+    "{P1, P2}, {P1, P3}": 90,
+    "Everyone": 100,
+}
 
 
 class Proposal(ExtraModel):
@@ -179,7 +176,7 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
-    prod_fct = prod_fcts()[player.round_number]
+    prod_fct = list(PROD_FCT.values())
     coalition_size = sum(members)
     big_player_included = members[0]  # the big player is always first
 
@@ -264,7 +261,8 @@ class Info(Page):
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct=prod_fcts()[player.round_number],
+            prod_fct=list(PROD_FCT.values()),
+            prod_fct_labels=list(PROD_FCT.keys()),
         )
 
 
@@ -288,14 +286,14 @@ class Bargain(Page):
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct=prod_fcts()[player.round_number],
+            prod_fct=list(PROD_FCT.values()),
+            prod_fct_labels=list(PROD_FCT.keys()),
         )
 
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            last_player_is_dummy=len(prod_fcts()[player.round_number])
-            == C.PLAYERS_PER_GROUP - 1,
+            last_player_is_dummy=len(PROD_FCT) == C.PLAYERS_PER_GROUP - 1,
             actual_round_number=player.subsession.round_number - 1,
         )
 
