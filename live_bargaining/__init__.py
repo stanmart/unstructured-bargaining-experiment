@@ -49,8 +49,6 @@ class C(BaseConstants):
     SMALL1_ROLE = "Player 2"
     SMALL2_ROLE = "Player 3"
 
-    TIME_PER_ROUND = 5 * 60
-
 
 class Subsession(BaseSubsession):
     start_time = models.FloatField(initial=float("inf"))  # type: ignore
@@ -265,7 +263,7 @@ class WaitForBargaining(WaitPage):
     @staticmethod
     def after_all_players_arrive(subsession: BaseSubsession):  # type: ignore
         subsession.start_time = time.time()  # type: ignore
-        subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
+        subsession.expiry = time.time() + subsession.session.config["seconds_per_round"]  # type: ignore
 
 
 class Bargain(Page):
