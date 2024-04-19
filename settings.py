@@ -24,7 +24,7 @@ SESSION_CONFIGS = [
         seconds_per_round=5 * 60,
         prod_fct={
             "{P2,\xa0P3}": 0,
-            "{P1,\xa0P2}, {P1,\xa0P3}": 10,
+            "{P1,\xa0P2}, {P1,\xa0P3}": 30,
             "Everyone": 100,
         },
     ),
@@ -35,7 +35,7 @@ SESSION_CONFIGS = [
         seconds_per_round=5 * 60,
         prod_fct={
             "{P2,\xa0P3}": 0,
-            "{P1,\xa0P2}, {P1,\xa0P3}": 10,
+            "{P1,\xa0P2}, {P1,\xa0P3}": 90,
             "Everyone": 100,
         },
     ),
