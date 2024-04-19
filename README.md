@@ -78,16 +78,26 @@ The `Procfile` is set up to start a production server on Heroku. Simply create a
 ## Automated checks
 
 The project is set up with GitHub Actions to run automated checks on every push and pull request to the main branch. The checks include:
+ - `otree test` for playing the experiment with automated bots
  - `pyright` for Python type checking
  - `ruff check` for Python code style
  - `ruff format` for Python code formatting
  - `codespell` for spell checking
 
+You can also run these checks locally.
+ - You can run the `otree` test by starting a local server and running `otree test bargaining_test`
+ - For `pyright`, you need to have the `pyright` package installed.
+ - `ruff` and `codespell` are implemented as `pre-commit` hooks.
+
 <details>
 <summary>Running the checks locally</summary>
-You can also run these checks locally. For `pyright`, you need to have the `pyright` package installed. The rest of them are implemented as `pre-commit` hooks.
+You can run the oTree test and get nice output with the following one-liner:
 
-First, install `pyright` and `pre-commit`, e.g. using `pipx`:
+```bash
+timeout 30 otree devserver & otree test bargaining_test 2> /tmp/stderr.log || cat /tmp/stderr.log; rm /tmp/stderr.log; pkill otree
+```
+
+For the rest, install `pyright` and `pre-commit`, e.g. using `pipx`:
 
 ```bash
 pipx install pyright
