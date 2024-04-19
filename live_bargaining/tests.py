@@ -3,6 +3,7 @@ from . import Info, Bargain, BargainingResults
 
 
 def create_offers(method):
+    # Offer 1
     method(
         1,
         {
@@ -11,6 +12,8 @@ def create_offers(method):
             "allocations": [100, 0, 0],
         },
     )
+
+    # Offer 2
     method(
         3,
         {
@@ -19,6 +22,8 @@ def create_offers(method):
             "allocations": [50, 25, 25],
         },
     )
+
+    # Offer 3
     method(
         1,
         {
@@ -149,6 +154,10 @@ def test_invalid_input(method):
 
 
 def call_live_method(method, **kwargs):
+    # Invalid input
+    if kwargs["round_number"] == 1:
+        test_invalid_input(method)
+
     # Grand coalition
     if kwargs["round_number"] == 2:
         create_offers(method)
@@ -162,8 +171,7 @@ def call_live_method(method, **kwargs):
         create_offers(method)
         method(1, {"type": "accept", "offer_id": 2})
         method(2, {"type": "accept", "offer_id": 2})
-        method(3, {"type": "accept", "offer_id": 2})
-        method(3, {"type": "accept", "offer_id": 0})
+        method(3, {"type": "accept", "offer_id": 1})
 
     # Smaller coalition
     if kwargs["round_number"] == 4:
@@ -172,9 +180,15 @@ def call_live_method(method, **kwargs):
         method(2, {"type": "accept", "offer_id": 3})
         method(3, {"type": "accept", "offer_id": 1})
 
-    # Invalid input
+    # Revoke acceptance
     if kwargs["round_number"] == 5:
-        test_invalid_input(method)
+        create_offers(method)
+        method(1, {"type": "accept", "offer_id": 1})
+        method(2, {"type": "accept", "offer_id": 1})
+        method(3, {"type": "accept", "offer_id": 1})
+        method(2, {"type": "accept", "offer_id": 0})
+
+    print("Payoffs: ")
 
 
 class PlayerBot(Bot):
@@ -183,6 +197,9 @@ class PlayerBot(Bot):
         yield Submission(Bargain, timeout_happened=True, check_html=False)
 
         num_real_rounds = 4
+
+        if self.round_number == 1:
+            expect(self.player.payoff, c(0))
 
         if self.round_number == 2:
             if self.player.id_in_group == 1:
@@ -198,5 +215,8 @@ class PlayerBot(Bot):
                 expect(self.player.payoff, c(5 / num_real_rounds))
             else:
                 expect(self.player.payoff, c(0))
+
+        if self.round_number == 5:
+            expect(self.player.payoff, c(0))
 
         yield BargainingResults
