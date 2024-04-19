@@ -220,6 +220,4 @@ class PlayerBot(Bot):
             ),
         )
 
-        print(f"Player {self.player.id_in_group} received payoff: {self.player.payoff}")
-
         yield BargainingResults  # just press proceed
