@@ -144,7 +144,7 @@ class PageLoad(ExtraModel):
 
 
 def check_proposal_validity(player: Player, members, allocations):
-    if len(members) != len(allocations):
+    if len(members) != C.PLAYERS_PER_GROUP or len(allocations) != C.PLAYERS_PER_GROUP:
         return {player.id_in_group: {"type": "error", "content": "Data is incomplete"}}
 
     try:

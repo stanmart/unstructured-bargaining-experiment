@@ -6,6 +6,11 @@ SESSION_CONFIGS = [
         app_sequence=["introduction", "live_bargaining", "survey"],
         num_demo_participants=3,
     ),
+    dict(
+        name="bargaining_test",
+        app_sequence=["live_bargaining"],
+        num_demo_participants=3,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
