@@ -42,14 +42,12 @@ def creating_session(subsession):
 
 class C(BaseConstants):
     NAME_IN_URL = "live_bargaining"
-    PLAYERS_PER_GROUP = 5
+    PLAYERS_PER_GROUP = 3
     NUM_ROUNDS = 5  # todo: adjust for main experiment
 
     BIG_ROLE = "Player 1"
     SMALL1_ROLE = "Player 2"
     SMALL2_ROLE = "Player 3"
-    SMALL3_ROLE = "Player 4"
-    SMALL4_ROLE = "Player 5"
 
     TIME_PER_ROUND = 5 * 60
 
@@ -71,14 +69,11 @@ class Player(BasePlayer):
     end_time = models.FloatField(initial=float("inf"))  # type: ignore
 
 
-def prod_fcts():
-    return {
-        1: [0, 30, 60, 80, 100],  # trial
-        2: [0, 25, 50, 75, 100],  # linear
-        3: [0, 5, 20, 60, 100],  # convex
-        4: [0, 45, 80, 90, 100],  # concave
-        5: [0, 33, 67, 100],  # dummy
-    }
+PROD_FCT = {
+    "{P2, P3}": 0,
+    "{P1, P2}, {P1, P3}": 90,
+    "Everyone": 100,
+}
 
 
 class Proposal(ExtraModel):
@@ -90,13 +85,9 @@ class Proposal(ExtraModel):
     member_1 = models.BooleanField()
     member_2 = models.BooleanField()
     member_3 = models.BooleanField()
-    member_4 = models.BooleanField()
-    member_5 = models.BooleanField()
     allocation_1 = models.IntegerField()
     allocation_2 = models.IntegerField()
     allocation_3 = models.IntegerField()
-    allocation_4 = models.IntegerField()
-    allocation_5 = models.IntegerField()
 
     @classmethod
     def create_fromlist(cls, player, members, allocations):
@@ -110,13 +101,9 @@ class Proposal(ExtraModel):
             member_1=members[0],
             member_2=members[1],
             member_3=members[2],
-            member_4=members[3],
-            member_5=members[4],
             allocation_1=allocations[0],
             allocation_2=allocations[1],
             allocation_3=allocations[2],
-            allocation_4=allocations[3],
-            allocation_5=allocations[4],
         )
 
     @classmethod
@@ -130,15 +117,11 @@ class Proposal(ExtraModel):
                     proposal.member_1,
                     proposal.member_2,
                     proposal.member_3,
-                    proposal.member_4,
-                    proposal.member_5,
                 ],
                 "allocations": [
                     proposal.allocation_1,
                     proposal.allocation_2,
                     proposal.allocation_3,
-                    proposal.allocation_4,
-                    proposal.allocation_5,
                 ],
             }
             for proposal in filtered
@@ -161,7 +144,7 @@ class PageLoad(ExtraModel):
 
 
 def check_proposal_validity(player: Player, members, allocations):
-    if len(members) != len(allocations):
+    if len(members) != C.PLAYERS_PER_GROUP or len(allocations) != C.PLAYERS_PER_GROUP:
         return {player.id_in_group: {"type": "error", "content": "Data is incomplete"}}
 
     try:
@@ -193,7 +176,7 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
-    prod_fct = prod_fcts()[player.round_number]
+    prod_fct = list(PROD_FCT.values())
     coalition_size = sum(members)
     big_player_included = members[0]  # the big player is always first
 
@@ -214,7 +197,7 @@ def check_proposal_validity(player: Player, members, allocations):
         }
 
     num_small_players = coalition_size - big_player_included
-    if len(prod_fct) == 4:  # p5 is a dummy player
+    if len(prod_fct) == C.PLAYERS_PER_GROUP - 1:  # last player is a dummy player
         num_small_players -= members[-1]  # the dummy player is always last
 
     if sum(allocations) > prod_fct[num_small_players]:
@@ -246,8 +229,8 @@ def create_acceptance_data(group: Group):
     if players[0].accepted_offer == 0:  # P1 not in any coalition
         return {
             "acceptances": [player.accepted_offer for player in players],
-            "coalition_members": [False, False, False, False, False],
-            "payoffs": [0, 0, 0, 0, 0],
+            "coalition_members": [False] * C.PLAYERS_PER_GROUP,
+            "payoffs": [0] * C.PLAYERS_PER_GROUP,
         }
     else:
         offer = Proposal.filter_tolist(group=group, offer_id=p1_offer)[0]
@@ -264,8 +247,8 @@ def create_acceptance_data(group: Group):
         else:  # Not everyone accepted the offer
             return {
                 "acceptances": [player.accepted_offer for player in players],
-                "coalition_members": [False, False, False, False, False],
-                "payoffs": [0, 0, 0, 0, 0],
+                "coalition_members": [False] * C.PLAYERS_PER_GROUP,
+                "payoffs": [0] * C.PLAYERS_PER_GROUP,
             }
 
 
@@ -278,7 +261,8 @@ class Info(Page):
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct=prod_fcts()[player.round_number],
+            prod_fct=list(PROD_FCT.values()),
+            prod_fct_labels=list(PROD_FCT.keys()),
         )
 
 
@@ -302,13 +286,14 @@ class Bargain(Page):
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct=prod_fcts()[player.round_number],
+            prod_fct=list(PROD_FCT.values()),
+            prod_fct_labels=list(PROD_FCT.keys()),
         )
 
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            p5_is_dummy=len(prod_fcts()[player.round_number]) == 4,
+            last_player_is_dummy=len(PROD_FCT) == C.PLAYERS_PER_GROUP - 1,
             actual_round_number=player.subsession.round_number - 1,
         )
 
@@ -424,13 +409,9 @@ def custom_export(players):
         "member_1",
         "member_2",
         "member_3",
-        "member_4",
-        "member_5",
         "allocation_1",
         "allocation_2",
         "allocation_3",
-        "allocation_4",
-        "allocation_5",
         "accepted_offer",
     ]
 
@@ -454,13 +435,9 @@ def custom_export(players):
             proposal.member_1,
             proposal.member_2,
             proposal.member_3,
-            proposal.member_4,
-            proposal.member_5,
             proposal.allocation_1,
             proposal.allocation_2,
             proposal.allocation_3,
-            proposal.allocation_4,
-            proposal.allocation_5,
             "",
         ]
 
@@ -486,10 +463,6 @@ def custom_export(players):
             "",
             "",
             "",
-            "",
-            "",
-            "",
-            "",
             acceptance.offer_id,
         ]
 
@@ -508,10 +481,6 @@ def custom_export(players):
             player.id,
             player.id_in_group,
             player.group.id,
-            "",
-            "",
-            "",
-            "",
             "",
             "",
             "",

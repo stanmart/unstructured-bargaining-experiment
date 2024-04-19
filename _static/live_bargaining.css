@@ -61,28 +61,28 @@ input {
 }
 
 .offer-left-col {
-    width: 15%;
+    width: 40%;
     text-align: left;
 }
 
 .offer-proposer-col {
-    width: 15%;
+    width: 20%;
     text-align: center;
     font-weight: bold;
 }
 
 .offer-player-col {
-    width: 14%;
+    width: 20%;
     text-align: center;
 }
 
 .offer-total-col {
-    width: 15%;
+    width: 20%;
     text-align: right;
 }
 
 .offer-id-col {
-    width: 15%;
+    width: 20%;
     text-align: left;
     color: #b70505;
     font-weight: bold;

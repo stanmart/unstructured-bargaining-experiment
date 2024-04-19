@@ -14,7 +14,7 @@ Instructions 2/4
 <h4> Group budgets </h4>
 
 <p> 
-    You and the four other players will each be randomly assigned a player number ("Player 1/2/3/4/5"). 
+    You and the two other players will each be randomly assigned a player number ("Player 1/2/3"). 
     <b> The player numbers will be reshuffled each round. </b>
 </p>
 <p>
@@ -22,11 +22,10 @@ Instructions 2/4
         A group needs to include Player 1 to receive any budget. 
         The more members a group has, the bigger the budget. 
         For the exact size of the budget in CHF, you will see a table and a corresponding graph like the one below ("Group budgets"). 
-        The specific numbers can change between rounds.
 </p></b>
 
 <p> </p>
-<p> For example, if Player 1 and one other player form a group together, they have a budget of 30 CHF. If Player 1 and two other players form a group together, they have a budget of 60 CHF. </p>
+<p> For example, if Player 1 and one other player form a group together, they have a budget of 50 CHF. If all players form a group together, they have a budget of 100 CHF. (The exact numbers might be different in the game.) </p>
     
 
 
@@ -39,7 +38,7 @@ Instructions 2/4
 
 </p>
 <p> 
-    <b> During the five minutes of the discussion phase, you can make as many proposals as you like. </b>
+    <b> During the five minutes of the discussion phase, you can make as many proposals as you like. Furthermore, proposals are not binding. </b>
 </p>
 
 <h4> Past proposals </h4>
@@ -49,7 +48,7 @@ Instructions 2/4
     Each row corresponds to one proposal.
     In the first column, you see the "ID" of the proposal (this is just the number of the proposal, e.g. the second proposal that was made has the ID 2), this is used for easier reference later on. 
     In the second column you see who made the proposal. 
-    In the remaining five columns you see which amount each player gets in this proposal.
+    In the remaining three columns you see which amount each player gets in this proposal.
     Players not included in the proposed group are marked with "-".
 </p>
 
@@ -60,7 +59,7 @@ Instructions 2/4
     <div>
         <p>  To become more familiar with the interface, we ask you to complete the following small exercise: </p>
         <p>
-            For each of of the criteria below, make a proposal that satisfies it. 
+            For each of the criteria below, make a proposal that satisfies it. 
             Once a criterion is satisfied, it will turn green and a check mark will appear.
             Note that a proposal can satisfy more than one criterion at the same time.   
         </p>
@@ -88,21 +87,19 @@ Instructions 2/4
         <h3> Group budgets </h3>
         <table id="payoff-table" style="margin-bottom: 30px;">
             <colgroup>
-                <col style="width: 50%;">
-                <col style="width: 10%">
-                <col style="width: 10%">
-                <col style="width: 10%">
-                <col style="width: 10%">
-                <col style="width: 10%">
+                <col style="width: 34%;">
+                <col style="width: 22%">
+                <col style="width: 22%">
+                <col style="width: 22%">
             </colgroup>
             <tr id="payoff-table-header">
-                <th id="payoff-table-header-title">P1 + this many others</th>
+                <th id="payoff-table-header-title">Group members</th>
             </tr>
             <tr id="payoff-table-values">
                 <th>Group's budget </th>
             </tr>
         </table>
-        <div style="height: 230px; width: 350px">
+        <div style="height: 200px; width: 350px">
             <canvas id="payoff-chart"></canvas>
         </div>
     </div>
@@ -119,8 +116,6 @@ Instructions 2/4
                         <th class="offer-player-col player-1">P1</th>
                         <th class="offer-player-col player-2">P2</th>
                         <th class="offer-player-col player-3">P3</th>
-                        <th class="offer-player-col player-4">P4</th>
-                        <th class="offer-player-col player-5">P5</th>
                     </tr>
                 </thead>
                 <tbody id="past-offers-table"></tbody>
@@ -140,8 +135,6 @@ Instructions 2/4
                 <th class="offer-player-col player-1">Player 1</th>
                 <th class="offer-player-col player-2">Player 2</th>
                 <th class="offer-player-col player-3">Player 3</th>
-                <th class="offer-player-col player-4">Player 4</th>
-                <th class="offer-player-col player-5">Player 5</th>
                 <th style="text-align: right;">Total</th>
             </tr>
             <tr style="height: 3em;">
@@ -149,8 +142,6 @@ Instructions 2/4
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-1"></td>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-2"></td>
                 <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-3"></td>
-                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-4"></td>
-                <td class="offer-player-col"><input type="checkbox" class="coalition-member" id="is-member-5"></td>
                 <td class="offer-total-col"><div class="allocation-total" id="total-shareable">0</div></td>
             </tr>
             <tr style="height: 3em;">
@@ -158,14 +149,10 @@ Instructions 2/4
                 <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-1"></td>
                 <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-2"></td>
                 <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-3"></td>
-                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-4"></td>
-                <td class="offer-player-col"><input type="number" disabled="true", value="0", class="allocation" id="allocation-5"></td>
                 <td class="offer-total-col"><div class="allocation-total" id="total-shared">0</div></td>
             </tr>
         </tbody>
         <tr>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>

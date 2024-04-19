@@ -1,3 +1,5 @@
+let numPlayers = 3;
+
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
 
@@ -29,37 +31,31 @@ let canContinue = false;
 exampleOffers = [
     {
         'offer_id': 1,
-        'player': 2,
-        'members': [true, true, true, false, true],
-        'allocations': [10, 50, 10, 0, 10],
+        'player': 1,
+        'members': [true, false, true],
+        'allocations': [40, 0, 10],
     },
     {
         'offer_id': 2,
-        'player': 4,
-        'members': [true, false, false, true, false],
-        'allocations': [10, 0, 0, 20, 0],
+        'player': 3,
+        'members': [true, true, true],
+        'allocations': [30, 40, 30],
     },
     {
         'offer_id': 3,
         'player': 1,
-        'members': [true, true, true, true, true],
-        'allocations': [20, 20, 15, 15, 25],
+        'members': [true, true, true],
+        'allocations': [80, 20, 0],
     },
     {
         'offer_id': 4,
-        'player': 4,
-        'members': [true, false, false, true, true],
-        'allocations': [40, 0, 0, 20, 0],
-    },
-    {
-        'offer_id': 5,
         'player': 1,
-        'members': [true, false, false, true, false],
-        'allocations': [25, 0, 0, 5, 0],
+        'members': [true, true, false],
+        'allocations': [25, 15, 0],
     },
 ]
 
-preferredOffers = [0, 1, 1, 2, 1]
+preferredOffers = [0, 2, 1]
 
 closePopup = function () {
     popupFull.classList.remove('show');
@@ -80,7 +76,7 @@ openPopup = function (content, type) {
         popupFull.classList = 'success';
         popupTitle.innerHTML = 'Success';
     }
-   popupFull.classList.add('show');
+    popupFull.classList.add('show');
 }
 
 
@@ -107,7 +103,7 @@ function updatePastOffers(newPastOffers) {
         from.className = "offer-proposer-col";
         from.innerHTML = `P${offer.player}`;
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < numPlayers; i++) {
             let cell = row.insertCell();
             cell.className = "offer-player-col";
             if (!offer.members[i]) {
@@ -147,8 +143,8 @@ function updatePayoffsCoalitions() {
 
     let results = computePayoffs(choices);
 
-    for (let i = 0; i < 5; i++) {
-        let cell = document.getElementById(`payoff-${i+1}`);
+    for (let i = 0; i < numPlayers; i++) {
+        let cell = document.getElementById(`payoff-${i + 1}`);
         if (results.members[i] === true) {
             cell.style.color = 'green';
             cell.style.fontWeight = 'bold';
@@ -195,15 +191,15 @@ function updatePayoffsPreferred() {
 
     let results = computePayoffs(preferredOffers)
 
-    for (let i = 0; i < 5; i++) {
-        let preferred = document.getElementById(`preferred-${i+1}`);
+    for (let i = 0; i < numPlayers; i++) {
+        let preferred = document.getElementById(`preferred-${i + 1}`);
         if (preferredOffers[i] == 0) {
             preferred.innerHTML = '—';
         } else {
             preferred.innerHTML = preferredOffers[i];
         }
 
-        let payoff = document.getElementById(`payoff-${i+1}-preferred`);
+        let payoff = document.getElementById(`payoff-${i + 1}-preferred`);
         if (results.members[i] === true) {
             payoff.style.color = 'green';
             payoff.style.fontWeight = 'bold';
@@ -239,8 +235,8 @@ function computePayoffs(choices) {
         payoffs = offer.allocations;
         members = offer.members;
     } else {
-        payoffs = Array(5).fill(0);
-        members = Array(5).fill(false);
+        payoffs = Array(numPlayers).fill(0);
+        members = Array(numPlayers).fill(false);
     }
 
     return {
@@ -295,7 +291,7 @@ function acceptTask(element) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // Setup
     let thisPlayerHeaders = document.getElementsByClassName(`player-${js_vars.my_id}`);
     for (let i = 0; i < thisPlayerHeaders.length; i++) {
@@ -310,10 +306,10 @@ document.addEventListener("DOMContentLoaded", function() {
         next_buttons[i].style.visibility = 'hidden';
     }
 
-    $('html').bind('keypress', function(e) {
-        if(e.keyCode === 13 || e.key == 'Enter') {
-           return false;
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode === 13 || e.key == 'Enter') {
+            return false;
         }
-     });
+    });
 
 })

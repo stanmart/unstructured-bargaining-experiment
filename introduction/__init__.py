@@ -19,6 +19,13 @@ class Player(BasePlayer):
     pass
 
 
+PROD_FCT = {
+    "{P2, P3}": 0,
+    "{P1, P2}, {P1, P3}": 50,
+    "Everyone": 100,
+}
+
+
 # FUNCTIONS
 
 # PAGES
@@ -36,7 +43,8 @@ class Proposal(Page):
     @staticmethod
     def js_vars(player: Player):
         return dict(
-            prod_fct=[0, 30, 60, 80, 100],
+            prod_fct=list(PROD_FCT.values()),
+            prod_fct_labels=list(PROD_FCT.keys()),
             my_id=1,
         )
 
