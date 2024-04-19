@@ -193,8 +193,12 @@ def call_live_method(method, **kwargs):
 
 class PlayerBot(Bot):
     def play_round(self):
-        yield Info
-        yield Submission(Bargain, timeout_happened=True, check_html=False)
+        yield Info  # just press proceed
+        # call_live_method is automagically executed here
+        yield Submission(
+            Bargain, timeout_happened=True, check_html=False
+        )  # act as if timer expired
+        # payoffs are now realized, check them
 
         num_real_rounds = 4
         expected_payoffs = {
@@ -215,4 +219,4 @@ class PlayerBot(Bot):
 
         print(f"Player {self.player.id_in_group} received payoff: {self.player.payoff}")
 
-        yield BargainingResults
+        yield BargainingResults  # just press proceed
