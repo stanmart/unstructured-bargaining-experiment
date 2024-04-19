@@ -197,27 +197,21 @@ class PlayerBot(Bot):
         yield Submission(Bargain, timeout_happened=True, check_html=False)
 
         num_real_rounds = 4
+        expected_payoffs = {
+            1: [0, 0, 0],
+            2: [50, 25, 25],
+            3: [0, 0, 0],
+            4: [5, 5, 0],
+            5: [0, 0, 0],
+        }
 
-        if self.round_number == 1:
-            expect(self.player.payoff, c(0))
-
-        if self.round_number == 2:
-            if self.player.id_in_group == 1:
-                expect(self.player.payoff, c(50 / num_real_rounds))
-            else:
-                expect(self.player.payoff, c(25 / num_real_rounds))
-
-        if self.round_number == 3:
-            expect(self.player.payoff, c(0))
-
-        if self.round_number == 4:
-            if self.player.id_in_group in [1, 2]:
-                expect(self.player.payoff, c(5 / num_real_rounds))
-            else:
-                expect(self.player.payoff, c(0))
-
-        if self.round_number == 5:
-            expect(self.player.payoff, c(0))
+        expect(
+            self.player.payoff,
+            c(
+                expected_payoffs[self.round_number][self.player.id_in_group - 1]
+                / num_real_rounds
+            ),
+        )
 
         print(f"Player {self.player.id_in_group} received payoff: {self.player.payoff}")
 
