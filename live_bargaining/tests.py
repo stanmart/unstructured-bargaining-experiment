@@ -154,41 +154,41 @@ def test_invalid_input(method):
 
 
 def call_live_method(method, **kwargs):
-    # Invalid input
+    print(f"Round {kwargs['round_number']}: ", end="")
+
     if kwargs["round_number"] == 1:
+        print("Testing invalid input")
         test_invalid_input(method)
 
-    # Grand coalition
     if kwargs["round_number"] == 2:
+        print("Testing grand coalition")
         create_offers(method)
         method(3, {"type": "accept", "offer_id": 1})
         method(1, {"type": "accept", "offer_id": 2})
         method(2, {"type": "accept", "offer_id": 2})
         method(3, {"type": "accept", "offer_id": 2})
 
-    # No agreement
     if kwargs["round_number"] == 3:
+        print("Testing no agreement")
         create_offers(method)
         method(1, {"type": "accept", "offer_id": 2})
         method(2, {"type": "accept", "offer_id": 2})
         method(3, {"type": "accept", "offer_id": 1})
 
-    # Smaller coalition
     if kwargs["round_number"] == 4:
+        print("Testing smaller coalition")
         create_offers(method)
         method(1, {"type": "accept", "offer_id": 3})
         method(2, {"type": "accept", "offer_id": 3})
         method(3, {"type": "accept", "offer_id": 1})
 
-    # Revoke acceptance
     if kwargs["round_number"] == 5:
+        print("Testing revoking acceptance")
         create_offers(method)
         method(1, {"type": "accept", "offer_id": 1})
         method(2, {"type": "accept", "offer_id": 1})
         method(3, {"type": "accept", "offer_id": 1})
         method(2, {"type": "accept", "offer_id": 0})
-
-    print("Payoffs: ")
 
 
 class PlayerBot(Bot):
@@ -218,5 +218,7 @@ class PlayerBot(Bot):
 
         if self.round_number == 5:
             expect(self.player.payoff, c(0))
+
+        print(f"Player {self.player.id_in_group} received payoff: {self.player.payoff}")
 
         yield BargainingResults
