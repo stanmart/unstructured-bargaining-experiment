@@ -47,8 +47,14 @@ SECRET_KEY = "5644004254536"
 ROOMS = [
     dict(
         name="blu",
-        display_name="BLU Econ Lab",
+        display_name="BLU Econ Lab (secure URLs)",
         participant_label_file="_rooms/blu.txt",
         use_secure_urls=True,
+    ),
+    dict(
+        name="blu_ns",
+        display_name="BLU Econ Lab (non-secure URLs)",
+        participant_label_file="_rooms/blu.txt",
+        use_secure_urls=False,
     ),
 ]
