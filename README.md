@@ -85,7 +85,7 @@ The project is set up with GitHub Actions to run automated checks on every push 
  - `codespell` for spell checking
 
 You can also run these checks locally.
- - You can run the `otree` test by starting a local server and running `otree test bargaining_test`
+ - You can run the `otree` test by starting a local server and running `otree test`
  - For `pyright`, you need to have the `pyright` package installed.
  - `ruff` and `codespell` are implemented as `pre-commit` hooks.
 
@@ -94,7 +94,7 @@ You can also run these checks locally.
 You can run the oTree test and get nice output with the following one-liner:
 
 ```bash
-timeout 30 otree devserver & otree test bargaining_test 2> /tmp/stderr.log || cat /tmp/stderr.log; rm /tmp/stderr.log; pkill otree
+otree devserver & otree test 2> /tmp/stderr.log || cat /tmp/stderr.log; rm /tmp/stderr.log; pkill otree
 ```
 
 For the rest, install `pyright` and `pre-commit`, e.g. using `pipx`:
