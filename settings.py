@@ -16,6 +16,7 @@ SESSION_CONFIGS = [
             "{P1,\xa0P2},\n{P1,\xa0P3}": 10,
             "Everyone": 100,
         },
+        doc="Treatment with production function [0, 10, 100]",
     ),
     dict(
         name="treatment_y_30",
@@ -27,6 +28,7 @@ SESSION_CONFIGS = [
             "{P1,\xa0P2}, {P1,\xa0P3}": 30,
             "Everyone": 100,
         },
+        doc="Treatment with production function [0, 30, 100]",
     ),
     dict(
         name="treatment_y_90",
@@ -38,6 +40,7 @@ SESSION_CONFIGS = [
             "{P1,\xa0P2}, {P1,\xa0P3}": 90,
             "Everyone": 100,
         },
+        doc="Treatment with production function [0, 90, 100]",
     ),
     dict(
         name="treatment_dummy_player",
@@ -48,6 +51,7 @@ SESSION_CONFIGS = [
             "{P1,\xa0P3}, {P2,\xa0P3}": 0,
             "{P1,\xa0P2}, Everyone": 100,
         },
+        doc="Treatment with production function [0, 100] and P3 as dummy player",
     ),
 ]
 
