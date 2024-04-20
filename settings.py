@@ -82,7 +82,10 @@ ADMIN_USERNAME = "admin"
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get("OTREE_ADMIN_PASSWORD")
 
-DEMO_PAGE_INTRO_HTML = """ """
+DEMO_PAGE_INTRO_HTML = """
+<b>Welcome to the live bargaining experiment!</b>
+Please choose one of the treatments on the left to start a demo session.
+"""
 
 SECRET_KEY = "5644004254536"
 
