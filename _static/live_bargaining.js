@@ -273,7 +273,7 @@ for (let i = 0; i < thisPlayerHeaders.length; i++) {
 // Timer
 
 let timer = document.getElementsByClassName('otree-timer')[0];
-timer.getElementsByTagName('p')[0].innerHTML += ' — no more communication possible after time expires';
+timer.getElementsByTagName('p')[0].innerHTML += ' — decisions become final after time expires';
 document.addEventListener("DOMContentLoaded", function (event) {
     $('.otree-timer__time-left').on('update.countdown', function (event) {
         if (event.offset.totalSeconds <= 30) {
@@ -323,11 +323,6 @@ let chart = new Chart(ctx, {
 // Payoff table
 payoffTableHeader = document.getElementById('payoff-table-header');
 payoffTableRow = document.getElementById('payoff-table-values');
-
-if (lastPlayerIsDummy) {
-    let coalitionSizeHeader = document.getElementById('payoff-table-header-title');
-    coalitionSizeHeader.innerHTML += ` (excluding P${numPlayers})`;
-}
 
 prod_fct.forEach(function (payoff, i) {
     let headerCell = document.createElement("th");

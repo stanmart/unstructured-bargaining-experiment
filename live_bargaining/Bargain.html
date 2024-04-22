@@ -21,21 +21,19 @@ Bargaining phase
             </li> 
             
             {{ if last_player_is_dummy }}
-            <li><span class="red-highlight">  Note that in this round, unlike in previous rounds, the group's budget does not depend on whether Player 5 is in the group or not.</span></li>
+            <li style="display: none;" class="dummy-instruction">The group's budget does not depend on Player 3's inclusion. They can still be included in any group.</li>
             {{ endif }}
-            <!-- The line below might be more suitable for the final experiment -->
-            <!-- <li style="display: none;" class="dummy-instruction">The group's budget does not depend on Player 5's inclusion. They can still be included in any group.</li> -->
                 
             <li> 
-                Use the <span class="red-highlight">chat</span> below for bargaining. The other interfaces are additional coordination tools. 
+                Use the <span class="red-highlight">chat</span> below for bargaining.
                 You can make as many proposals as you like and change your currently accepted proposal any time. </li>
             <li> 
                 You have five minutes to bargain. <b> After the five minutes end, the currently accepted proposals will become final. </b> 
             </li>
 
             <li> 
-                <span class="red-highlight"> Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful. </span>
-                <span class="red-highlight"> Otherwise, everyone gets 0 in this round.</b> </span>
+                <span style="font-weight: bold;"> Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful. </span>
+                <span style="font-weight: bold;"> Otherwise, everyone gets 0 in this round.</b> </span>
             </li>
 
         </ul>

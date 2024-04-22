@@ -49,8 +49,6 @@ class C(BaseConstants):
     SMALL1_ROLE = "Player 2"
     SMALL2_ROLE = "Player 3"
 
-    TIME_PER_ROUND = 5 * 60
-
 
 class Subsession(BaseSubsession):
     start_time = models.FloatField(initial=float("inf"))  # type: ignore
@@ -67,13 +65,6 @@ class Player(BasePlayer):
     )  # 0 means no offer accepted
     payoff_this_round = models.IntegerField(initial=0)  # type: ignore
     end_time = models.FloatField(initial=float("inf"))  # type: ignore
-
-
-PROD_FCT = {
-    "{P2, P3}": 0,
-    "{P1, P2}, {P1, P3}": 90,
-    "Everyone": 100,
-}
 
 
 class Proposal(ExtraModel):
@@ -176,7 +167,7 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
-    prod_fct = list(PROD_FCT.values())
+    prod_fct = list(player.session.config["prod_fct"].values())
     coalition_size = sum(members)
     big_player_included = members[0]  # the big player is always first
 
@@ -261,8 +252,8 @@ class Info(Page):
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct=list(PROD_FCT.values()),
-            prod_fct_labels=list(PROD_FCT.keys()),
+            prod_fct=list(player.session.config["prod_fct"].values()),
+            prod_fct_labels=list(player.session.config["prod_fct"].keys()),
         )
 
 
@@ -272,7 +263,7 @@ class WaitForBargaining(WaitPage):
     @staticmethod
     def after_all_players_arrive(subsession: BaseSubsession):  # type: ignore
         subsession.start_time = time.time()  # type: ignore
-        subsession.expiry = time.time() + C.TIME_PER_ROUND  # type: ignore
+        subsession.expiry = time.time() + subsession.session.config["seconds_per_round"]  # type: ignore
 
 
 class Bargain(Page):
@@ -286,14 +277,15 @@ class Bargain(Page):
     def js_vars(player: Player):
         return dict(
             my_id=player.id_in_group,
-            prod_fct=list(PROD_FCT.values()),
-            prod_fct_labels=list(PROD_FCT.keys()),
+            prod_fct=list(player.session.config["prod_fct"].values()),
+            prod_fct_labels=list(player.session.config["prod_fct"].keys()),
         )
 
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            last_player_is_dummy=len(PROD_FCT) == C.PLAYERS_PER_GROUP - 1,
+            last_player_is_dummy=len(player.session.config["prod_fct"])
+            == C.PLAYERS_PER_GROUP - 1,
             actual_round_number=player.subsession.round_number - 1,
         )
 

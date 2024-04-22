@@ -2,8 +2,9 @@ from otree.api import Currency as c, expect, Bot, Submission
 from . import Info, Bargain, BargainingResults
 
 
-def create_offers(method):
+def create_offers(method, Y):
     # Offer 1
+
     method(
         1,
         {
@@ -29,12 +30,16 @@ def create_offers(method):
         {
             "type": "propose",
             "members": [True, True, False],
-            "allocations": [5, 5, 0],
+            "allocations": [
+                Y // 2,
+                Y // 2,
+                0,
+            ],
         },
     )
 
 
-def test_invalid_input(method):
+def test_invalid_input(method, Y, dummy_player=False):
     non_existing_offer = method(1, {"type": "accept", "offer_id": 1})
     expect(
         non_existing_offer,
@@ -46,14 +51,28 @@ def test_invalid_input(method):
         },
     )
 
-    allocation_exceeds_total = method(
-        2,
-        {
-            "type": "propose",
-            "members": [True, False, True],
-            "allocations": [50, 0, 50],
-        },
-    )
+    if not dummy_player:
+        allocation_exceeds_total = method(
+            2,
+            {
+                "type": "propose",
+                "members": [True, True, False],
+                "allocations": [
+                    Y // 2 + 5,
+                    Y // 2 + 5,
+                    0,
+                ],
+            },
+        )
+    else:
+        allocation_exceeds_total = method(
+            2,
+            {
+                "type": "propose",
+                "members": [True, False, True],
+                "allocations": [50, 0, 50],
+            },
+        )
     expect(
         allocation_exceeds_total,
         {
@@ -154,15 +173,22 @@ def test_invalid_input(method):
 
 
 def call_live_method(method, **kwargs):
-    print(f"Round {kwargs['round_number']}: ", end="")
+    print(
+        f"Session {kwargs['group'].session.config['name']}, round {kwargs['round_number']}: ",
+        end="",
+    )
+
+    prod_fct = kwargs["group"].session.config["prod_fct"]
+    Y = list(prod_fct.values())[1]
+    dummy_player = len(prod_fct) == 2
 
     if kwargs["round_number"] == 1:
         print("Testing invalid input")
-        test_invalid_input(method)
+        test_invalid_input(method, Y, dummy_player)
 
     if kwargs["round_number"] == 2:
         print("Testing grand coalition")
-        create_offers(method)
+        create_offers(method, Y)
         method(3, {"type": "accept", "offer_id": 1})
         method(1, {"type": "accept", "offer_id": 2})
         method(2, {"type": "accept", "offer_id": 2})
@@ -170,21 +196,21 @@ def call_live_method(method, **kwargs):
 
     if kwargs["round_number"] == 3:
         print("Testing no agreement")
-        create_offers(method)
+        create_offers(method, Y)
         method(1, {"type": "accept", "offer_id": 2})
         method(2, {"type": "accept", "offer_id": 2})
         method(3, {"type": "accept", "offer_id": 1})
 
     if kwargs["round_number"] == 4:
         print("Testing smaller coalition")
-        create_offers(method)
+        create_offers(method, Y)
         method(1, {"type": "accept", "offer_id": 3})
         method(2, {"type": "accept", "offer_id": 3})
         method(3, {"type": "accept", "offer_id": 1})
 
     if kwargs["round_number"] == 5:
         print("Testing revoking acceptance")
-        create_offers(method)
+        create_offers(method, Y)
         method(1, {"type": "accept", "offer_id": 1})
         method(2, {"type": "accept", "offer_id": 1})
         method(3, {"type": "accept", "offer_id": 1})
@@ -200,12 +226,14 @@ class PlayerBot(Bot):
         )  # act as if timer expired
         # payoffs are now realized, check them
 
+        Y = list(self.session.config["prod_fct"].values())[1]
+
         num_real_rounds = 4
         expected_payoffs = {
             1: [0, 0, 0],
             2: [50, 25, 25],
             3: [0, 0, 0],
-            4: [5, 5, 0],
+            4: [Y // 2, Y // 2, 0],
             5: [0, 0, 0],
         }
 
@@ -216,7 +244,5 @@ class PlayerBot(Bot):
                 / num_real_rounds
             ),
         )
-
-        print(f"Player {self.player.id_in_group} received payoff: {self.player.payoff}")
 
         yield BargainingResults  # just press proceed
