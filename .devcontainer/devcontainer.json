@@ -12,7 +12,22 @@
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
-			"settings": {},
+			"settings": {
+				"workbench.colorTheme": "Default Dark+",
+				"python.analysis.typeCheckingMode": "basic",
+				"python.languageServer": "Pylance",
+				"editor.renderWhitespace": "all",
+				"gitlens.hovers.currentLine.over": "line",
+				"gitlens.defaultDateShortFormat": "YYYY-MM-DD",
+				"gitlens.defaultDateFormat": "YYYY MMMM DD HH:mm",
+				"editor.inlineSuggest.enabled": true,
+				"terminal.integrated.cursorBlinking": true,
+				"terminal.integrated.cursorStyle": "line",
+				"python.analysis.inlayHints.functionReturnTypes": true,
+				"python.analysis.inlayHints.variableTypes": true,
+				"editor.inlayHints.enabled": "offUnlessPressed",
+				"git-graph.date.format": "ISO Date & Time"
+			},
 			"extensions": [
 				"charliermarsh.ruff",
 				"mhutchie.git-graph",
@@ -37,7 +52,7 @@
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pipx install pre-commit ruff pyright && pip3 install -r requirements.txt",
+	"postCreateCommand": "pipx install pre-commit ruff pyright && pre-commit install && pip3 install -r requirements.txt"
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
