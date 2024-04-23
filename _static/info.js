@@ -10,7 +10,7 @@ const ctx = document.getElementById('payoff-chart');
 let chart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: prod_fct_labels,
+        labels: prod_fct_labels.map(s => s.split(' ')),
         datasets: [{
             label: "Group's value",
             data: prod_fct,
