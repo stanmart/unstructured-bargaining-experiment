@@ -130,6 +130,16 @@ table.shaded-rows tbody tr:nth-child(odd) {
     border-top: 1px solid black;
 }
 
+#payoff-table td {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+#payoff-table th {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
 .payoff {
     text-align: center;
 }
