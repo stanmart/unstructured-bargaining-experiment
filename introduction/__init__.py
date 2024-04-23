@@ -39,6 +39,7 @@ class Proposal(Page):
             prod_fct=list(player.session.config["prod_fct"].values()),
             prod_fct_labels=list(player.session.config["prod_fct"].keys()),
             my_id=1,
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod
@@ -51,6 +52,7 @@ class Coalitions(Page):
     def js_vars(player: Player):
         return dict(
             my_id=1,
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod

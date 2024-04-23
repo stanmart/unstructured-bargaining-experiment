@@ -21,6 +21,7 @@ let pastOffers = []
 let prod_fct = js_vars.prod_fct;
 let prod_fct_labels = js_vars.prod_fct_labels;
 let lastPlayerIsDummy = prod_fct.length == numPlayers - 1;
+let player_names = js_vars.player_names;
 
 let popupFull = document.getElementById('popup-full');
 let popupTitle = document.getElementById('popup-title');
@@ -184,7 +185,7 @@ function updatePastOffers(newPastOffers) {
 
         let from = row.insertCell();
         from.className = "offer-proposer-col";
-        from.innerHTML = `P${offer.player}`;
+        from.innerHTML = player_names[`P${offer.player}`];
 
         for (let i = 0; i < numPlayers; i++) {
             let cell = row.insertCell();

@@ -282,6 +282,7 @@ class Bargain(Page):
             my_id=player.id_in_group,
             prod_fct=list(player.session.config["prod_fct"].values()),
             prod_fct_labels=list(player.session.config["prod_fct"].keys()),
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod
@@ -382,6 +383,7 @@ class BargainingResults(Page):
             acceptances=acceptance_data["acceptances"],
             coalition_members=acceptance_data["coalition_members"],
             payoffs=acceptance_data["payoffs"],
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod
