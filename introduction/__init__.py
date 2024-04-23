@@ -41,6 +41,10 @@ class Proposal(Page):
             my_id=1,
         )
 
+    @staticmethod
+    def vars_for_template(subsession):
+        return subsession.session.config["player_names"]
+
 
 class Coalitions(Page):
     @staticmethod
@@ -48,6 +52,10 @@ class Coalitions(Page):
         return dict(
             my_id=1,
         )
+
+    @staticmethod
+    def vars_for_template(subsession):
+        return subsession.session.config["player_names"]
 
 
 class Payment(Page):
