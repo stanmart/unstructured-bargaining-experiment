@@ -17,6 +17,7 @@ Instructions 2/4
     You and the two other players will each be randomly assigned a player number ("Player 1/2/3"). 
     <b> The player numbers will be reshuffled each round. </b>
 </p>
+{{ if not last_player_is_dummy }}
 <p>
     <b> 
         A group needs to include Player 1 to receive any budget. 
@@ -28,6 +29,14 @@ Instructions 2/4
     <li>If Player 1 and one other player form a group together, they have a budget of {{small_coalition_value}} CHF.</li>
     <li>If all three players form a group together, they have a budget of {{grand_coalition_value}} CHF.</li>
 </ul>
+{{ else }}
+<p>
+    <b> 
+        A group needs to include Players 1 and 2 to receive a budget of CHF {{grand_coalition_value}}. 
+        The group's budget does not depend on Player 3's inclusion. They can still be included in any group.
+    </b>
+</p>
+{{ endif }}
 
 <p>
     For the size of the budget of each possible group, you will see a table and a corresponding graph like the one below ("Group budgets"). 

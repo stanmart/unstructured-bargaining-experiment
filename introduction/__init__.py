@@ -46,6 +46,8 @@ class Proposal(Page):
         return dict(
             small_coalition_value=list(player.session.config["prod_fct"].values())[1],
             grand_coalition_value=list(player.session.config["prod_fct"].values())[-1],
+            last_player_is_dummy=len(player.session.config["prod_fct"])
+            == 2,  # hardcoded group size
         )
 
 
