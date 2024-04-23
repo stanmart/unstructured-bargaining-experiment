@@ -43,7 +43,7 @@ class Proposal(Page):
         )
 
     @staticmethod
-    def vars_for_template(subsession):
+    def vars_for_template(subsession: BaseSubsession):  # type: ignore
         return subsession.session.config["player_names"]
 
 
@@ -56,7 +56,7 @@ class Coalitions(Page):
         )
 
     @staticmethod
-    def vars_for_template(subsession):
+    def vars_for_template(subsession: BaseSubsession):  # type: ignore
         return subsession.session.config["player_names"]
 
 
