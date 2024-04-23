@@ -10,7 +10,7 @@ def create_offers(method, Y):
         {
             "type": "propose",
             "members": [True, True, True],
-            "allocations": [100, 0, 0],
+            "allocations": [90, 5, 5],
         },
     )
 
@@ -169,6 +169,24 @@ def test_invalid_input(method, Y, dummy_player=False):
     expect(
         incomplete_data_allocations,
         {3: {"type": "error", "content": "Data is incomplete"}},
+    )
+
+    member_receives_zero = method(
+        1,
+        {
+            "type": "propose",
+            "members": [True, True, True],
+            "allocations": [100, 0, 0],
+        },
+    )
+    expect(
+        member_receives_zero,
+        {
+            1: {
+                "type": "error",
+                "content": "Invalid allocation: all members must receive a positive amount",
+            }
+        },
     )
 
 
