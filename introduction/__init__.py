@@ -54,6 +54,7 @@ class Coalitions(Page):
     def js_vars(player: Player):
         return dict(
             my_id=1,
+            prod_fct=list(player.session.config["prod_fct"].values()),
         )
 
 
