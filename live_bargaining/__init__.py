@@ -175,16 +175,37 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
-    if not big_player_included and sum(allocations) > 0:
+    last_player_is_dummy = len(prod_fct) == C.PLAYERS_PER_GROUP - 1
+
+    if not last_player_is_dummy and not big_player_included and sum(allocations) > 0:
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": f"Invalid allocation: allocation has to be zero when Player {player.session.config['player_names']['P1']} is not included",  # noqa: E501
+                "content": (
+                    "Invalid allocation: allocation has to be zero when "
+                    f"Player {player.session.config['player_names']['P1']} is not included"
+                ),
+            }
+        }
+
+    if (
+        last_player_is_dummy
+        and not (members[0] and members[1])
+        and sum(allocations) > 0
+    ):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": (
+                    "Invalid allocation: allocation has to be zero when Players "
+                    f"{player.session.config['player_names']['P1']} and "
+                    f"{player.session.config['player_names']['P2']} are not included"
+                ),
             }
         }
 
     num_small_players = coalition_size - big_player_included
-    if len(prod_fct) == C.PLAYERS_PER_GROUP - 1:  # last player is a dummy player
+    if last_player_is_dummy:  # last player is a dummy player
         num_small_players -= members[-1]  # the dummy player is always last
 
     if sum(allocations) > prod_fct[num_small_players]:

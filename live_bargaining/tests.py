@@ -39,7 +39,7 @@ def create_offers(method, Y):
     )
 
 
-def test_invalid_input(method, Y, dummy_player, P1_name):
+def test_invalid_input(method, Y, dummy_player, player_names):
     non_existing_offer = method(1, {"type": "accept", "offer_id": 1})
     expect(
         non_existing_offer,
@@ -69,8 +69,8 @@ def test_invalid_input(method, Y, dummy_player, P1_name):
             2,
             {
                 "type": "propose",
-                "members": [True, False, True],
-                "allocations": [50, 0, 50],
+                "members": [True, True, True],
+                "allocations": [50, 50, 10],
             },
         )
     expect(
@@ -91,15 +91,26 @@ def test_invalid_input(method, Y, dummy_player, P1_name):
             "allocations": [0, 50, 50],
         },
     )
-    expect(
-        p1_not_included,
-        {
-            3: {
-                "type": "error",
-                "content": f"Invalid allocation: allocation has to be zero when Player {P1_name} is not included",
-            }
-        },
-    )
+    if not dummy_player:
+        expect(
+            p1_not_included,
+            {
+                3: {
+                    "type": "error",
+                    "content": f"Invalid allocation: allocation has to be zero when Player {player_names['P1']} is not included",
+                }
+            },
+        )
+    else:
+        expect(
+            p1_not_included,
+            {
+                3: {
+                    "type": "error",
+                    "content": f"Invalid allocation: allocation has to be zero when Players {player_names['P1']} and {player_names['P2']} are not included",
+                }
+            },
+        )
 
     invalid_allocaion_negative = method(
         1,
@@ -179,13 +190,13 @@ def call_live_method(method, **kwargs):
     )
 
     prod_fct = kwargs["group"].session.config["prod_fct"]
-    P1_name = kwargs["group"].session.config["player_names"]["P1"]
+    player_names = kwargs["group"].session.config["player_names"]
     Y = list(prod_fct.values())[1]
     dummy_player = len(prod_fct) == 2
 
     if kwargs["round_number"] == 1:
         print("Testing invalid input")
-        test_invalid_input(method, Y, dummy_player, P1_name)
+        test_invalid_input(method, Y, dummy_player, player_names)
 
     if kwargs["round_number"] == 2:
         print("Testing grand coalition")

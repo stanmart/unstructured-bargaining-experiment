@@ -91,8 +91,12 @@ function sendOffer() {
         'allocations': allocations,
     };
 
-    if (totalSharedValue > 0 && !members[0]) {
+    if (!lastPlayerIsDummy && totalSharedValue > 0 && !isMemberCheckboxes[0].checked) {
         openPopup(`Invalid proposal: the budget is zero when Player ${player_names['P1']} is not included in the group`, 'error');
+        return;
+    }
+    if (lastPlayerIsDummy && totalSharedValue > 0 && !(isMemberCheckboxes[0].checked && isMemberCheckboxes[1].checked)) {
+        openPopup(`Invalid proposal: the budget is zero when Players ${player_names['P1']} and ${player_names['P2']} are not included in the group`, 'error');
         return;
     }
     if (totalSharedValue > totalShareableValue) {
