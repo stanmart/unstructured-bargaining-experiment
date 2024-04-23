@@ -98,6 +98,12 @@ function sendOffer() {
         openPopup('Invalid proposal: total amount exceeds the budget available to this group', 'error');
         return;
     }
+    for (let i = 0; i < numPlayers; i++) {
+        if (isMemberCheckboxes[i].checked && allocationTextBoxes[i].value === '0') {
+            openPopup('Invalid proposal: all group members must receive a positive amount', 'error');
+            return;
+        }
+    }
 
     newPastOffers.push(newOffer);
     updatePastOffers(newPastOffers);
