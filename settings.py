@@ -14,7 +14,7 @@ SESSION_CONFIGS = [
         seconds_per_round=5 * 60,
         prod_fct={
             "P2+P3": 0,
-            "P1+P2 P1+P3": 10,
+            "P1+P2<br>P1+P3": 10,
             "P1+P2+P3": 100,
         },
         doc="Treatment with production function [0, 10, 100]",
@@ -27,7 +27,7 @@ SESSION_CONFIGS = [
         seconds_per_round=5 * 60,
         prod_fct={
             "P2+P3": 0,
-            "P1+P2 P1+P3": 30,
+            "P1+P2<br>P1+P3": 30,
             "P1+P2+P3": 100,
         },
         doc="Treatment with production function [0, 30, 100]",
@@ -40,7 +40,7 @@ SESSION_CONFIGS = [
         seconds_per_round=5 * 60,
         prod_fct={
             "P2+P3": 0,
-            "P1+P2 P1+P3": 90,
+            "P1+P2<br>P1+P3": 90,
             "P1+P2+P3": 100,
         },
         doc="Treatment with production function [0, 90, 100]",
@@ -52,8 +52,8 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
-            "P1+P3 P2+P3": 0,
-            "P1+P2 P1+P2+P3": 100,
+            "P1+P3<br>P2+P3": 0,
+            "P1+P2<br>P1+P2+P3": 100,
         },
         doc="Treatment with production function [0, 100] and P3 as dummy player",
     ),

@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: prod_fct_labels.map(s => s.split(' ')),
+            labels: prod_fct_labels.map(s => s.split('<br>')),
             datasets: [{
                 label: "Group's value",
                 data: prod_fct,
