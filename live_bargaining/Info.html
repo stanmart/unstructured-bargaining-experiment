@@ -22,10 +22,12 @@
         <div style="width: 350px; align-content: center;">
             <table id="payoff-table" style="margin-bottom: 30px;">
                 <colgroup>
-                    <col style="width: 40%;">
-                    <col style="width: 20%">
-                    <col style="width: 20%">
-                    <col style="width: 20%">
+                    <col style="width: 34%;">
+                    <col style="width: 22%">
+                    <col style="width: 22%">
+                    {{ if not last_player_is_dummy }}
+                    <col style="width: 22%">
+                    {{ endif }}
                 </colgroup>
                 <tr id="payoff-table-header">
                     <th id="payoff-table-header-title">Group members</th>

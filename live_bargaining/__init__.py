@@ -246,7 +246,11 @@ def create_acceptance_data(group: Group):
 class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
-        return dict(actual_round_number=player.subsession.round_number - 1)
+        return dict(
+            last_player_is_dummy=len(player.session.config["prod_fct"])
+            == C.PLAYERS_PER_GROUP - 1,
+            actual_round_number=player.subsession.round_number - 1,
+        )
 
     @staticmethod
     def js_vars(player: Player):
