@@ -123,21 +123,30 @@ table.shaded-rows tbody tr:nth-child(odd) {
 
 #payoff-table {
     width: 100%;
+    font-size: 0.9rem;
+    border-collapse:separate;
+    border:solid black 1px;
+    border-radius:6px;
 }
 
-#payoff-table tr {
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+#payoff-table-header th {
+    border-top: none;
+    border-bottom: solid black 1px;;
 }
 
 #payoff-table td {
     border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-right: none;
 }
 
 #payoff-table th {
     border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-right: none;
+}
+
+#payoff-table th:first-child {
+    border-left: none;
+    border-right: none;
 }
 
 .payoff {
