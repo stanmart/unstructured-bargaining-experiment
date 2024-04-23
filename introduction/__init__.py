@@ -41,6 +41,13 @@ class Proposal(Page):
             my_id=1,
         )
 
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            small_coalition_value=list(player.session.config["prod_fct"].values())[1],
+            grand_coalition_value=list(player.session.config["prod_fct"].values())[-1],
+        )
+
 
 class Coalitions(Page):
     @staticmethod
