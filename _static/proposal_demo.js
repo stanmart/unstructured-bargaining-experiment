@@ -92,7 +92,7 @@ function sendOffer() {
     };
 
     if (totalSharedValue > 0 && !members[0]) {
-        openPopup('Invalid proposal: the budget is zero when Player 1 is not included in the group', 'error');
+        openPopup(`Invalid proposal: the budget is zero when Player ${player_names['P1']} is not included in the group`, 'error');
         return;
     }
     if (totalSharedValue > totalShareableValue) {

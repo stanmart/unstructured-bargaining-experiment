@@ -39,7 +39,7 @@ def create_offers(method, Y):
     )
 
 
-def test_invalid_input(method, Y, dummy_player=False):
+def test_invalid_input(method, Y, dummy_player, P1_name):
     non_existing_offer = method(1, {"type": "accept", "offer_id": 1})
     expect(
         non_existing_offer,
@@ -96,7 +96,7 @@ def test_invalid_input(method, Y, dummy_player=False):
         {
             3: {
                 "type": "error",
-                "content": "Invalid allocation: allocation has to be zero when Player 1 is not included",
+                "content": f"Invalid allocation: allocation has to be zero when Player {P1_name} is not included",
             }
         },
     )
@@ -179,12 +179,13 @@ def call_live_method(method, **kwargs):
     )
 
     prod_fct = kwargs["group"].session.config["prod_fct"]
+    P1_name = kwargs["group"].session.config["player_names"]["P1"]
     Y = list(prod_fct.values())[1]
     dummy_player = len(prod_fct) == 2
 
     if kwargs["round_number"] == 1:
         print("Testing invalid input")
-        test_invalid_input(method, Y, dummy_player)
+        test_invalid_input(method, Y, dummy_player, P1_name)
 
     if kwargs["round_number"] == 2:
         print("Testing grand coalition")

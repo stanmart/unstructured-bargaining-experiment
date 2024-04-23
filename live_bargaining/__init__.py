@@ -45,10 +45,6 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = 3
     NUM_ROUNDS = 5  # todo: adjust for main experiment
 
-    BIG_ROLE = "Player 1"
-    SMALL1_ROLE = "Player 2"
-    SMALL2_ROLE = "Player 3"
-
 
 class Subsession(BaseSubsession):
     start_time = models.FloatField(initial=float("inf"))  # type: ignore
@@ -183,7 +179,7 @@ def check_proposal_validity(player: Player, members, allocations):
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: allocation has to be zero when Player 1 is not included",  # noqa: E501
+                "content": f"Invalid allocation: allocation has to be zero when Player {player.session.config['player_names']['P1']} is not included",  # noqa: E501
             }
         }
 

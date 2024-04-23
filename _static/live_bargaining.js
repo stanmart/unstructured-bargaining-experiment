@@ -69,7 +69,7 @@ for (let i = 0; i < numPlayers; i++) {
 
 function sendOffer() {
     if (totalSharedValue > 0 && !isMemberCheckboxes[0].checked) {
-        openPopup('Invalid proposal: the budget is zero when Player 1 is not included in the group', 'error');
+        openPopup(`Invalid proposal: the budget is zero when Player ${player_names['P1']} is not included in the group`, 'error');
         return;
     }
     if (totalSharedValue > totalShareableValue) {
