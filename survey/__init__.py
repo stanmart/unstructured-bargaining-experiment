@@ -1,5 +1,7 @@
 from math import ceil
 
+from country_list import countries_for_language
+
 from otree.api import (
     BaseConstants,
     BaseGroup,
@@ -45,7 +47,10 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     study_field = models.StringField(label="What is your field of study?")  # type: ignore
-    nationality = models.StringField(label="What is your nationality?")  # type: ignore
+    nationality = models.StringField(
+        label="What is your nationality?",
+        choices=countries_for_language("en"),
+    )  # type: ignore
     own_strategy = models.LongStringField(
         label="What was your bargaining strategy and why?"
     )  # type: ignore

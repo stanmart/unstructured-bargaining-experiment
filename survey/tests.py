@@ -9,7 +9,7 @@ class PlayerBot(Bot):
             "gender": "Female",
             "degree": "PhD",
             "study_field": "Canine Behavior",
-            "nationality": "Isle of Dogs",
+            "nationality": "CH",
             "own_strategy": "I barked a lot and they barked back",
             "other_players_strategy": "They didn't give me ear scratches :(",
             "pilot_difficulty": "Very easy",
