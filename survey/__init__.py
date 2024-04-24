@@ -33,7 +33,7 @@ class Player(BasePlayer):
     gender = models.StringField(
         choices=[["Male", "Male"], ["Female", "Female"], ["Other", "Other"]],
         label="What is your gender?",
-        widget=widgets.RadioSelect,
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     degree = models.StringField(
         choices=[
@@ -42,8 +42,8 @@ class Player(BasePlayer):
             ["PhD", "PhD"],
             ["Other", "Other"],
         ],
-        label="What is your current degree?",
-        widget=widgets.RadioSelect,
+        label="What is the degree you are currently pursuing?",
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     study_field = models.StringField(
         label="""
@@ -60,25 +60,112 @@ class Player(BasePlayer):
 
     # TODO: delete for the main experiment
     pilot_difficulty = models.StringField(
-        label="""
-        How would you rate the difficulty level of the game?"""
+        choices=[
+            ["Very easy", "Very easy"],
+            ["Rather easy", "Rather easy"],
+            ["Medium difficulty", "Medium difficulty"],
+            ["Rather difficult", "Rather difficult"],
+            ["Very difficult", "Very difficult"],
+        ],
+        label="How would you rate the difficulty level of the game?",
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_explanation = models.StringField(
-        label="""
-        How well was the game explained? What parts were unclear to you? What would you change in the explanation?"""  # noqa: E501
+        choices=[
+            ["Very badly", "Very badly"],
+            ["Rather badly", "Rather badly"],
+            ["Neutral", "Neutral"],
+            ["Rather well", "Rather well"],
+            ["Very well", "Very well"],
+        ],
+        label="How well was the game explained?",  # noqa: E501
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_interface = models.StringField(
-        label="""
-        How well could you work with the bargaining interface? What parts would you change?"""  # noqa: E501
+        choices=[
+            ["Very badly", "Very badly"],
+            ["Rather badly", "Rather badly"],
+            ["Neutral", "Neutral"],
+            ["Rather well", "Rather well"],
+            ["Very well", "Very well"],
+        ],
+        label="How well could you work with the bargaining interface?",  # noqa: E501
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_time = models.StringField(
-        label="""
-        Did you feel there was enough time for the bargaining? How much would you have preferred?"""  # noqa: E501
+        choices=[
+            ["Way too little", "Way too little"],
+            ["Slightly too little", "Slightly too little"],
+            ["Just enough", "Just enough"],
+            ["Slightly too much", "Slightly too much"],
+            ["Way too much", "Way too much"],
+        ],
+        label="Did you feel there was enough time for the bargaining?",  # noqa: E501
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
     comments = models.LongStringField(
-        label="""
-        Any additional comments you want to share with us?"""
+        label="Any additional comments you want to share with us?"
+    )  # type: ignore
+
+    dummy_player_axiom = models.StringField(
+        choices=[
+            ["Strongly Disagree", "Strongly Disagree"],
+            ["Disagree", "Disagree"],
+            ["Neutral", "Neutral"],
+            ["Agree", "Agree"],
+            ["Strongly Agree", "Strongly Agree"],
+        ],
+        label="Players who contribute nothing should receive nothing.",
+        widget=widgets.RadioSelectHorizontal,
+    )  # type: ignore
+
+    symmetry_axiom = models.StringField(
+        choices=[
+            ["Strongly Disagree", "Strongly Disagree"],
+            ["Disagree", "Disagree"],
+            ["Neutral", "Neutral"],
+            ["Agree", "Agree"],
+            ["Strongly Agree", "Strongly Agree"],
+        ],
+        label="If two players contribute the same to the group's budget, they should receive the same payoff.",
+        widget=widgets.RadioSelectHorizontal,
+    )  # type: ignore
+
+    efficiency_axiom = models.StringField(
+        choices=[
+            ["Strongly Disagree", "Strongly Disagree"],
+            ["Disagree", "Disagree"],
+            ["Neutral", "Neutral"],
+            ["Agree", "Agree"],
+            ["Strongly Agree", "Strongly Agree"],
+        ],
+        label="The whole available budget should be distributed (nothing should be left on the table).",
+        widget=widgets.RadioSelectHorizontal,
+    )  # type: ignore
+
+    linearity_axiom = models.StringField(
+        choices=[
+            ["Strongly Disagree", "Strongly Disagree"],
+            ["Disagree", "Disagree"],
+            ["Neutral", "Neutral"],
+            ["Agree", "Agree"],
+            ["Strongly Agree", "Strongly Agree"],
+        ],
+        label="I don't know how to do linearity tbh...",
+        widget=widgets.RadioSelectHorizontal,
+    )  # type: ignore
+
+    stability_axiom = models.StringField(
+        choices=[
+            ["Strongly Disagree", "Strongly Disagree"],
+            ["Disagree", "Disagree"],
+            ["Neutral", "Neutral"],
+            ["Agree", "Agree"],
+            ["Strongly Agree", "Strongly Agree"],
+        ],
+        label="If a smaller group has a budget of X, then their members should receive at least X in total.",
+        widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
 
@@ -99,6 +186,11 @@ def compute_final_payoffs(subsession: Subsession):
 class Questions(Page):
     form_model = "player"
     form_fields = [
+        "dummy_player_axiom",
+        "symmetry_axiom",
+        "efficiency_axiom",
+        "linearity_axiom",
+        "stability_axiom",
         "age",
         "gender",
         "degree",
@@ -111,6 +203,12 @@ class Questions(Page):
         "pilot_time",
         "comments",
     ]
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            num_axiom_questions=5,  # They need to come first in form_fields
+        )
 
 
 class WaitForAll(WaitPage):

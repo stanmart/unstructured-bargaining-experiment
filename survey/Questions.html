@@ -2,13 +2,68 @@
 Survey
 {{ endblock }}
 
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block content }}
 
     <p>
-        Please answer the following questions.
+        To conclude the experiment, please answer the following questions.
     </p>
 
-    {{ formfields }}
+    <div class="section">
+        <h4>Demographic questions</h4>
+        {{ formfield 'age' }}
+        {{ formfield 'gender' }}
+        {{ formfield 'degree' }}
+        {{ formfield 'study_field' }}
+        {{ formfield 'nationality' }}
+    </div>
+
+    <div class="section">
+        <h4>Preference questions</h4>
+        <p>For each of the following statements, please indicate the extent to which you agree or disagree with it.</p>
+        <table class="likert-table">
+            <colgroup>
+                <col span="1" style="width: 40%;">
+                <col span="5" style="width: 12%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Strongly disagree</th>
+                    <th>Disagree</th>
+                    <th>Neutral</th>
+                    <th>Agree</th>
+                    <th>Strongly agree</th>
+                </tr>
+            </thead>
+            {{ for field in form }}
+                {{ if forloop.counter <= num_axiom_questions }}
+                <tr>
+                    <td>{{ field.label }}</td>
+                    {{ for option in field }}
+                        <td>
+                            {{ option }}
+                        </td>
+                    {{ endfor }}
+                </tr>
+                {{ endif }}
+
+            {{ endfor }}
+        </table>
+    </div>
+
+    <div class="section">
+        <h4>Feedback</h4>
+        {{ formfield 'reflection' }}
+        {{ formfield 'pilot_difficulty' }}
+        {{ formfield 'pilot_explanation' }}
+        {{ formfield 'pilot_interface' }}
+        {{ formfield 'pilot_time' }}
+        {{ formfield 'comments' }}
+    </div>
 
 {{ next_button}}
 
