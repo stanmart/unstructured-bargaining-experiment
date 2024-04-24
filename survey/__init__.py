@@ -36,6 +36,10 @@ class Player(BasePlayer):
         label="What is your gender?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
+    gender_other = models.StringField(
+        label="If you selected 'Other', please specify",
+        blank=True,
+    )  # type: ignore
     degree = models.StringField(
         choices=[
             "Bachelor",
@@ -46,9 +50,22 @@ class Player(BasePlayer):
         label="What is the degree you are currently pursuing?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
+    degree_other = models.StringField(
+        label="If you selected 'Other', please specify",
+        blank=True,
+    )  # type: ignore
     study_field = models.StringField(label="What is your field of study?")  # type: ignore
     nationality = models.StringField(
         label="What is your nationality?",
+        choices=countries_for_language("en"),
+    )  # type: ignore
+    has_second_nationality = models.BooleanField(
+        label="Do you have a second nationality?",
+        widget=widgets.RadioSelectHorizontal,
+        initial=False,
+    )  # type: ignore
+    second_nationality = models.StringField(
+        label="What is your second nationality?",
         choices=countries_for_language("en"),
     )  # type: ignore
     own_strategy = models.LongStringField(
@@ -189,9 +206,13 @@ class Questions(Page):
         "stability_axiom",
         "age",
         "gender",
+        "gender_other",
         "degree",
+        "degree_other",
         "study_field",
         "nationality",
+        "has_second_nationality",
+        "second_nationality",
         "own_strategy",
         "other_players_strategy",
         "pilot_difficulty",
