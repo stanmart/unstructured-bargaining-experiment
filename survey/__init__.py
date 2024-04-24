@@ -108,7 +108,8 @@ class Player(BasePlayer):
     )  # type: ignore
 
     comments = models.LongStringField(
-        label="Any additional comments you want to share with us?"
+        label="Any additional comments you want to share with us?",
+        blank=True,
     )  # type: ignore
 
     dummy_player_axiom = models.StringField(
