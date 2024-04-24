@@ -8,7 +8,8 @@ class PlayerBot(Bot):
             "age": 14,  # not bad for a dog, might be a bit young for our subjects
             "gender": "Female",
             "degree": "PhD",
-            "study_field": "Canine Behavior",
+            "study_field": "Other",
+            "study_field_other": "Stickology",
             "nationality": "CH",
             "has_second_nationality": False,
             "own_strategy": "I barked a lot and they barked back",
