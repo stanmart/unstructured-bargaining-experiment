@@ -60,9 +60,9 @@ class Player(BasePlayer):
         choices=countries_for_language("en"),
     )  # type: ignore
     has_second_nationality = models.BooleanField(
-        label="Do you have a second nationality?",
-        widget=widgets.RadioSelectHorizontal,
-        initial=False,
+        label="Do you have a second nationality?",  # type: ignore
+        widget=widgets.RadioSelectHorizontal,  # type: ignore
+        initial=False,  # type: ignore
     )  # type: ignore
     second_nationality = models.StringField(
         label="What is your second nationality?",
