@@ -311,6 +311,7 @@ function checkCompletion() {
         for (let i = 0; i < next_buttons.length; i++) {
             next_buttons[i].style.visibility = '';
         }
+        document.getElementById('exercises-remaining-text').style.visibility = 'hidden';
         canContinue = true;
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
