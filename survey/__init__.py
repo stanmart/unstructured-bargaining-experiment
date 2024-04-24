@@ -6,7 +6,6 @@ from otree.api import (
     BasePlayer,
     BaseSubsession,
     Page,
-    WaitPage,
     cu,
     models,
     widgets,
@@ -170,14 +169,9 @@ class Player(BasePlayer):
 
 
 # FUNCTIONS
-def compute_final_payoffs(subsession: Subsession):
-    players = subsession.get_players()
-    # get number of (non-trial) bargaining rounds
-    for player in players:
-        player.participant.payoff = cu(ceil(player.participant.payoff))
-        player.participant.final_payoff = (
-            player.participant.payoff_plus_participation_fee()
-        )
+def compute_final_payoffs(player: Player):
+    player.participant.payoff = cu(ceil(player.participant.payoff))
+    player.participant.final_payoff = player.participant.payoff_plus_participation_fee()
 
 
 # PAGES
@@ -210,12 +204,9 @@ class Questions(Page):
             num_axiom_questions=5,  # They need to come first in form_fields
         )
 
-
-class WaitForAll(WaitPage):
-    wait_for_all_groups = True
-    after_all_players_arrive = compute_final_payoffs  # type: ignore
-    # compute_final_payoffs expects a Subsession as input
-    # because of wait_for_all_groups = True
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        compute_final_payoffs(player)
 
 
 class Completion(Page):
@@ -231,4 +222,4 @@ class Completion(Page):
         }
 
 
-page_sequence = [Questions, WaitForAll, Completion]
+page_sequence = [Questions, Completion]
