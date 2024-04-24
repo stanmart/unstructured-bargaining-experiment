@@ -44,21 +44,13 @@ class Player(BasePlayer):
         label="What is the degree you are currently pursuing?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
-    study_field = models.StringField(
-        label="""
-        What is your field of study?"""
-    )  # type: ignore
-    nationality = models.StringField(
-        label="""
-        What is your nationality?"""
-    )  # type: ignore
+    study_field = models.StringField(label="What is your field of study?")  # type: ignore
+    nationality = models.StringField(label="What is your nationality?")  # type: ignore
     own_strategy = models.LongStringField(
-        label="""
-        What was your bargaining strategy and why?"""  # noqa: E501
+        label="What was your bargaining strategy and why?"
     )  # type: ignore
     other_players_strategy = models.LongStringField(
-        label="""
-        What did you think about the behavior of the other players?"""  # noqa: E501
+        label="What did you think about the behavior of the other players?"
     )  # type: ignore
 
     # TODO: delete for the main experiment
@@ -81,7 +73,7 @@ class Player(BasePlayer):
             ["Well", "Well"],
             ["Very well", "Very well"],
         ],
-        label="How well was the game explained?",  # noqa: E501
+        label="How well was the game explained?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_interface = models.StringField(
@@ -92,7 +84,7 @@ class Player(BasePlayer):
             ["Well", "Well"],
             ["Very well", "Very well"],
         ],
-        label="How well could you work with the bargaining interface?",  # noqa: E501
+        label="How well could you work with the bargaining interface?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_time = models.StringField(
@@ -103,7 +95,7 @@ class Player(BasePlayer):
             ["Too much", "Too much"],
             ["Way too much", "Way too much"],
         ],
-        label="Did you feel there was enough time for the bargaining?",  # noqa: E501
+        label="Did you feel there was enough time for the bargaining?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
