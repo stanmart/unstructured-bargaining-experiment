@@ -30,16 +30,16 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     age = models.IntegerField(label="What is your age?", min=13, max=125)  # type: ignore
     gender = models.StringField(
-        choices=[["Male", "Male"], ["Female", "Female"], ["Other", "Other"]],
+        choices=["Male", "Female", "Other"],
         label="What is your gender?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     degree = models.StringField(
         choices=[
-            ["Bachelor", "Bachelor"],
-            ["Master", "Master"],
-            ["PhD", "PhD"],
-            ["Other", "Other"],
+            "Bachelor",
+            "Master",
+            "PhD",
+            "Other",
         ],
         label="What is the degree you are currently pursuing?",
         widget=widgets.RadioSelectHorizontal,
@@ -56,44 +56,44 @@ class Player(BasePlayer):
     # TODO: delete for the main experiment
     pilot_difficulty = models.StringField(
         choices=[
-            ["Very easy", "Very easy"],
-            ["Easy", "Easy"],
-            ["Medium difficulty", "Medium difficulty"],
-            ["Difficult", "Difficult"],
-            ["Very difficult", "Very difficult"],
+            "Very easy",
+            "Easy",
+            "Medium difficulty",
+            "Difficult",
+            "Very difficult",
         ],
         label="How would you rate the difficulty level of the game?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_explanation = models.StringField(
         choices=[
-            ["Very poorly", "Very poorly"],
-            ["Poorly", "Poorly"],
-            ["Neutral", "Neutral"],
-            ["Well", "Well"],
-            ["Very well", "Very well"],
+            "Very poorly",
+            "Poorly",
+            "Neutral",
+            "Well",
+            "Very well",
         ],
         label="How well was the game explained?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_interface = models.StringField(
         choices=[
-            ["Very poorly", "Very poorly"],
-            ["Poorly", "Poorly"],
-            ["Neutral", "Neutral"],
-            ["Well", "Well"],
-            ["Very well", "Very well"],
+            "Very poorly",
+            "Poorly",
+            "Neutral",
+            "Well",
+            "Very well",
         ],
         label="How well could you work with the bargaining interface?",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     pilot_time = models.StringField(
         choices=[
-            ["Way too little", "Way too little"],
-            ["Too little", "Too little"],
-            ["Just right", "Just right"],
-            ["Too much", "Too much"],
-            ["Way too much", "Way too much"],
+            "Way too little",
+            "Too little",
+            "Just right",
+            "Too much",
+            "Way too much",
         ],
         label="Did you feel there was enough time for the bargaining?",
         widget=widgets.RadioSelectHorizontal,
@@ -106,11 +106,11 @@ class Player(BasePlayer):
 
     dummy_player_axiom = models.StringField(
         choices=[
-            ["Strongly Disagree", "Strongly Disagree"],
-            ["Disagree", "Disagree"],
-            ["Neutral", "Neutral"],
-            ["Agree", "Agree"],
-            ["Strongly Agree", "Strongly Agree"],
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree",
         ],
         label="Players who contribute nothing should receive nothing.",
         widget=widgets.RadioSelectHorizontal,
@@ -118,11 +118,11 @@ class Player(BasePlayer):
 
     symmetry_axiom = models.StringField(
         choices=[
-            ["Strongly Disagree", "Strongly Disagree"],
-            ["Disagree", "Disagree"],
-            ["Neutral", "Neutral"],
-            ["Agree", "Agree"],
-            ["Strongly Agree", "Strongly Agree"],
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree",
         ],
         label="If two players contribute the same to the group's budget, they should receive the same payoff.",
         widget=widgets.RadioSelectHorizontal,
@@ -130,11 +130,11 @@ class Player(BasePlayer):
 
     efficiency_axiom = models.StringField(
         choices=[
-            ["Strongly Disagree", "Strongly Disagree"],
-            ["Disagree", "Disagree"],
-            ["Neutral", "Neutral"],
-            ["Agree", "Agree"],
-            ["Strongly Agree", "Strongly Agree"],
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree",
         ],
         label="The whole available budget should be distributed (nothing should be left on the table).",
         widget=widgets.RadioSelectHorizontal,
@@ -142,11 +142,11 @@ class Player(BasePlayer):
 
     linearity_axiom = models.StringField(
         choices=[
-            ["Strongly Disagree", "Strongly Disagree"],
-            ["Disagree", "Disagree"],
-            ["Neutral", "Neutral"],
-            ["Agree", "Agree"],
-            ["Strongly Agree", "Strongly Agree"],
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree",
         ],
         label="I don't know how to do linearity tbh...",
         widget=widgets.RadioSelectHorizontal,
@@ -154,11 +154,11 @@ class Player(BasePlayer):
 
     stability_axiom = models.StringField(
         choices=[
-            ["Strongly Disagree", "Strongly Disagree"],
-            ["Disagree", "Disagree"],
-            ["Neutral", "Neutral"],
-            ["Agree", "Agree"],
-            ["Strongly Agree", "Strongly Agree"],
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree",
         ],
         label="If a smaller group has a budget of X, then their members should receive at least X in total.",
         widget=widgets.RadioSelectHorizontal,
