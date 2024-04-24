@@ -67,8 +67,8 @@ class Player(BasePlayer):
     )  # type: ignore
     pilot_explanation = models.StringField(
         choices=[
-            ["Very badly", "Very badly"],
-            ["Badly", "Badly"],
+            ["Very poorly", "Very poorly"],
+            ["Poorly", "Poorly"],
             ["Neutral", "Neutral"],
             ["Well", "Well"],
             ["Very well", "Very well"],
@@ -78,8 +78,8 @@ class Player(BasePlayer):
     )  # type: ignore
     pilot_interface = models.StringField(
         choices=[
-            ["Very badly", "Very badly"],
-            ["Badly", "Badly"],
+            ["Very poorly", "Very poorly"],
+            ["Poorly", "Poorly"],
             ["Neutral", "Neutral"],
             ["Well", "Well"],
             ["Very well", "Very well"],
