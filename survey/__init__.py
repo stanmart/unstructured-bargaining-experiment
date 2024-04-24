@@ -61,9 +61,9 @@ class Player(BasePlayer):
     pilot_difficulty = models.StringField(
         choices=[
             ["Very easy", "Very easy"],
-            ["Rather easy", "Rather easy"],
+            ["Easy", "Easy"],
             ["Medium difficulty", "Medium difficulty"],
-            ["Rather difficult", "Rather difficult"],
+            ["Difficult", "Difficult"],
             ["Very difficult", "Very difficult"],
         ],
         label="How would you rate the difficulty level of the game?",
@@ -72,9 +72,9 @@ class Player(BasePlayer):
     pilot_explanation = models.StringField(
         choices=[
             ["Very badly", "Very badly"],
-            ["Rather badly", "Rather badly"],
+            ["Badly", "Badly"],
             ["Neutral", "Neutral"],
-            ["Rather well", "Rather well"],
+            ["Well", "Well"],
             ["Very well", "Very well"],
         ],
         label="How well was the game explained?",  # noqa: E501
@@ -83,9 +83,9 @@ class Player(BasePlayer):
     pilot_interface = models.StringField(
         choices=[
             ["Very badly", "Very badly"],
-            ["Rather badly", "Rather badly"],
+            ["Badly", "Badly"],
             ["Neutral", "Neutral"],
-            ["Rather well", "Rather well"],
+            ["Well", "Well"],
             ["Very well", "Very well"],
         ],
         label="How well could you work with the bargaining interface?",  # noqa: E501
@@ -94,9 +94,9 @@ class Player(BasePlayer):
     pilot_time = models.StringField(
         choices=[
             ["Way too little", "Way too little"],
-            ["Slightly too little", "Slightly too little"],
-            ["Just enough", "Just enough"],
-            ["Slightly too much", "Slightly too much"],
+            ["Too little", "Too little"],
+            ["Just right", "Just right"],
+            ["Too much", "Too much"],
             ["Way too much", "Way too much"],
         ],
         label="Did you feel there was enough time for the bargaining?",  # noqa: E501
