@@ -54,7 +54,44 @@ class Player(BasePlayer):
         label="If you selected 'Other', please specify",
         blank=True,
     )  # type: ignore
-    study_field = models.StringField(label="What is your field of study?")  # type: ignore
+    study_field = models.StringField(
+        choices=[
+            "Agriculture",
+            "Anthropology",
+            "Archaeology",
+            "Architecture",
+            "Biology",
+            "Business",
+            "Chemistry",
+            "Computer sciences",
+            "Economics",
+            "Education",
+            "Engineering",
+            "Environmental studies",
+            "Geography",
+            "History",
+            "Media studies and communication",
+            "Law",
+            "Linguistics",
+            "Literature",
+            "Mathematics",
+            "Medicine",
+            "Philosophy",
+            "Physics",
+            "Political science",
+            "Psychology",
+            "Public administration and policy",
+            "Religious studies",
+            "Sociology",
+            "Statistics",
+            "Other",
+        ],
+        label="What is your field of study?",
+    )  # type: ignore
+    study_field_other = models.StringField(
+        label="If you selected 'Other', please specify",
+        blank=True,
+    )  # type: ignore
     nationality = models.StringField(
         label="What is your nationality?",
         choices=countries_for_language("en"),
@@ -211,6 +248,7 @@ class Questions(Page):
         "degree",
         "degree_other",
         "study_field",
+        "study_field_other",
         "nationality",
         "has_second_nationality",
         "second_nationality",
