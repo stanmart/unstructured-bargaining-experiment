@@ -5,12 +5,13 @@ from . import Questions
 class PlayerBot(Bot):
     def play_round(self):
         answers = {
-            "age": 14,  # not bad for a dogm might be a bit young for out subjects
+            "age": 14,  # not bad for a dog, might be a bit young for our subjects
             "gender": "Female",
             "degree": "PhD",
             "study_field": "Canine Behavior",
             "nationality": "Isle of Dogs",
-            "reflection": "I barked a lot and they barked back",
+            "own_strategy": "I barked a lot and they barked back",
+            "other_players_strategy": "They didn't give me ear scratches :(",
             "pilot_difficulty": "Very easy",
             "pilot_explanation": "Very well",
             "pilot_interface": "Very well",

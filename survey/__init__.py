@@ -52,9 +52,13 @@ class Player(BasePlayer):
         label="""
         What is your nationality?"""
     )  # type: ignore
-    reflection = models.LongStringField(
+    own_strategy = models.LongStringField(
         label="""
-        What was your bargaining strategy and why? What did you think about the behavior of the other players?"""  # noqa: E501
+        What was your bargaining strategy and why?"""  # noqa: E501
+    )  # type: ignore
+    other_players_strategy = models.LongStringField(
+        label="""
+        What did you think about the behavior of the other players?"""  # noqa: E501
     )  # type: ignore
 
     # TODO: delete for the main experiment
@@ -190,7 +194,8 @@ class Questions(Page):
         "degree",
         "study_field",
         "nationality",
-        "reflection",
+        "own_strategy",
+        "other_players_strategy",
         "pilot_difficulty",
         "pilot_explanation",
         "pilot_interface",
