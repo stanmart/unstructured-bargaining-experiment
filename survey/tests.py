@@ -10,6 +10,7 @@ class PlayerBot(Bot):
             "degree": "PhD",
             "study_field": "Canine Behavior",
             "nationality": "CH",
+            "has_second_nationality": False,
             "own_strategy": "I barked a lot and they barked back",
             "other_players_strategy": "They didn't give me ear scratches :(",
             "pilot_difficulty": "Very easy",

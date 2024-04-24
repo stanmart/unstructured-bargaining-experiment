@@ -37,7 +37,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
     gender_other = models.StringField(
-        label="If you selected 'Other', please specify",
+        label="If you selected 'Other', would you like to specify?",
         blank=True,
     )  # type: ignore
     degree = models.StringField(
@@ -67,6 +67,7 @@ class Player(BasePlayer):
     second_nationality = models.StringField(
         label="What is your second nationality?",
         choices=countries_for_language("en"),
+        blank=True,
     )  # type: ignore
     own_strategy = models.LongStringField(
         label="What was your bargaining strategy and why?"
