@@ -45,10 +45,6 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = 3
     NUM_ROUNDS = 5  # todo: adjust for main experiment
 
-    BIG_ROLE = "Player 1"
-    SMALL1_ROLE = "Player 2"
-    SMALL2_ROLE = "Player 3"
-
 
 class Subsession(BaseSubsession):
     start_time = models.FloatField(initial=float("inf"))  # type: ignore
@@ -179,16 +175,37 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
-    if not big_player_included and sum(allocations) > 0:
+    last_player_is_dummy = len(prod_fct) == C.PLAYERS_PER_GROUP - 1
+
+    if not last_player_is_dummy and not big_player_included and sum(allocations) > 0:
         return {
             player.id_in_group: {
                 "type": "error",
-                "content": "Invalid allocation: allocation has to be zero when Player 1 is not included",  # noqa: E501
+                "content": (
+                    "Invalid allocation: allocation has to be zero when "
+                    f"Player {player.session.config['player_names']['P1']} is not included"
+                ),
+            }
+        }
+
+    if (
+        last_player_is_dummy
+        and not (members[0] and members[1])
+        and sum(allocations) > 0
+    ):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": (
+                    "Invalid allocation: allocation has to be zero when Players "
+                    f"{player.session.config['player_names']['P1']} and "
+                    f"{player.session.config['player_names']['P2']} are not included"
+                ),
             }
         }
 
     num_small_players = coalition_size - big_player_included
-    if len(prod_fct) == C.PLAYERS_PER_GROUP - 1:  # last player is a dummy player
+    if last_player_is_dummy:  # last player is a dummy player
         num_small_players -= members[-1]  # the dummy player is always last
 
     if sum(allocations) > prod_fct[num_small_players]:
@@ -250,6 +267,7 @@ class Info(Page):
             last_player_is_dummy=len(player.session.config["prod_fct"])
             == C.PLAYERS_PER_GROUP - 1,
             actual_round_number=player.subsession.round_number - 1,
+            player_name=player.session.config["player_names"][f"P{player.id_in_group}"],
         )
 
     @staticmethod
@@ -283,6 +301,7 @@ class Bargain(Page):
             my_id=player.id_in_group,
             prod_fct=list(player.session.config["prod_fct"].values()),
             prod_fct_labels=list(player.session.config["prod_fct"].keys()),
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod
@@ -290,7 +309,9 @@ class Bargain(Page):
         return dict(
             last_player_is_dummy=len(player.session.config["prod_fct"])
             == C.PLAYERS_PER_GROUP - 1,
+            player_name=player.session.config["player_names"][f"P{player.id_in_group}"],
             actual_round_number=player.subsession.round_number - 1,
+            **player.session.config["player_names"],
         )
 
     @staticmethod
@@ -381,12 +402,14 @@ class BargainingResults(Page):
             acceptances=acceptance_data["acceptances"],
             coalition_members=acceptance_data["coalition_members"],
             payoffs=acceptance_data["payoffs"],
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
             payoff_to_display=f"CHF {player.payoff_this_round:.2f}",
+            **player.session.config["player_names"],
         )
 
 

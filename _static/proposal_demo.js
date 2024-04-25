@@ -19,6 +19,7 @@ let pastOffers = []
 let prod_fct = js_vars.prod_fct;
 let prod_fct_labels = js_vars.prod_fct_labels;
 let lastPlayerIsDummy = prod_fct.length == numPlayers - 1;
+let player_names = js_vars.player_names;
 
 let popupFull = document.getElementById('popup-full');
 let popupTitle = document.getElementById('popup-title');
@@ -90,8 +91,12 @@ function sendOffer() {
         'allocations': allocations,
     };
 
-    if (totalSharedValue > 0 && !members[0]) {
-        openPopup('Invalid proposal: the budget is zero when Player 1 is not included in the group', 'error');
+    if (!lastPlayerIsDummy && totalSharedValue > 0 && !isMemberCheckboxes[0].checked) {
+        openPopup(`Invalid proposal: the budget is zero when Player ${player_names['P1']} is not included in the group`, 'error');
+        return;
+    }
+    if (lastPlayerIsDummy && totalSharedValue > 0 && !(isMemberCheckboxes[0].checked && isMemberCheckboxes[1].checked)) {
+        openPopup(`Invalid proposal: the budget is zero when Players ${player_names['P1']} and ${player_names['P2']} are not included in the group`, 'error');
         return;
     }
     if (totalSharedValue > totalShareableValue) {
@@ -151,7 +156,7 @@ function updatePastOffers(newPastOffers) {
 
         let from = row.insertCell();
         from.className = "offer-proposer-col";
-        from.innerHTML = `P${offer.player}`;
+        from.innerHTML = player_names[`P${offer.player}`];
 
         for (let i = 0; i < numPlayers; i++) {
             let cell = row.insertCell();

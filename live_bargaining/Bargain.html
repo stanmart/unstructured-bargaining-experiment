@@ -16,7 +16,7 @@ Bargaining phase
             <li> 
                 Any subset of players can form a group.
                 {{ if not last_player_is_dummy }}
-                A group needs to include Player 1 to receive any budget. 
+                A group needs to include Player {{P1}} to receive any budget. 
                 The more members a group has, the bigger the budget.  
                 {{ else }}
                 A group needs to include Players 1 and 2 to receive a budget. 
@@ -38,7 +38,7 @@ Bargaining phase
 
         </ul>
         
-        <b> This is <b>round {{ actual_round_number }}</b>. You are <span style="color: #056fb7; font-weight: bold;">Player {{ player.id_in_group }}</span>. 
+        <b> This is <b>round {{ actual_round_number }}</b>. You are <span style="color: #056fb7; font-weight: bold;">Player {{ player_name }}</span>. 
             
         
         {{ if subsession.round_number == 1 }}
@@ -76,7 +76,7 @@ Bargaining phase
 
     <div class="section vertical-fill highlight-section" style="width: 200px;">
         <h3 class="highlight-section-title">Chat</h3>
-        {{ chat nickname=player.role }} 
+        {{ chat nickname=player_name }} 
     </div>
     
     <div class="section vertical-fill">
@@ -87,9 +87,9 @@ Bargaining phase
                     <tr>
                         <th class="offer-id-col">ID</th>
                         <th class="offer-proposer-col">From</th>
-                        <th class="offer-player-col player-1">P1</th>
-                        <th class="offer-player-col player-2">P2</th>
-                        <th class="offer-player-col player-3">P3</th>
+                        <th class="offer-player-col player-1">{{P1}}</th>
+                        <th class="offer-player-col player-2">{{P2}}</th>
+                        <th class="offer-player-col player-3">{{P3}}</th>
                     </tr>
                 </thead>
                 <tbody id="past-offers-table"></tbody>
@@ -106,9 +106,9 @@ Bargaining phase
         <tbody>
             <tr>
                 <th></th>
-                <th class="offer-player-col player-1">Player 1</th>
-                <th class="offer-player-col player-2">Player 2</th>
-                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-1">Player {{P1}}</th>
+                <th class="offer-player-col player-2">Player {{P2}}</th>
+                <th class="offer-player-col player-3">Player {{P3}}</th>
                 <th style="text-align: right;">Total</th>
             </tr>
             <tr style="height: 3em;">
@@ -144,9 +144,9 @@ Bargaining phase
         <tbody>
             <tr>
                 <th></th>
-                <th class="offer-player-col player-1">Player 1</th>
-                <th class="offer-player-col player-2">Player 2</th>
-                <th class="offer-player-col player-3">Player 3</th>
+                <th class="offer-player-col player-1">Player {{P1}}</th>
+                <th class="offer-player-col player-2">Player {{P2}}</th>
+                <th class="offer-player-col player-3">Player {{P3}}</th>
             </tr>
             <tr style="height: 3em;">
                 <th class="offer-left-col">Accepted proposal <span class="red-highlight">ID</span></th>

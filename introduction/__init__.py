@@ -39,6 +39,7 @@ class Proposal(Page):
             prod_fct=list(player.session.config["prod_fct"].values()),
             prod_fct_labels=list(player.session.config["prod_fct"].keys()),
             my_id=1,
+            player_names=player.session.config["player_names"],
         )
 
     @staticmethod
@@ -48,6 +49,7 @@ class Proposal(Page):
             grand_coalition_value=list(player.session.config["prod_fct"].values())[-1],
             last_player_is_dummy=len(player.session.config["prod_fct"])
             == 2,  # hardcoded group size
+            **player.session.config["player_names"],
         )
 
 
@@ -57,7 +59,12 @@ class Coalitions(Page):
         return dict(
             my_id=1,
             prod_fct=list(player.session.config["prod_fct"].values()),
+            player_names=player.session.config["player_names"],
         )
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return player.session.config["player_names"]
 
 
 class Payment(Page):
