@@ -5,6 +5,12 @@ from os import environ
 # 3 assumes that P1 is the big player and P2 and P3 are the small players.
 # 2 assumes that P1 and P2 symmetric P3 is a dummy player.
 
+common_doc = """
+A live bargaining experiment with three-player groups.
+Players are randomly assigned asymmetric (big player and small player) roles, and must negotiate to form coalitions.
+The treatments differ in the characteristic/production function.
+"""
+
 SESSION_CONFIGS = [
     dict(
         name="treatment_y_10",
@@ -22,7 +28,7 @@ SESSION_CONFIGS = [
             "P2": "B1",
             "P3": "B2",
         },
-        doc="Treatment with production function [0, 10, 100]",
+        doc=common_doc + "This is the treatment with production function [0, 10, 100].",
     ),
     dict(
         name="treatment_y_30",
@@ -40,7 +46,7 @@ SESSION_CONFIGS = [
             "P2": "B1",
             "P3": "B2",
         },
-        doc="Treatment with production function [0, 30, 100]",
+        doc=common_doc + "This is the treatment with production function [0, 30, 100].",
     ),
     dict(
         name="treatment_y_90",
@@ -58,7 +64,7 @@ SESSION_CONFIGS = [
             "P2": "B1",
             "P3": "B2",
         },
-        doc="Treatment with production function [0, 90, 100]",
+        doc=common_doc + "This is the treatment with production function [0, 90, 100].",
     ),
     dict(
         name="treatment_dummy_player",
@@ -75,7 +81,8 @@ SESSION_CONFIGS = [
             "P2": "A2",
             "P3": "B",
         },
-        doc="Treatment with production function [0, 100] and P3 as dummy player",
+        doc=common_doc
+        + "This is the treatment with production function [0, 100] and P3 as a dummy player.",
     ),
 ]
 
