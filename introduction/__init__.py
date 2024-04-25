@@ -1,5 +1,10 @@
 from otree.api import BaseConstants, BaseGroup, BasePlayer, BaseSubsession, Page
 
+doc = """
+A welcome page with some information about the experiment, followed by instructions about the game.
+The instructions involve a number of interactive exercises to make sure that the participants understand the game.
+"""
+
 
 class C(BaseConstants):
     NAME_IN_URL = "introduction"

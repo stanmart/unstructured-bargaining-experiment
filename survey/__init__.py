@@ -12,6 +12,12 @@ from otree.api import (
     widgets,
 )
 
+doc = """
+A short survey at the end of the experiment.
+Includes questions about demographics, players' strategies, preferences, and some feedback on the game itself.
+The final page displays payoffs and instructions on how to proceed.
+"""
+
 
 class C(BaseConstants):
     pass

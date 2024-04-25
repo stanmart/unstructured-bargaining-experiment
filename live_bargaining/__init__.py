@@ -13,7 +13,11 @@ from otree.api import (
     models,
 )
 
-doc = """ 
+doc = """
+The actual bargaining game.
+Players can propose, discuss and accept offers in real time.
+Proposals must conform to the group budgets (characteristic function of the game).
+No action is binding during the bargaining phase, but current choices ara auto-accepted and binding at the end of the round.
 """
 # todo: add doc
 
