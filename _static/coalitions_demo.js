@@ -1,5 +1,7 @@
 let numPlayers = 3;
 
+let player_names = js_vars.player_names;
+
 let totalShareable = document.getElementById('total-shareable');
 let totalShared = document.getElementById('total-shared');
 
@@ -101,7 +103,7 @@ function updatePastOffers(newPastOffers) {
 
         let from = row.insertCell();
         from.className = "offer-proposer-col";
-        from.innerHTML = `P${offer.player}`;
+        from.innerHTML = player_names[`P${offer.player}`];
 
         for (let i = 0; i < numPlayers; i++) {
             let cell = row.insertCell();
