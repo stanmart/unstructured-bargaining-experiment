@@ -59,7 +59,11 @@ openPopup = function (content, type) {
 for (let i = 0; i < numPlayers; i++) {
     isMemberCheckboxes[i].addEventListener('change', function () {
         allocationTextBoxes[i].disabled = !isMemberCheckboxes[i].checked;
-        allocationTextBoxes[i].value = 0;
+        if (!isMemberCheckboxes[i].checked) {
+            allocationTextBoxes[i].value = 0;
+        } else {
+            allocationTextBoxes[i].value = 1;
+        }
         updateTotalShareable();
         updateTotalShared();
         if (!allocationTextBoxes[i].disabled) {
@@ -68,12 +72,12 @@ for (let i = 0; i < numPlayers; i++) {
     });
 
     allocationTextBoxes[i].addEventListener('change', function () {
-        allocationTextBoxes[i].value = Math.floor(Math.max(0, allocationTextBoxes[i].value));
+        allocationTextBoxes[i].value = Math.floor(Math.max(1, allocationTextBoxes[i].value));
         updateTotalShared();
     });
     allocationTextBoxes[i].addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
-            allocationTextBoxes[i].value = Math.floor(Math.max(0, allocationTextBoxes[i].value));
+            allocationTextBoxes[i].value = Math.floor(Math.max(1, allocationTextBoxes[i].value));
             updateTotalShared();
         }
     });
@@ -102,6 +106,12 @@ function sendOffer() {
     if (totalSharedValue > totalShareableValue) {
         openPopup('Invalid proposal: total amount exceeds the budget available to this group', 'error');
         return;
+    }
+    for (let i = 0; i < numPlayers; i++) {
+        if (isMemberCheckboxes[i].checked && allocationTextBoxes[i].value === '0') {
+            openPopup('Invalid proposal: all group members must receive a positive amount', 'error');
+            return;
+        }
     }
 
     newPastOffers.push(newOffer);

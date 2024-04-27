@@ -220,6 +220,16 @@ def check_proposal_validity(player: Player, members, allocations):
             }
         }
 
+    if any(
+        member and allocation == 0 for member, allocation in zip(members, allocations)
+    ):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid allocation: all members must receive a positive amount",  # noqa: E501
+            }
+        }
+
 
 def check_acceptance_validity(player: Player, offer_id):
     if not isinstance(offer_id, int):

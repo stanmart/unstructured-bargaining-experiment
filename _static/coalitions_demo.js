@@ -46,7 +46,7 @@ exampleOffers = [
     {
         'offer_id': 3,
         'player': 1,
-        'members': [true, true, true],
+        'members': [true, true, false],
         'allocations': [80, 20, 0],
     },
     {
