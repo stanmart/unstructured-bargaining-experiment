@@ -13,7 +13,11 @@ from otree.api import (
     models,
 )
 
-doc = """ 
+doc = """
+The actual bargaining game.
+Players can propose, discuss and accept offers in real time.
+Proposals must conform to the group budgets (characteristic function of the game).
+No action is binding during the bargaining phase, but current choices ara auto-accepted and binding at the end of the round.
 """
 # todo: add doc
 
@@ -213,6 +217,16 @@ def check_proposal_validity(player: Player, members, allocations):
             player.id_in_group: {
                 "type": "error",
                 "content": "Invalid allocation: allocations exceed value available to this group",  # noqa: E501
+            }
+        }
+
+    if any(
+        member and allocation == 0 for member, allocation in zip(members, allocations)
+    ):
+        return {
+            player.id_in_group: {
+                "type": "error",
+                "content": "Invalid allocation: all members must receive a positive amount",  # noqa: E501
             }
         }
 
