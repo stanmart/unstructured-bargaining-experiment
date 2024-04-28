@@ -278,18 +278,7 @@ class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            last_player_is_dummy=len(player.session.config["prod_fct"])
-            == C.PLAYERS_PER_GROUP - 1,
             actual_round_number=player.subsession.round_number - 1,
-            player_name=player.session.config["player_names"][f"P{player.id_in_group}"],
-        )
-
-    @staticmethod
-    def js_vars(player: Player):
-        return dict(
-            my_id=player.id_in_group,
-            prod_fct=list(player.session.config["prod_fct"].values()),
-            prod_fct_labels=list(player.session.config["prod_fct"].keys()),
         )
 
 
