@@ -8,129 +8,17 @@ Instructions 3/4
 
 {{ block content}}
 
+
 <p> We will now discuss how the group is formed at the end of the round. </p>
 
-<h4> Group formation </h4>
-<p> 
-    During the bargaining stage, each player can choose which proposal they accept.
-    Once the round ends, the final outcome and the payoffs of this round are determined as follows:
-    <ul>
-        <li>
-            <span style="color: #b70505; font-weight: bold;"> 
-                Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful.
-            </span>
-        </li>
-        <li>
-            <span style="color: #b70505; font-weight: bold;"> 
-                Note, that <u>players who are not included in a proposal (marked as "—") do not have to agree to it</u>.
-            </span>
-        </li>
-    </ul>
-    The group is then successfully formed and its members' payoffs are then determined by the agreed-upon proposal. 
-    All other players get 0. 
-    <span style="color: #b70505; font-weight: bold;"> If there is no such agreement, all three players get 0. </span>
-</p>
-
-{{ if not last_player_is_dummy }}
-    <p> Note that because Player {{P1}} has to be included for a group to receive a budget, there will be one group at most.</p>
-{{ else }}
-    <p> Note that because Player {{P1}} and Player {{P2}} have to be included for a group to receive a budget, there will be one group at most.</p>
-{{ endif }}
-
-
 <hr>
-
-<h5> Try it yourself </h5>
-
-<div>
-    <p>
-        To get a better idea about how group formation works, you will now try out various combinations of acceptance decisions.
-        <b> This is just for illustration purposes: in the actual experiment, you will not be able to modify the choices of other players. </b>
-    </p>
-    <p>
-        Here is an example of a game where a number of proposals were made.
-        As before, "All proposals" is a table of offers. 
-        
-        In the "Choose a proposal" interface you can set which proposal ID each player accepts (or whether they reject all, by choosing "—"). 
-        In the row below you see which payoffs these choices would lead to.
-
-    </p>
-    <p> 
-        For each of the criteria below, set the accepted proposal IDs such that it is satisfied. 
-        Once you satisfy a criterion, it turns green and a checkmark appears.
-    </p>
-    <ul>
-        <li id="grand-coalition">All players form a group <span class="checkmark" style="visibility: hidden;">✅</span></li>
-        <li id="sub-coalition">Not all players agree, but a smaller group is formed <span class="checkmark" style="visibility: hidden;">✅</span></li>
-        <li id="no-coalition">No group is formed <span class="checkmark" style="visibility: hidden;">✅</span></li>
-    </ul>
-</div>
-
-
-    <div class="section vertical-fill">
-        <h3>All proposals</h3>
-        <div class="vertical-fill" style="overflow-y: auto;">
-            <table class="offer-table horizontal-rules shaded-rows">
-                <thead>
-                    <tr>
-                        <th class="offer-id-col">ID</th>
-                        <th class="offer-proposer-col">From</th>
-                        <th class="offer-player-col player-1">{{P1}}</th>
-                        <th class="offer-player-col player-2">{{P2}}</th>
-                        <th class="offer-player-col player-3">{{P3}}</th>
-                    </tr>
-                </thead>
-                <tbody id="past-offers-table"></tbody>
-            </table>
-        </div>
-    </div>
-    
-    
-    <div class="section">
-        <h3>Choose a proposal </h2>    
-        <table class="offer-table">
-            <tbody>
-                <tr>
-                    <th></th>
-                    <th class="offer-player-col player-1">Player {{P1}}</th>
-                    <th class="offer-player-col player-2">Player {{P2}}</th>
-                    <th class="offer-player-col player-3">Player {{P3}}</th>
-                </tr>
-                <tr style="height: 3em;">
-                    <th class="offer-left-col">Accepted proposal <span class="red-highlight">ID</span></th>
-                    <td class="offer-player-col" class="allocation">
-                        <select id="accepted-1" class="allocation-dropdown"><option>—</option></select>
-                    </td>
-                    <td class="offer-player-col" class="allocation">
-                        <select id="accepted-2" class="allocation-dropdown"><option>—</option></select>
-                    </td>
-                    <td class="offer-player-col" class="allocation">
-                        <select id="accepted-3" class="allocation-dropdown"><option>—</option></select>
-                    </td>
-                </tr>
-                <tr style="height: 3em;">
-                    <th class="offer-left-col">Implied payoff</th>
-                    <td class="offer-player-col" class="payoff" id="payoff-1">0</td>
-                    <td class="offer-player-col" class="payoff" id="payoff-2">0</td>
-                    <td class="offer-player-col" class="payoff" id="payoff-3">0</td>
-                </tr>
-            </tbody>
-        </table>
-        <div style="text-align: right;">
-            <button type="button" onclick="updatePayoffsCoalitions()" id="btn-calculate" style="width: 200px;">Calculate payoffs</button>
-        </div>
-    </div>
-
-</div>
-
-<hr>
-
 <h4> Accepting proposals </h4>
 
 <p> 
-    During the five minutes of discussion and bargaining <b>you can change your choice on which proposal you accept any number of times</b>.
-    At the end of the five minutes, everyone's currently accepted proposal becomes final.
-    The interface for this is shown below.
+    During the five minutes of discussion and bargaining <b>you can change which proposal you currently accept any number of task-submit-preferred.
+    At the end of the five minutes, everyone's currently accepted proposal becomes final.</b>
+    The "Currently accepted proposal" interface for this is shown below.  You can see which proposal ID each player currently accepts (or whether they reject all, by choosing "—"). 
+    In the row below you see which payoffs these choices would lead to.
 </p>
 
 <hr>
@@ -186,6 +74,115 @@ Instructions 3/4
         <p id="popup-content"></p>
         <button type="button" onclick="closePopup()" id="btn-close-popup">Close</button>
     </div>
+</div>
+
+
+
+<hr>
+
+<h4> Group formation </h4>
+<p> 
+    After the five minutes of discussion and bargaining, the final outcome and the payoffs of this round are determined as follows:
+    <ul>
+        <li>
+            <span style="color: #b70505; font-weight: bold;"> 
+                Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful.
+            </span>
+        </li>
+        <li>
+            <span style="color: #b70505; font-weight: bold;"> 
+                Note that <u>players who are not included in a proposal (marked as "—") do not have to agree to it for it to be successful</u>.
+            </span>
+        </li>
+    </ul>
+    The group is then successfully formed and its members' payoffs are determined by the agreed-upon proposal. 
+    All other players get 0. 
+    <span style="color: #b70505; font-weight: bold;"> If there is no such agreement, all three players get 0. </span>
+</p>
+
+{{ if not last_player_is_dummy }}
+    <p> Note that because Player {{P1}} has to be included for a group to receive a budget, there will be one group at most.</p>
+{{ else }}
+    <p> Note that because Player {{P1}} and Player {{P2}} have to be included for a group to receive a budget, there will be one group at most.</p>
+{{ endif }}
+
+
+<hr>
+
+<h5> Try it yourself </h5>
+
+<div>
+    <p>
+        Here is an example of a game where a number of proposals were made. To get a better idea about how group formation works, you will now try out various combinations of acceptance decisions.
+        <b> This is just for illustration purposes: in the actual experiment, you will not be able to modify the choices of other players. </b>
+    </p>
+
+    <p> 
+        For each of the criteria below, set the accepted proposal IDs such that it is satisfied. 
+        Once you satisfy a criterion, it turns green and a checkmark appears.
+    </p>
+    <ul>
+        <li id="grand-coalition">All players form a group <span class="checkmark" style="visibility: hidden;">✅</span></li>
+        <li id="sub-coalition">Not all players agree, but a smaller group is formed <span class="checkmark" style="visibility: hidden;">✅</span></li>
+        <li id="no-coalition">No group is formed <span class="checkmark" style="visibility: hidden;">✅</span></li>
+    </ul>
+</div>
+
+
+    <div class="section vertical-fill">
+        <h3>All proposals</h3>
+        <div class="vertical-fill" style="overflow-y: auto;">
+            <table class="offer-table horizontal-rules shaded-rows">
+                <thead>
+                    <tr>
+                        <th class="offer-id-col">ID</th>
+                        <th class="offer-proposer-col">From</th>
+                        <th class="offer-player-col player-1">{{P1}}</th>
+                        <th class="offer-player-col player-2">{{P2}}</th>
+                        <th class="offer-player-col player-3">{{P3}}</th>
+                    </tr>
+                </thead>
+                <tbody id="past-offers-table"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+    <div class="section">
+        <h3>Currently accepted proposal </h2>    
+        <table class="offer-table">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th class="offer-player-col player-1">Player {{P1}}</th>
+                    <th class="offer-player-col player-2">Player {{P2}}</th>
+                    <th class="offer-player-col player-3">Player {{P3}}</th>
+                </tr>
+                <tr style="height: 3em;">
+                    <th class="offer-left-col">Accepted proposal <span class="red-highlight">ID</span></th>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-1" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-2" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                    <td class="offer-player-col" class="allocation">
+                        <select id="accepted-3" class="allocation-dropdown"><option>—</option></select>
+                    </td>
+                </tr>
+                <tr style="height: 3em;">
+                    <th class="offer-left-col">Implied payoff</th>
+                    <td class="offer-player-col" class="payoff" id="payoff-1">0</td>
+                    <td class="offer-player-col" class="payoff" id="payoff-2">0</td>
+                    <td class="offer-player-col" class="payoff" id="payoff-3">0</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="text-align: right;">
+            <button type="button" onclick="updatePayoffsCoalitions()" id="btn-calculate" style="width: 200px;">Calculate payoffs</button>
+        </div>
+    </div>
+
 </div>
 
 
