@@ -22,7 +22,8 @@ class PlayerBot(Bot):
             "dummy_player_axiom": "Strongly Disagree",
             "symmetry_axiom": "Strongly Agree",
             "efficiency_axiom": "Agree",
-            "linearity_axiom": "Neutral",
+            "linearity_additivity_axiom": "Neutral",
+            "linearity_HD1_axiom": "Prefer not to say",
             "stability_axiom": "Disagree",
         }
         yield Questions, answers

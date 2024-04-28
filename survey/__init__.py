@@ -290,7 +290,7 @@ class Questions(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            num_axiom_questions=5,  # They need to come first in form_fields
+            num_axiom_questions=6,  # They need to come first in form_fields
         )
 
     @staticmethod
