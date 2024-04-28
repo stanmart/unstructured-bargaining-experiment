@@ -69,7 +69,11 @@ class Coalitions(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        return player.session.config["player_names"]
+        return dict(
+            last_player_is_dummy=len(player.session.config["prod_fct"])
+            == 2,  # hardcoded group size
+            **player.session.config["player_names"],
+        )
 
 
 class Payment(Page):

@@ -30,7 +30,13 @@ Instructions 3/4
     All other players get 0. 
     <span style="color: #b70505; font-weight: bold;"> If there is no such agreement, all three players get 0. </span>
 </p>
-<p> Note that because Player {{P1}} has to be included for a group to receive a budget, there will be one group at most.</p>
+
+{{ if not last_player_is_dummy }}
+    <p> Note that because Player {{P1}} has to be included for a group to receive a budget, there will be one group at most.</p>
+{{ else }}
+    <p> Note that because Player {{P1}} and Player {{P2}} have to be included for a group to receive a budget, there will be one group at most.</p>
+{{ endif }}
+
 
 <hr>
 
