@@ -16,32 +16,6 @@
     </p>
 {{ endif }}
 
-<p> In this round you are <span style="color: #056fb7; font-weight: bold;">Player {{ player_name }}</span>. </p>
-    Remember, payoffs are determined as follows:
-
-        <div style="width: 350px; align-content: center;">
-            <table id="payoff-table" style="margin-bottom: 30px;">
-                <colgroup>
-                    <col style="width: 34%;">
-                    <col style="width: 22%">
-                    <col style="width: 22%">
-                    {{ if not last_player_is_dummy }}
-                    <col style="width: 22%">
-                    {{ endif }}
-                </colgroup>
-                <tr id="payoff-table-header">
-                    <th id="payoff-table-header-title">Group members</th>
-                </tr>
-                <tr id="payoff-table-values">
-                    <th>Group's budget</th>
-                </tr>
-            </table>
-            <div style="height: 200px; width: 350px">
-                <canvas id="payoff-chart"></canvas>
-            </div>
-        </div>
-</p>
-
 <p> <b> 
     You will now have exactly five minutes to discuss and bargain with the other players. 
     After the five minutes end, accepted proposals become final.
@@ -49,8 +23,5 @@
 
 
 {{ next_button}}
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ static 'info.js' }}"></script>
 
 {{ endblock }}
