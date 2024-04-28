@@ -56,10 +56,12 @@ class Player(BasePlayer):
     )  # type: ignore
     study_field = models.StringField(
         choices=[
+            "Accounting",
             "Agriculture",
             "Anthropology",
             "Archaeology",
             "Architecture",
+            "Business Administration",
             "Biology",
             "Business",
             "Chemistry",
@@ -68,6 +70,7 @@ class Player(BasePlayer):
             "Education",
             "Engineering",
             "Environmental studies",
+            "Finance",
             "Geography",
             "History",
             "Media studies and communication",
@@ -110,7 +113,7 @@ class Player(BasePlayer):
         label="What was your bargaining strategy and why?"
     )  # type: ignore
     other_players_strategy = models.LongStringField(
-        label="What did you think about the behavior of the other players?"
+        label="What did you think about the behavior of the other players? What do you think their strategy was?"
     )  # type: ignore
 
     # TODO: delete for the main experiment
@@ -121,6 +124,7 @@ class Player(BasePlayer):
             "Medium difficulty",
             "Difficult",
             "Very difficult",
+            "Prefer not to say",
         ],
         label="How would you rate the difficulty level of the game?",
         widget=widgets.RadioSelectHorizontal,
@@ -132,6 +136,7 @@ class Player(BasePlayer):
             "Neutral",
             "Well",
             "Very well",
+            "Prefer not to say",
         ],
         label="How well was the game explained?",
         widget=widgets.RadioSelectHorizontal,
@@ -143,6 +148,7 @@ class Player(BasePlayer):
             "Neutral",
             "Well",
             "Very well",
+            "Prefer not to say",
         ],
         label="How well could you work with the bargaining interface?",
         widget=widgets.RadioSelectHorizontal,
@@ -154,6 +160,7 @@ class Player(BasePlayer):
             "Just right",
             "Too much",
             "Way too much",
+            "Prefer not to say",
         ],
         label="Did you feel there was enough time for the bargaining?",
         widget=widgets.RadioSelectHorizontal,
@@ -171,8 +178,9 @@ class Player(BasePlayer):
             "Neutral",
             "Agree",
             "Strongly Agree",
+            "Prefer not to say",
         ],
-        label="Players who contribute nothing should receive nothing.",
+        label="If adding player X to a group never increases the budget, player X should get nothing. ",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -183,8 +191,9 @@ class Player(BasePlayer):
             "Neutral",
             "Agree",
             "Strongly Agree",
+            "Prefer not to say",
         ],
-        label="If two players contribute the same to the group's budget, they should receive the same payoff.",
+        label="If adding player X to a group always has the same impact on the budget as adding player Y, then player X and player Y should get the same payoff.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -195,20 +204,35 @@ class Player(BasePlayer):
             "Neutral",
             "Agree",
             "Strongly Agree",
+            "Prefer not to say",
         ],
-        label="The whole available budget should be distributed (nothing should be left on the table).",
+        label="The payoffs at the end of a bargaining round should always add up to the biggest possible budget (100 CHF). ",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
-    linearity_axiom = models.StringField(
+    linearity_additivity_axiom = models.StringField(
         choices=[
             "Strongly Disagree",
             "Disagree",
             "Neutral",
             "Agree",
             "Strongly Agree",
+            "Prefer not to say",
         ],
-        label="I don't know how to do linearity tbh...",
+        label="Suppose in round 3 the budget each group (out of the three players) can get is the sum of the budget it can get in round 1 and 2. Then the payoff of player X should the be the sum of the payoff player X got in round 1 and 2.",
+        widget=widgets.RadioSelectHorizontal,
+    )  # type: ignore
+
+    linearity_HD1_axiom = models.StringField(
+        choices=[
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree",
+            "Prefer not to say",
+        ],
+        label="Suppose in round 2 each group of players has double the budget they can get in round 1. Then the payoff of player X should be double the amount player X got in round 1.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -219,8 +243,9 @@ class Player(BasePlayer):
             "Neutral",
             "Agree",
             "Strongly Agree",
+            "Prefer not to say",
         ],
-        label="If a smaller group has a budget of X, then their members should receive at least X in total.",
+        label="If player X and player Y would have a budget of Z if they formed a group on their own, then the payoffs of player X and Y should be at least Z in total in the final accepted proposal.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -240,7 +265,8 @@ class Questions(Page):
         "dummy_player_axiom",
         "symmetry_axiom",
         "efficiency_axiom",
-        "linearity_axiom",
+        "linearity_additivity_axiom",
+        "linearity_HD1_axiom",
         "stability_axiom",
         "age",
         "gender",
