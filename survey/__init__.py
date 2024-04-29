@@ -172,6 +172,11 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
+    research_question = models.StringField(
+        label="What do you think is the research question we are studying in this experiment?",
+        blank=True,
+    )  # type: ignore
+
     comments = models.LongStringField(
         label="Any additional comments you want to share with us?",
         blank=True,
@@ -290,6 +295,7 @@ class Questions(Page):
         "pilot_explanation",
         "pilot_interface",
         "pilot_time",
+        "research_question",
         "comments",
     ]
 
