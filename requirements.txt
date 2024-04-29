@@ -2,3 +2,5 @@ otree~=5.10.3
 psycopg2~=2.9.9
 requests~=2.31.0
 country_list~=1.1.0
+Pillow~=8.0
+sentry_sdk

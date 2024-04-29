@@ -1,0 +1,30 @@
+{% block styles  %}
+    <link href="{% static 'sliders.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{{ block title }}
+Task
+{{ endblock }}
+
+{{ block content }}
+
+<p> Move the slider into the position indicated by the red dot. 
+    Once the slider is in the correct position, it will turn green. 
+    Your goal is to put as many sliders to the correct position as possible.
+    You have 4 minutes in total.
+ </p>
+
+
+<div class="d-flex flex-column align-items-center">
+    <progress id="progress-bar" max="{{ params.num_sliders }}" value="0"></progress>
+
+    <canvas id="canvas" class="m-2"></canvas>
+
+</div>
+
+{{ endblock }}
+
+{{ block scripts }}
+<script src="{{ static 'sliders.js' }}"></script>
+
+{{ endblock }}
