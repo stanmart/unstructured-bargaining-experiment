@@ -279,6 +279,7 @@ class Info(Page):
     def vars_for_template(player: Player):
         return dict(
             actual_round_number=player.subsession.round_number - 1,
+            player_name=player.session.config["player_names"][f"P{player.id_in_group}"],
         )
 
 
