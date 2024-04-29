@@ -241,3 +241,41 @@ tr.highlight:nth-child(even) {
 .error > div {
     border-color: #b70505;
 }
+
+.likert-table {
+    width: 100%;
+}
+
+.likert-table tr {
+    border-bottom: 1px solid black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.likert-table thead {
+    border-bottom: 2px solid black;
+}
+
+.likert-table td {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.likert-table th {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.likert-table td:first-child {
+    text-align: left;
+    border-right: 1px solid black;
+}
+
+.likert-table th:first-child {
+    text-align: left;
+}
+
+.likert-table td:last-child {
+    border-left: 1px solid black;
+}

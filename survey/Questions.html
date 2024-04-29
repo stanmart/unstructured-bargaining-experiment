@@ -2,13 +2,79 @@
 Survey
 {{ endblock }}
 
+{{ block head }}
+<link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
+{{ endblock }}
+
 {{ block content }}
 
     <p>
-        Please answer the following questions.
+        To conclude the experiment, please answer the following questions.
     </p>
 
-    {{ formfields }}
+    <div class="section">
+        <h4>Demographic questions</h4>
+        {{ formfield 'age' }}
+        {{ formfield 'gender' }}
+        {{ formfield 'gender_other' }}
+        {{ formfield 'degree' }}
+        {{ formfield 'degree_other' }}
+        {{ formfield 'study_field' }}
+        {{ formfield 'study_field_other' }}
+        {{ formfield 'nationality' }}
+        {{ formfield 'has_second_nationality' }}
+        {{ formfield 'second_nationality' }}
+    </div>
+
+    <div class="section">
+        <h4>Preference questions</h4>
+        <p>For each of the following statements, please indicate the extent to which you agree or disagree with it.</p>
+        <table class="likert-table">
+            <colgroup>
+                <col span="1" style="width: 40%;">
+                <col span="6" style="width: 5%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Strongly disagree</th>
+                    <th>Disagree</th>
+                    <th>Neutral</th>
+                    <th>Agree</th>
+                    <th>Strongly agree</th>
+                    <th>Prefer not to say</th>
+                </tr>
+            </thead>
+            {{ for field in form }}
+                {{ if forloop.counter <= num_axiom_questions }}
+                <tr>
+                    <td>{{ field.label }}</td>
+                    {{ for option in field }}
+                        <td>
+                            {{ option }}
+                        </td>
+                    {{ endfor }}
+                </tr>
+                {{ endif }}
+
+            {{ endfor }}
+        </table>
+    </div>
+
+    <div class="section">
+        <h4>Strategy</h4>
+        {{ formfield 'own_strategy' }}
+        {{ formfield 'other_players_strategy' }}
+    </div>
+
+    <div class="section">
+        <h4>Feedback</h4>
+        {{ formfield 'pilot_difficulty' }}
+        {{ formfield 'pilot_explanation' }}
+        {{ formfield 'pilot_interface' }}
+        {{ formfield 'pilot_time' }}
+        {{ formfield 'comments' }}
+    </div>
 
 {{ next_button}}
 
