@@ -23,7 +23,7 @@ class PlayerBot(Bot):
             "symmetry_axiom": "Strongly Agree",
             "efficiency_axiom": "Agree",
             "linearity_additivity_axiom": "Neutral",
-            "linearity_HD1_axiom": "Prefer not to say",
+            "linearity_HD1_axiom": "No opinion",
             "stability_axiom": "Disagree",
         }
         yield Questions, answers
