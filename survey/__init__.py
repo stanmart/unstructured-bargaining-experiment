@@ -230,7 +230,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "Prefer not to say",
         ],
-        label="Suppose in round 3 the budget each group (out of the three players) can get is the sum of the budget it can get in round 1 and 2. Then the payoff of player X should the be the sum of the payoff player X got in round 1 and 2.",
+        label="Suppose in round 3 the group budgets are the sum of the group budgets in round 1 and 2 for any group. Then the payoff of player X should the be the sum of the payoff player X got in round 1 and 2.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -243,7 +243,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "Prefer not to say",
         ],
-        label="Suppose in round 2 each group of players has double the budget they can get in round 1. Then the payoff of player X should be double the amount player X got in round 1.",
+        label="Suppose in round 2 each group budget is twice as large as in in round 1. Then the payoff of player X should be double the amount player X got in round 1.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
