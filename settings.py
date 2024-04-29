@@ -19,9 +19,9 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
-            "{B1,\xa0B2}": 0,
-            "{A,\xa0B1},\n{A,\xa0B2}": 10,
-            "Everyone": 100,
+            "B1+B2": 0,
+            "A+B1<br>A+B2": 10,
+            "A+B1+B2": 100,
         },
         player_names={
             "P1": "A",
@@ -37,9 +37,9 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
-            "{B1,\xa0B2}": 0,
-            "{A,\xa0B1}, {A,\xa0B2}": 30,
-            "Everyone": 100,
+            "B1+B2": 0,
+            "A+B1<br>A+B2": 30,
+            "A+B1+B2": 100,
         },
         player_names={
             "P1": "A",
@@ -55,9 +55,9 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
-            "{B1,\xa0B2}": 0,
-            "{A,\xa0B1}, {A,\xa0B2}": 90,
-            "Everyone": 100,
+            "B1+B2": 0,
+            "A+B1<br>A+B2": 90,
+            "A+B1+B2": 100,
         },
         player_names={
             "P1": "A",
@@ -73,8 +73,8 @@ SESSION_CONFIGS = [
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
-            "{A1,\xa0B}, {A2,\xa0B}": 0,
-            "{A1,\xa0A2}, Everyone": 100,
+            "A1+B<br>A2+B": 0,
+            "A1+A2<br>A1+A2+B": 100,
         },
         player_names={
             "P1": "A1",

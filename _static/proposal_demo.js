@@ -228,6 +228,7 @@ function updateTasks(newOffer) {
             next_buttons[i].style.visibility = '';
             next_buttons[i].disabled = false;
         }
+        document.getElementById('exercises-remaining-text').style.visibility = 'hidden';
         canContinue = true;
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }
@@ -254,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: prod_fct_labels,
+            labels: prod_fct_labels.map(s => s.split('<br>')),
             datasets: [{
                 label: "Group's value",
                 data: prod_fct,

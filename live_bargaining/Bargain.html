@@ -14,15 +14,16 @@ Bargaining phase
     <div>
         <ul> 
             <li> 
-                Any subset of players can form a group. 
+                Any subset of players can form a group.
+                {{ if not last_player_is_dummy }}
                 A group needs to include Player {{P1}} to receive any budget. 
                 The more members a group has, the bigger the budget.  
-                You see the budget sizes for this particular round on the right.
+                {{ else }}
+                A group needs to include Players 1 and 2 to receive a budget. 
+                The group's budget does not depend on Player 3's inclusion. They can still be included in any group.
+                {{ endif }}
+                Group budgets are depicted on the right.
             </li> 
-            
-            {{ if last_player_is_dummy }}
-            <li style="display: none;" class="dummy-instruction">The group's budget does not depend on Player {{P3}}'s inclusion. They can still be included in any group.</li>
-            {{ endif }}
                 
             <li> 
                 Use the <span class="red-highlight">chat</span> below for bargaining.
@@ -33,12 +34,11 @@ Bargaining phase
 
             <li> 
                 <span style="font-weight: bold;"> Only if <u> all players in a proposed group </u> agree on the same proposal is that proposal successful. </span>
-                <span style="font-weight: bold;"> Otherwise, everyone gets 0 in this round.</b> </span>
             </li>
 
         </ul>
         
-        <b> This is <span class="red-highlight">round {{ actual_round_number }}</span>. You are <span style="color: #056fb7; font-weight: bold;">Player {{ player_name }}</span>. 
+        <b> This is <b>round {{ actual_round_number }}</b>. You are <span style="color: #056fb7; font-weight: bold;">Player {{ player_name }}</span>. 
             
         
         {{ if subsession.round_number == 1 }}
@@ -51,10 +51,12 @@ Bargaining phase
     <div style="margin-left: 20px;">
         <table id="payoff-table" style="margin-bottom: 30px;">
             <colgroup>
-                <col style="width: 40%;">
-                <col style="width: 20%">
-                <col style="width: 20%">
-                <col style="width: 20%">
+                <col style="width: 34%;">
+                <col style="width: 22%">
+                <col style="width: 22%">
+                {{ if not last_player_is_dummy }}
+                <col style="width: 22%">
+                {{ endif }}
             </colgroup>
             <tr id="payoff-table-header">
                 <th id="payoff-table-header-title">Group members</th>

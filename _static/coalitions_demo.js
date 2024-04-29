@@ -17,6 +17,11 @@ let preferredDropdwon = document.getElementById('offer-select')
 let allocationDropdowns = document.getElementsByClassName('allocation-dropdown');
 let offerSelect = document.getElementById('offer-select');
 
+let prod_fct = js_vars.prod_fct;
+let lastPlayerIsDummy = prod_fct.length == numPlayers - 1;
+let smallCoalitionValue = lastPlayerIsDummy ? prod_fct[prod_fct.length - 1] : prod_fct[prod_fct.length - 2];
+let grandCoalitionValue = prod_fct[prod_fct.length - 1];
+
 let tasks_coalitions = {
     "grand-coalition": false,
     "sub-coalition": false,
@@ -34,30 +39,58 @@ exampleOffers = [
     {
         'offer_id': 1,
         'player': 1,
-        'members': [true, false, true],
-        'allocations': [40, 0, 10],
+        'members': [true, true, false],
+        'allocations': [
+            Math.floor(smallCoalitionValue * 3 / 5),
+            Math.ceil(smallCoalitionValue * 2 / 5),
+            0
+        ],
     },
     {
         'offer_id': 2,
-        'player': 3,
+        'player': 2,
         'members': [true, true, true],
-        'allocations': [30, 40, 30],
+        'allocations': [
+            Math.floor(grandCoalitionValue * 3 / 10),
+            Math.floor(grandCoalitionValue * 4 / 10),
+            Math.ceil(grandCoalitionValue * 3 / 10),
+        ],
     },
     {
         'offer_id': 3,
         'player': 1,
-        'members': [true, true, false],
-        'allocations': [80, 20, 0],
+        'members': [true, true, true],
+        'allocations': [
+            Math.floor(grandCoalitionValue * 8 / 10),
+            Math.floor(grandCoalitionValue * 1 / 10),
+            Math.ceil(grandCoalitionValue * 1 / 10),
+        ]
     },
     {
         'offer_id': 4,
-        'player': 1,
+        'player': 2,
         'members': [true, true, false],
-        'allocations': [25, 15, 0],
+        'allocations': [
+            Math.ceil(smallCoalitionValue * 2 / 5),
+            Math.floor(smallCoalitionValue * 3 / 5),
+            0
+        ],
     },
 ]
 
-preferredOffers = [0, 2, 1]
+if (!lastPlayerIsDummy) {
+    exampleOffers.push(    {
+        'offer_id': 5,
+        'player': 3,
+        'members': [true, false, true],
+        'allocations': [
+            Math.floor(smallCoalitionValue * 4 / 5),
+            0,
+            Math.ceil(smallCoalitionValue / 5),
+        ],
+    })
+}
+preferredOffers = [0, 1, 2]
 
 closePopup = function () {
     popupFull.classList.remove('show');
@@ -280,6 +313,7 @@ function checkCompletion() {
         for (let i = 0; i < next_buttons.length; i++) {
             next_buttons[i].style.visibility = '';
         }
+        document.getElementById('exercises-remaining-text').style.visibility = 'hidden';
         canContinue = true;
         openPopup('You have completed all tasks. Feel free to experiment some more with these interactive controls if you\'d like. When you are done, click "Next" to continue.', 'success');
     }

@@ -17,23 +17,37 @@ Instructions 2/4
     You and the two other players will each be randomly assigned a player role ({{P1}}, {{P2}}, {{P3}}). 
     <b> The player roles will be reshuffled each round. </b>
 </p>
+{{ if not last_player_is_dummy }}
 <p>
     <b> 
         A group needs to include Player {{P1}} to receive any budget. 
-        The more members a group has, the bigger the budget. 
-        For the exact size of the budget in CHF, you will see a table and a corresponding graph like the one below ("Group budgets"). 
-</p></b>
+        The more members a group has, the bigger the budget:
+    </b>
+</p>
 
-<p> </p>
-<p> For example, if Player {{P1}} and one other player form a group together, they have a budget of 50 CHF. If all players form a group together, they have a budget of 100 CHF. (The exact numbers might be different in the game.) </p>
-    
+<ul>
+    <li>If Player {{P1}} and one other player form a group together, they have a budget of {{small_coalition_value}} CHF.</li>
+    <li>If all three players form a group together, they have a budget of {{grand_coalition_value}} CHF.</li>
+</ul>
+{{ else }}
+<p>
+    <b> 
+        A group needs to include Players {{P1}} and {{P2}} to receive a budget of CHF {{grand_coalition_value}}. 
+        The group's budget does not depend on Player {{P3}}'s inclusion. They can still be included in any group.
+    </b>
+</p>
+{{ endif }}
+
+<p>
+    This information is also summarized in a table and a corresponding graph for reference during the discussion and bargaining phase (see below: "Group budgets").
+</p>
 
 
 
 <h4> Make a proposal </h4>
 <p> 
     When you want to make a new proposal for which group to form and how to split its budget, you submit it in the "Make a proposal" interface (see below).
-    For each proposal, simply select the players you want to include in the group and then enter the amount they get below (you can only enter whole numbers).
+    For each proposal, simply select the players you want to include in the group and then enter the amount they get below (you can only enter positive, whole numbers).
     On the right you see two totals: the budget that is available to this group (top) and how much you have already distributed among the group members (bottom).
 
 </p>
@@ -49,7 +63,7 @@ Instructions 2/4
     In the first column, you see the "ID" of the proposal (this is just the number of the proposal, e.g. the second proposal that was made has the ID 2), this is used for easier reference later on. 
     In the second column you see who made the proposal. 
     In the remaining three columns you see which amount each player gets in this proposal.
-    Players not included in the proposed group are marked with "-".
+    Players not included in the proposed group are marked with "—".
 </p>
 
 <hr>
@@ -90,7 +104,9 @@ Instructions 2/4
                 <col style="width: 34%;">
                 <col style="width: 22%">
                 <col style="width: 22%">
+                {{ if not last_player_is_dummy }}
                 <col style="width: 22%">
+                {{ endif }}
             </colgroup>
             <tr id="payoff-table-header">
                 <th id="payoff-table-header-title">Group members</th>
@@ -168,6 +184,7 @@ Instructions 2/4
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ static 'proposal_demo.js' }}"></script>
 
+<b id="exercises-remaining-text" class="red-highlight">Please complete all exercises before moving to the next page.</b>
 
 {{ next_button }}
 

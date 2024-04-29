@@ -282,14 +282,6 @@ class Info(Page):
             player_name=player.session.config["player_names"][f"P{player.id_in_group}"],
         )
 
-    @staticmethod
-    def js_vars(player: Player):
-        return dict(
-            my_id=player.id_in_group,
-            prod_fct=list(player.session.config["prod_fct"].values()),
-            prod_fct_labels=list(player.session.config["prod_fct"].keys()),
-        )
-
 
 class WaitForBargaining(WaitPage):
     wait_for_all_groups = True
