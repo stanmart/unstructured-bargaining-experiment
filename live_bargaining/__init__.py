@@ -24,12 +24,10 @@ No action is binding during the bargaining phase, but current choices ara auto-a
 
 def creating_session(subsession):
     num_active_groups = len(subsession.get_groups())
-    if num_active_groups in [6, 7]:
+    if num_active_groups == 10:
         subsession_index = subsession.round_number - 1
         with open(
-            "preparation/group_matrices/group_matrices_"
-            + str(num_active_groups)
-            + "_groups.pkl",
+            "preparation/group_matrices/group_matrices.pkl",
             "rb",
         ) as file:
             group_matrices = pickle.load(file)

@@ -15,7 +15,7 @@ Instructions 3/4
 <h4> Accepting proposals </h4>
 
 <p> 
-    During the five minutes of discussion and bargaining <b>you can change which proposal you currently accept any number of task-submit-preferred.
+    During the five minutes of discussion and bargaining <b>you can change which proposal you currently accept any number of times.
     At the end of the five minutes, everyone's currently accepted proposal becomes final.</b>
     The "Currently accepted proposal" interface for this is shown below.  You can see which proposal ID each player currently accepts (or whether they reject all, by choosing "—"). 
     In the row below you see which payoffs these choices would lead to.
@@ -26,6 +26,7 @@ Instructions 3/4
 <h5> Try it yourself </h5>
 
 <div>
+    <p>As an illustration, suppose you are <span style="color: #056fb7; font-weight: bold;">Player {{player_name}}</span><div class=""></div></p>
     <p>Please perform the following tasks:</p>
     <ul>
         <li id="task-submit-preferred">Submit a preferred proposal <span class="checkmark" style="visibility: hidden;">✅</span></li>
@@ -137,9 +138,9 @@ Instructions 3/4
                     <tr>
                         <th class="offer-id-col">ID</th>
                         <th class="offer-proposer-col">From</th>
-                        <th class="offer-player-col player-1">{{P1}}</th>
-                        <th class="offer-player-col player-2">{{P2}}</th>
-                        <th class="offer-player-col player-3">{{P3}}</th>
+                        <th class="offer-player-col">{{P1}}</th>
+                        <th class="offer-player-col">{{P2}}</th>
+                        <th class="offer-player-col">{{P3}}</th>
                     </tr>
                 </thead>
                 <tbody id="past-offers-table"></tbody>
@@ -154,9 +155,9 @@ Instructions 3/4
             <tbody>
                 <tr>
                     <th></th>
-                    <th class="offer-player-col player-1">Player {{P1}}</th>
-                    <th class="offer-player-col player-2">Player {{P2}}</th>
-                    <th class="offer-player-col player-3">Player {{P3}}</th>
+                    <th class="offer-player-col">Player {{P1}}</th>
+                    <th class="offer-player-col">Player {{P2}}</th>
+                    <th class="offer-player-col">Player {{P3}}</th>
                 </tr>
                 <tr style="height: 3em;">
                     <th class="offer-left-col">Accepted proposal <span class="red-highlight">ID</span></th>

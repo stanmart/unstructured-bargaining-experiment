@@ -9,13 +9,13 @@ Instructions 2/4
 
 {{ block content }}
 
-<p> On this page, we explain how the budget of a group is determined and how you can make a proposal. </p>
+<p> On this page, we explain how the group budget is determined and how you can make a proposal. </p>
 
 <h4> Group budgets </h4>
 
 <p> 
     You and the two other players will each be randomly assigned a player role ({{P1}}, {{P2}}, {{P3}}). 
-    <b> The player roles will be reshuffled each round. </b>
+    <b> The player roles will be reassigned each round. </b>
 </p>
 {{ if not last_player_is_dummy }}
 <p>
@@ -33,7 +33,7 @@ Instructions 2/4
 <p>
     <b> 
         A group needs to include Players {{P1}} and {{P2}} to receive a budget of CHF {{grand_coalition_value}}. 
-        The group's budget does not depend on Player {{P3}}'s inclusion. They can still be included in any group.
+        The group budget does not depend on Player {{P3}}'s inclusion. They can still be included in any group.
     </b>
 </p>
 {{ endif }}
@@ -71,6 +71,7 @@ Instructions 2/4
 <h4> Try it yourself </h4>
 <p> 
     <div>
+        <p>As an illustration, suppose you are <span style="color: #056fb7; font-weight: bold;">Player {{player_name}}</span> (the proposal options are the same no matter the role). </p>
         <p>  To become more familiar with the interface, we ask you to complete the following small exercise: </p>
         <p>
             For each of the criteria below, make a proposal that satisfies it. 
@@ -112,7 +113,7 @@ Instructions 2/4
                 <th id="payoff-table-header-title">Group members</th>
             </tr>
             <tr id="payoff-table-values">
-                <th>Group's budget </th>
+                <th>Group budget </th>
             </tr>
         </table>
         <div style="height: 200px; width: 350px">
