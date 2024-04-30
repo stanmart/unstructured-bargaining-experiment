@@ -4,7 +4,15 @@ import time
 import json
 
 from otree import settings
-from otree.api import *
+from otree.api import (
+    BaseConstants,
+    BaseSubsession,
+    BaseGroup,
+    BasePlayer,
+    ExtraModel,
+    Page,
+    models,
+)
 
 from .image_utils import encode_image
 from . import task_sliders

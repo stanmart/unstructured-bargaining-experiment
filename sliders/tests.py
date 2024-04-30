@@ -1,7 +1,7 @@
 import time
 from contextlib import contextmanager
 
-from otree.api import *
+from otree.api import Submission, Bot, expect
 from otree import settings
 
 from . import Puzzle, Slider, Game
@@ -44,7 +44,7 @@ class PlayerBot(Bot):
 # `r` for response
 
 
-def get_last_puzzle(p) -> Puzzle:
+def get_last_puzzle(p) -> Puzzle | None:
     puzzles = Puzzle.filter(player=p, iteration=p.iteration)
     puzzle = puzzles[-1] if len(puzzles) else None
     return puzzle
