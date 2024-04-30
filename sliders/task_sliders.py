@@ -72,12 +72,12 @@ def render_image(layout, targets):
         # bbox for debug
         w, h = SLIDER_BBOX
         draw.rectangle(
-            [x0 - w / 2, y0 - h / 2, x0 + w / 2, y0 + h / 2],
+            (x0 - w / 2, y0 - h / 2, x0 + w / 2, y0 + h / 2),
             outline="gray",
         )
 
         draw.rounded_rectangle(
-            [xm - SLIDER_WIDTH / 2 - 4, y0 - 4, xm + SLIDER_WIDTH / 2 + 4, y0 + 4],
+            (xm - SLIDER_WIDTH / 2 - 4, y0 - 4, xm + SLIDER_WIDTH / 2 + 4, y0 + 4),
             radius=4,  # PIL cannot draw r=6 w/out antialias
             fill=TRACK_COLOR,
         )
@@ -89,7 +89,7 @@ def render_image(layout, targets):
             #     [xv - 2, y0 - 2, xv + 2, y0 + 2], radius=2, fill=BACK_COLOR
             # )
             draw.rounded_rectangle(
-                [xv - 2, y0 - 2, xv + 2, y0 + 2], radius=2, fill=color
+                (xv - 2, y0 - 2, xv + 2, y0 + 2), radius=2, fill=color
             )
 
     return image
