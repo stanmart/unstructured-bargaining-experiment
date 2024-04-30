@@ -1,8 +1,8 @@
 """
 Utilities to generate and manipulate images
 """
-from io import BytesIO
 from base64 import b64encode
+from io import BytesIO
 
 MSG_NEED_PIL = """
 FAILURE: Before using these real-effort tasks,

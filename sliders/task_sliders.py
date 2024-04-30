@@ -1,6 +1,7 @@
 import math
-from PIL import Image, ImageDraw
 import random
+
+from PIL import Image, ImageDraw
 
 SLIDER_SNAP = 4  # size of 1 unit
 SLIDER_WIDTH = SLIDER_SNAP * 100

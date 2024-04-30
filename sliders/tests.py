@@ -1,11 +1,11 @@
 import time
 from contextlib import contextmanager
 
-from otree.api import Submission, Bot, expect
 from otree import settings
+from otree.api import Bot, Submission, expect
 
-from . import Puzzle, Slider, Game
-from .task_sliders import snap_value, SLIDER_SNAP
+from . import Game, Puzzle, Results, Slider
+from .task_sliders import SLIDER_SNAP, snap_value
 
 
 class PlayerBot(Bot):
@@ -34,6 +34,7 @@ class PlayerBot(Bot):
 
         make_timeout = "timeout" in self.case
         yield Submission(Game, check_html=False, timeout_happened=make_timeout)
+        yield Results
 
 
 # utils

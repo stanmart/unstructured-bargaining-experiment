@@ -1,21 +1,21 @@
 # This code for the real-effort task is taken from https://www.otreehub.com/projects/otree-realeffort/ (author: Chris @oTree).
 
-import time
 import json
+import time
 
 from otree import settings
 from otree.api import (
     BaseConstants,
-    BaseSubsession,
     BaseGroup,
     BasePlayer,
+    BaseSubsession,
     ExtraModel,
     Page,
     models,
 )
 
-from .image_utils import encode_image
 from . import task_sliders
+from .image_utils import encode_image
 
 doc = """
 """
