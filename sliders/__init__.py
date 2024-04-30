@@ -51,10 +51,10 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # only supported 1 iteration for now
-    iteration = models.IntegerField(initial=0)
+    iteration = models.IntegerField(initial=0)  # type: ignore
 
-    num_correct = models.IntegerField(initial=0)
-    elapsed_time = models.FloatField(initial=0)
+    num_correct = models.IntegerField(initial=0)  # type: ignore
+    elapsed_time = models.FloatField(initial=0)  # type: ignore
 
 
 # puzzle-specific stuff
@@ -71,8 +71,8 @@ class Puzzle(ExtraModel):
     layout = models.LongStringField()
 
     response_timestamp = models.FloatField()
-    num_correct = models.IntegerField(initial=0)
-    is_solved = models.BooleanField(initial=False)
+    num_correct = models.IntegerField(initial=0)  # type: ignore
+    is_solved = models.BooleanField(initial=False)  # type: ignore
 
 
 class Slider(ExtraModel):
@@ -82,8 +82,8 @@ class Slider(ExtraModel):
     idx = models.IntegerField()
     target = models.IntegerField()
     value = models.IntegerField()
-    is_correct = models.BooleanField(initial=False)
-    attempts = models.IntegerField(initial=0)
+    is_correct = models.BooleanField(initial=False)  # type: ignore
+    attempts = models.IntegerField(initial=0)  # type: ignore
 
 
 def generate_puzzle(player: Player) -> Puzzle:
@@ -194,7 +194,7 @@ def play_game(player: Player, message: dict):
         if puzzle is not None:
             raise RuntimeError("trying to create 2nd puzzle")
 
-        player.iteration += 1
+        player.iteration += 1  # type: ignore
         z = generate_puzzle(player)
         p = get_progress(player)
 
@@ -218,8 +218,8 @@ def play_game(player: Player, message: dict):
 
         value = int(message["value"])
         handle_response(puzzle, slider, value)
-        puzzle.response_timestamp = now
-        slider.attempts += 1
+        puzzle.response_timestamp = now  # type: ignore
+        slider.attempts += 1  # type: ignore
         player.num_correct = puzzle.num_correct
 
         p = get_progress(player)
@@ -248,7 +248,7 @@ def play_game(player: Player, message: dict):
 class Game(Page):
     timeout_seconds = 4 * 60
 
-    live_method = play_game
+    live_method = play_game  # type: ignore
 
     @staticmethod
     def js_vars(player: Player):
@@ -266,7 +266,7 @@ class Game(Page):
         puzzle = get_current_puzzle(player)
 
         if puzzle and puzzle.response_timestamp:
-            player.elapsed_time = puzzle.response_timestamp - puzzle.timestamp
+            player.elapsed_time = puzzle.response_timestamp - puzzle.timestamp  # type: ignore
             player.num_correct = puzzle.num_correct
             player.payoff = player.num_correct
 
