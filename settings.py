@@ -95,7 +95,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=10.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ["final_payoff", "payoff_list", "is_dropout"]
+PARTICIPANT_FIELDS = ["final_payoff", "payoff_list", "task_score"]
 
 SESSION_FIELDS = ["params"]
 

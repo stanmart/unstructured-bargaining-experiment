@@ -264,6 +264,7 @@ class Game(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         puzzle = get_current_puzzle(player)
+        player.participant.task_score = player.num_correct
 
         if puzzle and puzzle.response_timestamp:
             player.elapsed_time = puzzle.response_timestamp - puzzle.timestamp  # type: ignore

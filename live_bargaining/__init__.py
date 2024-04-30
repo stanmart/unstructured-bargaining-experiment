@@ -280,6 +280,7 @@ class Info(Page):
         return dict(
             actual_round_number=player.subsession.round_number - 1,
             player_name=player.session.config["player_names"][f"P{player.id_in_group}"],
+            player_score=player.participant.task_score,
         )
 
 
