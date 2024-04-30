@@ -146,10 +146,6 @@ function updatePastOffers(newPastOffers) {
             } else {
                 cell.innerHTML = offer.allocations[i]
             }
-            if (i === js_vars.my_id - 1) {
-                cell.style.fontWeight = 'bold';
-                cell.style.color = '#056fb7';
-            }
         }
 
         for (let i = 0; i < allocationDropdowns.length; i++) {
