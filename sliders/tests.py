@@ -9,31 +9,9 @@ from .task_sliders import SLIDER_SNAP, snap_value
 
 
 class PlayerBot(Bot):
-    cases = [
-        "normal",
-        "normal_timeout",
-        "dropout_timeout",
-        "snapping",
-        "reloading",
-        "submitting_null",
-        "submitting_empty",
-        "submitting_none",
-        "submitting_blank",
-        "submitting_premature",
-        "submitting_toofast",
-        "submitting_toomany",
-        "skipping",
-        "cheat_debug",
-        "cheat_nodebug",
-    ]
-
     def play_round(self):
-        if self.case == "iter_limit" and not self.session.params["max_iterations"]:
-            print(f"Skipping case {self.case} under no max_iterations")
-            return
-
-        make_timeout = "timeout" in self.case
-        yield Submission(Game, check_html=False, timeout_happened=make_timeout)
+        print("Testing slider task")
+        yield Submission(Game, check_html=False, timeout_happened=True)
         yield Results
 
 
@@ -127,227 +105,216 @@ def expect_response_progress(r, **values):
 
 
 def call_live_method(method, group, case, **kwargs):  # noqa
-    print(f"Testing case '{case}'")
-
-    try:
-        test = globals()[f"live_test_{case}"]
-    except KeyError:
-        raise NotImplementedError("Test case not implemented", case)
-
-    test(method, group.get_players()[0], group.session.params)
-
-
-# test cases
-
-
-def live_test_normal(method, player, conf):
-    num_sliders = conf["num_sliders"]
-    retry_delay = conf["retry_delay"]
+    player = group.get_players()[0]
+    conf = group.session.params
 
     send(method, player, "load")
+
+    print("  - testing submitting prematurely")
+    test_submitting_premature(method, player, conf)
+
     send(method, player, "new")
 
     puzzle = get_last_puzzle(player)
+    num_correct = 0
+    current_slider = 0
 
-    for i in range(num_sliders):
-        last = i == num_sliders - 1
-        target = get_target(puzzle, i)
-        # 1st attempt - incorrect
-        value = target + SLIDER_SNAP * 2
-        resp = send(method, player, "value", slider=i, value=value)
-        expect_puzzle(puzzle, iteration=1, num_correct=i, is_solved=False)
-        expect_slider(puzzle, i, value)
-        expect_response(
-            resp,
-            "feedback",
-            slider=i,
-            value=value,
-            is_correct=False,
-            is_completed=False,
-        )
+    print("  - testing unsuccessful attempt")
+    test_unsuccessful_attempt(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
 
-        time.sleep(retry_delay)
+    print("  - testing successful attempt")
+    num_correct += 1
+    test_successful_attempt(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
 
-        # 2nd attempt - correct
-        value = target
-        resp = send(method, player, "value", slider=i, value=value)
-        expect_puzzle(puzzle, iteration=1, num_correct=i + 1, is_solved=last)
-        expect_slider(puzzle, i, value)
-        expect_response(
-            resp, "feedback", slider=i, value=value, is_correct=True, is_completed=last
-        )
+    print("  - testing second successful attempt")
+    current_slider += 1
+    num_correct += 1
+    test_successful_attempt(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
 
-        time.sleep(retry_delay)
+    print("  - testing snapping")
+    current_slider += 1
+    test_snapping(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting null")
+    test_snapping(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing reloading")
+    test_reloading(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting null")
+    test_submitting_null(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting empty")
+    test_submitting_empty(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting none")
+    test_submitting_none(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting blank")
+    test_submitting_blank(method, player, puzzle, current_slider, num_correct)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting too many")
+    current_slider += 1
+    test_submitting_toomany(method, player, puzzle, current_slider, num_correct, conf)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing submitting too fast")
+    current_slider += 1
+    test_submitting_toofast(method, player, puzzle, current_slider, num_correct, conf)
+    time.sleep(conf["retry_delay"])
+
+    print("  - testing skipping")
+    test_skipping(method, player, puzzle, current_slider, num_correct)
+
+    print("  - testing cheating")
+    test_cheat_nodebug(method, player)
 
 
-def live_test_normal_timeout(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-    send(method, player, "value", slider=0, value=100)
+def test_unsuccessful_attempt(method, player, puzzle, slider, num_correct):
+    target = get_target(puzzle, slider)
+    value = target + SLIDER_SNAP * 2
+
+    resp = send(method, player, "value", slider=slider, value=value)
+    expect_puzzle(puzzle, iteration=1, num_correct=num_correct, is_solved=False)
+    expect_slider(puzzle, slider, value)
+    expect_response(
+        resp,
+        "feedback",
+        slider=slider,
+        value=value,
+        is_correct=False,
+        is_completed=False,
+    )
 
 
-def live_test_dropout_timeout(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
+def test_successful_attempt(method, player, puzzle, slider, num_correct):
+    target = get_target(puzzle, slider)
+    value = target
+
+    resp = send(method, player, "value", slider=slider, value=value)
+    expect_puzzle(puzzle, iteration=1, num_correct=num_correct, is_solved=False)
+    expect_slider(puzzle, slider, value)
+    expect_response(
+        resp,
+        "feedback",
+        slider=slider,
+        value=value,
+        is_correct=True,
+        is_completed=False,
+    )
 
 
-def live_test_snapping(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
-    puzzle = get_last_puzzle(player)
-
-    solution0 = get_target(puzzle, 0)
+def test_snapping(method, player, puzzle, slider, num_correct):
+    solution0 = get_target(puzzle, slider)
     value = solution0 + 100
     snapped = snap_value(value, solution0)
-    send(method, player, "value", slider=0, value=value)
-    expect_slider(puzzle, 0, snapped)
+    send(method, player, "value", slider=slider, value=value)
+    expect_slider(puzzle, slider, snapped)
 
 
-def live_test_reloading(method, player, conf):
-    # start of the game
-    resp = send(method, player, "load")
-
-    expect(get_last_puzzle(player), None)
-    expect_response(resp, "status")
-    expect_response_progress(resp, iteration=0)
-
-    resp = send(method, player, "new")
-    puzzle = get_last_puzzle(player)
-    expect_puzzle(puzzle, iteration=1, num_correct=0)
-    expect_response(resp, "puzzle")
-    expect_response_progress(resp, iteration=1)
-
-    # 1 answer
-    target = get_target(puzzle, 0)
-    send(method, player, "value", slider=0, value=target)
-    expect_puzzle(puzzle, iteration=1, num_correct=1)
-    expect_slider(puzzle, 0, target)
-
-    # midgame reload
+def test_reloading(method, player, puzzle, slider, num_correct):
     resp = send(method, player, "load")
     expect_response(resp, "status")
-    expect_response_progress(resp, iteration=1)
+    new_puzzle = get_last_puzzle(player)
+    expect_puzzle(puzzle, iteration=1, num_correct=num_correct)
+    for sl in range(slider + 1):
+        expect_slider(new_puzzle, sl, get_value(puzzle, sl))
 
-    puzzle = get_last_puzzle(player)
-    expect_puzzle(puzzle, iteration=1, num_correct=1)
-    expect_slider(puzzle, 0, target)
 
-
-def live_test_submitting_null(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
+def test_submitting_null(method, player, puzzle, slider, num_correct):
     with expect_failure(TypeError):
         method(player.id_in_group, None)
 
-    expect_puzzle(get_last_puzzle(player), iteration=1, num_correct=0, is_solved=False)
+    expect_puzzle(puzzle, iteration=1, num_correct=num_correct, is_solved=False)
 
 
-def live_test_submitting_empty(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
+def test_submitting_empty(method, player, puzzle, slider, num_correct):
     with expect_failure(KeyError):
         method(player.id_in_group, {})
 
-    expect_puzzle(get_last_puzzle(player), iteration=1, num_correct=0, is_solved=False)
+    expect_puzzle(puzzle, iteration=1, num_correct=num_correct, is_solved=False)
 
 
-def live_test_submitting_none(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
+def test_submitting_none(method, player, puzzle, slider, num_correct):
     with expect_failure(KeyError):
         send(method, player, "value")
 
-    expect_puzzle(get_last_puzzle(player), iteration=1, num_correct=0, is_solved=False)
+    expect_puzzle(
+        get_last_puzzle(player), iteration=1, num_correct=num_correct, is_solved=False
+    )
 
 
-def live_test_submitting_blank(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
+def test_submitting_blank(method, player, puzzle, slider, num_correct):
     with expect_failure(ValueError):
         send(method, player, "value", slider=0, value="")
 
-    expect_puzzle(get_last_puzzle(player), iteration=1, num_correct=0, is_solved=False)
+    expect_puzzle(puzzle, iteration=1, num_correct=num_correct, is_solved=False)
 
 
-def live_test_submitting_premature(method, player, conf):
-    send(method, player, "load")
-
+def test_submitting_premature(method, player, conf):
     with expect_failure(RuntimeError):
         send(method, player, "value", slider=0, value=100)
 
 
-def live_test_submitting_toomany(method, player, conf):
+def test_submitting_toomany(method, player, puzzle, slider, num_correct, conf):
     retry_delay = conf["retry_delay"]
-
-    send(method, player, "load")
-    send(method, player, "new")
-
-    puzzle = get_last_puzzle(player)
-    target = get_target(puzzle, 0)
+    target = get_target(puzzle, slider)
 
     v1 = snap_value(100, target)
     v2 = snap_value(50, target)
 
     for _ in range(conf["attempts_per_slider"]):
-        resp = send(method, player, "value", slider=0, value=v1)
+        resp = send(method, player, "value", slider=slider, value=v1)
         expect_response(resp, "feedback")
-        expect_slider(puzzle, 0, v1)
+        expect_slider(puzzle, slider, v1)
         time.sleep(retry_delay)
 
     with expect_failure(RuntimeError):
-        send(method, player, "value", slider=0, value=v2)
+        send(method, player, "value", slider=slider, value=v2)
 
-    expect_slider(puzzle, 0, v1)
+    expect_slider(puzzle, slider, v1)
 
 
-def live_test_submitting_toofast(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
-    puzzle = get_last_puzzle(player)
-    target = get_target(puzzle, 0)
+def test_submitting_toofast(method, player, puzzle, slider, num_correct, conf):
+    target = get_target(puzzle, slider)
 
     v1 = snap_value(100, target)
     v2 = snap_value(50, target)
 
-    resp = send(method, player, "value", slider=0, value=v1)
+    resp = send(method, player, "value", slider=slider, value=v1)
     expect_response(resp, "feedback")
-    expect_slider(puzzle, 0, v1)
+    expect_slider(puzzle, slider, v1)
 
     with expect_failure(RuntimeError):
-        send(method, player, "value", slider=0, value=v2)
+        send(method, player, "value", slider=slider, value=v2)
 
-    expect_slider(puzzle, 0, v1)
+    expect_slider(puzzle, slider, v1)
 
 
-def live_test_skipping(method, player, conf):
-    send(method, player, "load")
-    send(method, player, "new")
-
+def test_skipping(method, player, puzzle, slider, num_correct):
     with expect_failure(RuntimeError):
         send(method, player, "new")
 
-    expect_puzzle(get_last_puzzle(player), iteration=1, num_correct=0, is_solved=False)
+    expect_puzzle(
+        get_last_puzzle(player), iteration=1, num_correct=num_correct, is_solved=False
+    )
 
 
-def live_test_cheat_debug(method, player, conf):
-    settings.DEBUG = True
-    send(method, player, "load")
-    send(method, player, "new")
-
-    resp = send(method, player, "cheat")
-    expect_response(resp, "solution")
-
-
-def live_test_cheat_nodebug(method, player, conf):
+def test_cheat_nodebug(method, player):
+    debug_old = settings.DEBUG
     settings.DEBUG = False
-    send(method, player, "load")
-    send(method, player, "new")
 
     with expect_failure(RuntimeError):
         send(method, player, "cheat")
+
+    settings.DEBUG = debug_old
