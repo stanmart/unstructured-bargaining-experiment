@@ -1,7 +1,6 @@
 import time
 from contextlib import contextmanager
 
-from otree import settings
 from otree.api import Bot, Submission, expect
 
 from . import Game, Puzzle, Results, Slider
@@ -176,9 +175,6 @@ def call_live_method(method, group, case, **kwargs):  # noqa
     print("  - testing skipping")
     test_skipping(method, player, puzzle, current_slider, num_correct)
 
-    print("  - testing cheating")
-    test_cheat_nodebug(method, player)
-
 
 def test_unsuccessful_attempt(method, player, puzzle, slider, num_correct):
     target = get_target(puzzle, slider)
@@ -308,13 +304,3 @@ def test_skipping(method, player, puzzle, slider, num_correct):
     expect_puzzle(
         get_last_puzzle(player), iteration=1, num_correct=num_correct, is_solved=False
     )
-
-
-def test_cheat_nodebug(method, player):
-    debug_old = settings.DEBUG
-    settings.DEBUG = False
-
-    with expect_failure(RuntimeError):
-        send(method, player, "cheat")
-
-    settings.DEBUG = debug_old

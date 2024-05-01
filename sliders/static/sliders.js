@@ -172,10 +172,6 @@ class Controller {
             case 'feedback':
                 this.recvFeedback(message);
                 break;
-
-            case 'solution':
-                this.cheat(message.solution);
-                break;
         }
 
         if ('progress' in message) { // can be added to message of any type
@@ -269,16 +265,6 @@ class Controller {
 
     endGame() {
         document.getElementById("form").submit();
-    }
-
-    cheat(values) {
-        let i = 0, cnt=Object.keys(values).length;
-        let timer = window.setInterval(() => {
-            this.model.sliders[i].value = values[i];
-            this.submitSlider(i);
-            i++;
-            if (i == cnt) window.clearInterval(timer);
-        }, js_vars.params.retry_delay * 1000 + 100);
     }
 }
 
