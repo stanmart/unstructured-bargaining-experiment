@@ -1,6 +1,8 @@
 import pickle
 import time
 from datetime import datetime
+import numpy as np
+from random import choices
 
 from otree.api import (
     BaseConstants,
@@ -272,6 +274,35 @@ def create_acceptance_data(group: Group):
             }
 
 
+class WaitForRoles(WaitPage):
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        last_player_is_dummy = (
+            len(group.session.config["prod_fct"]) == C.PLAYERS_PER_GROUP - 1
+        )
+        scores = {
+            player.id_in_group: player.participant.task_score
+            for player in group.get_players()
+        }
+
+        scores_keys = list(scores.keys())
+        scores_vals = list(scores.values())
+        sorted_vals_index = np.argsort(scores_vals)  # in ascending order
+        sorted_scores = {scores_keys[i]: scores_vals[i] for i in sorted_vals_index}
+
+        # assign player roles
+        if (
+            last_player_is_dummy
+        ):  # the lower the score, the higher the probability of being the dummy player
+            dummy_id = choices(list(sorted_scores.keys()), weights=[5, 3, 2])
+            new_group_ids = [id for id in scores_keys if id != dummy_id[0]] + dummy_id
+        else:  # the higher the score, the higher the probability of being the dummy player
+            p1_id = choices(list(sorted_scores.keys()), weights=[2, 3, 5])
+            new_group_ids = p1_id + [id for id in scores_keys if id != p1_id[0]]
+        new_group = [group.get_player_by_id(id) for id in new_group_ids]
+        group.set_players(new_group)
+
+
 class Info(Page):
     @staticmethod
     def vars_for_template(player: Player):
@@ -515,6 +546,7 @@ def custom_export(players):
 
 
 page_sequence = [
+    WaitForRoles,
     Info,
     WaitForBargaining,
     Bargain,
