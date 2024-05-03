@@ -37,7 +37,7 @@ def creating_session(subsession: Subsession):
         trial_delay=1.0,
         retry_delay=0.1,
         num_sliders=120,
-        num_columns=3,
+        num_columns=1,
         attempts_per_slider=10,
     )
     session.params = {}
