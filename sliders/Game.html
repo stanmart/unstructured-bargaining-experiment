@@ -1,0 +1,33 @@
+{% block styles  %}
+    <link href="{% static 'sliders.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{{ block title }}
+Task
+{{ endblock }}
+
+{{ block content }}
+
+<p> Move the slider into the position indicated by the red dot. 
+    Once the slider is in the correct position, it will turn green. 
+    {{ if not last_player_is_dummy }}
+        Recall: The more sliders you put in the correct position, the higher the probability that you will be assigned player role {{P1}}. 
+    {{ else }}
+        Recall: The more sliders you put in the correct position, the higher the probability that you will be assigned player role {{P1}} or {{P2}}. 
+    {{ endif }}
+    You have 4 minutes in total.
+ </p>
+
+
+<div class="d-flex flex-column align-items-center">
+
+    <canvas id="canvas" class="m-2"></canvas>
+
+</div>
+
+{{ endblock }}
+
+{{ block scripts }}
+<script src="{{ static 'sliders.js' }}"></script>
+
+{{ endblock }}

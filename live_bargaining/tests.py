@@ -1,5 +1,7 @@
-from otree.api import Currency as c, expect, Bot, Submission
-from . import Info, Bargain, BargainingResults
+from otree.api import Bot, Submission, expect
+from otree.api import Currency as c
+
+from . import Bargain, BargainingResults, Info
 
 
 def create_offers(method, Y):

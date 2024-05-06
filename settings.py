@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
     dict(
         name="treatment_y_10",
         display_name="Treatment: Y=10",
-        app_sequence=["introduction", "live_bargaining", "survey"],
+        app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
@@ -33,7 +33,7 @@ SESSION_CONFIGS = [
     dict(
         name="treatment_y_30",
         display_name="Treatment: Y=30",
-        app_sequence=["introduction", "live_bargaining", "survey"],
+        app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
@@ -51,7 +51,7 @@ SESSION_CONFIGS = [
     dict(
         name="treatment_y_90",
         display_name="Treatment: Y=90",
-        app_sequence=["introduction", "live_bargaining", "survey"],
+        app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
@@ -69,7 +69,7 @@ SESSION_CONFIGS = [
     dict(
         name="treatment_dummy_player",
         display_name="Treatment: Dummy Player",
-        app_sequence=["introduction", "live_bargaining", "survey"],
+        app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
         prod_fct={
@@ -95,11 +95,9 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=10.00, doc=""
 )
 
-PARTICIPANT_FIELDS = [
-    "final_payoff",
-    "payoff_list",
-]
-SESSION_FIELDS = []
+PARTICIPANT_FIELDS = ["final_payoff", "payoff_list", "task_score"]
+
+SESSION_FIELDS = ["params"]
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans

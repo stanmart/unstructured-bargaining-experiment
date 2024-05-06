@@ -14,8 +14,16 @@ Instructions 2/4
 <h4> Group budgets </h4>
 
 <p> 
-    You and the two other players will each be randomly assigned a player role ({{P1}}, {{P2}}, {{P3}}). 
-    <b> The player roles will be reassigned each round. </b>
+    The assignment of player roles works as follows: After these instructions, you will work on a task (moving sliders). 
+    In each round, you and the respective two other players will each be randomly assigned a player role ({{P1}}, {{P2}}, {{P3}}). 
+
+    {{ if not last_player_is_dummy }}    
+        <b> The better you performed on the task, the higher the probability that you will be assigned player role {{P1}}.</b>
+    {{ else }}
+        <b> The better you performed on the task, the higher the probability that you will be assigned player role {{P1}} or {{P2}}. </b>
+    {{ endif}}
+    
+    <b> The player roles will be reassigned each round. </b> 
 </p>
 {{ if not last_player_is_dummy }}
 <p>

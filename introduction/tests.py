@@ -1,4 +1,5 @@
 from otree.api import Bot, Submission
+
 from . import Coalitions, Instructions, Payment, Proposal, Welcome
 
 

@@ -1,7 +1,6 @@
 from math import ceil
 
 from country_list import countries_for_language
-
 from otree.api import (
     BaseConstants,
     BaseGroup,
