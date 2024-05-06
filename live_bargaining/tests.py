@@ -271,10 +271,7 @@ class PlayerBot(Bot):
 
         expect(
             self.player.payoff,
-            c(
-                expected_payoffs[self.round_number][self.player.id_in_group - 1]
-                / num_real_rounds
-            ),
+            c(expected_payoffs[self.round_number][self.player.id_in_group - 1]),
         )
 
         yield BargainingResults  # just press proceed
