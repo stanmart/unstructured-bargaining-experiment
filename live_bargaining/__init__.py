@@ -1,9 +1,9 @@
 import pickle
 import time
 from datetime import datetime
-import numpy as np
 from random import choices
 
+import numpy as np
 from otree.api import (
     BaseConstants,
     BaseGroup,
