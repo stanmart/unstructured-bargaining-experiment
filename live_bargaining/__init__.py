@@ -414,7 +414,7 @@ def compute_payoffs(group: Group):
         if group.round_number == 1:
             player.payoff = 0
         else:
-            player.payoff = player.payoff_this_round / (C.NUM_ROUNDS - 1)
+            player.payoff = player.payoff_this_round
 
 
 class WaitForAnswers(WaitPage):
@@ -437,7 +437,7 @@ class BargainingResults(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            payoff_to_display=f"CHF {player.payoff_this_round:.2f}",
+            payoff_to_display=f"{player.payoff_this_round/4} points",
             **player.session.config["player_names"],
         )
 

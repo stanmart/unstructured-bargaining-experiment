@@ -92,7 +92,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=10.00, doc=""
+    real_world_currency_per_point=0.15, participation_fee=10.00, doc=""
 )
 
 PARTICIPANT_FIELDS = ["final_payoff", "payoff_list", "task_score"]
@@ -105,7 +105,7 @@ LANGUAGE_CODE = "en"
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = "CHF"
-USE_POINTS = False
+USE_POINTS = True
 
 ADMIN_USERNAME = "admin"
 # for security, best to set admin password in an environment variable

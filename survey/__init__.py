@@ -216,7 +216,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="The payoffs at the end of a bargaining round should always add up to the biggest possible budget (100 CHF). ",
+        label="The payoffs at the end of a bargaining round should always add up to the biggest possible budget (100 points). ",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -262,8 +262,9 @@ class Player(BasePlayer):
 
 # FUNCTIONS
 def compute_final_payoffs(player: Player):
-    player.participant.payoff = cu(ceil(player.participant.payoff))
-    player.participant.final_payoff = player.participant.payoff_plus_participation_fee()
+    player.participant.final_payoff = ceil(
+        player.participant.payoff_plus_participation_fee()
+    )
 
 
 # PAGES
@@ -314,11 +315,15 @@ class Completion(Page):
     def vars_for_template(player: Player):
         return {
             "all_payoffs": [
-                f"Round {i}: CHF{round_payoff:.2f}"
+                f"Round {i}: {round_payoff:.2f} points"
                 for i, round_payoff in enumerate(player.participant.payoff_list)  # type: ignore
                 if i > 0
             ],
             "num_of_rounds": len(player.participant.payoff_list) - 1,
+            "avg_payoff": float(player.participant.payoff) / 4,
+            "converted_bargaining_payoff": ceil(
+                player.participant.payoff.to_real_world_currency(player.session)
+            ),
         }
 
 
