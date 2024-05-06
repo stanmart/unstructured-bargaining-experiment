@@ -10,7 +10,11 @@ Task
 
 <p> Move the slider into the position indicated by the red dot. 
     Once the slider is in the correct position, it will turn green. 
-    Your goal is to put as many sliders to the correct position as possible.
+    {{ if not last_player_is_dummy }}
+        Recall: The more sliders you put in the correct position, the higher the probability that you will be assigned player role {{P1}}. 
+    {{ else }}
+        Recall: The more sliders you put in the correct position, the higher the probability that you will be assigned player role {{P1}} or {{P2}}. 
+    {{ endif }}
     You have 4 minutes in total.
  </p>
 
