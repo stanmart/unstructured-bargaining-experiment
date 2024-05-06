@@ -248,6 +248,14 @@ def call_live_method(method, **kwargs):
         method(3, {"type": "accept", "offer_id": 1})
         method(2, {"type": "accept", "offer_id": 0})
 
+    if kwargs["round_number"] == 6:
+        print("Testing revoking acceptance")
+        create_offers(method, Y)
+        method(1, {"type": "accept", "offer_id": 1})
+        method(2, {"type": "accept", "offer_id": 1})
+        method(3, {"type": "accept", "offer_id": 1})
+        method(2, {"type": "accept", "offer_id": 0})
+
 
 class PlayerBot(Bot):
     def play_round(self):
