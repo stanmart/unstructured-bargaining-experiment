@@ -242,7 +242,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="Suppose in round 2 each group budget is twice as large as in in round 1. Then the payoff of a player should be double the amount that player got in round 1.",
+        label="Suppose in round 2 each group budget is twice as large as in in round 1. Then the payoff of each player should be double the amount that player got in round 1.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
