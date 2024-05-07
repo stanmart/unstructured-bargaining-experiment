@@ -190,7 +190,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="If adding player X to a group never increases the budget, player X should get nothing. ",
+        label="If adding a certain player to a group never increases the budget, this player should get nothing.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -203,7 +203,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="If adding player X to a group always has the same impact on the budget as adding player Y, then player X and player Y should get the same payoff.",
+        label="If adding a certain player to a group always has the same impact on the budget as adding a certain other player, then both players should get the same payoff.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -216,7 +216,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="The payoffs at the end of a bargaining round should always add up to the biggest possible budget (100 points). ",
+        label="At the end of a bargaining round the biggest possible budget (100 points) should be paid out. ",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -229,7 +229,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="Suppose in round 3 the group budgets are the sum of the group budgets in round 1 and 2 for any group. Then the payoff of player X should the be the sum of the payoff player X got in round 1 and 2.",
+        label="Suppose in round 3 the group budgets are the sum of the group budgets in round 1 and 2, for any group. Then the payoff of each player should the be the sum of the payoffs that that player got in round 1 and 2.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -242,7 +242,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="Suppose in round 2 each group budget is twice as large as in in round 1. Then the payoff of player X should be double the amount player X got in round 1.",
+        label="Suppose in round 2 each group budget is twice as large as in in round 1. Then the payoff of each player should be double the amount that player got in round 1.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -255,7 +255,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="If player X and player Y would have a budget of Z if they formed a group on their own, then the payoffs of player X and Y should be at least Z in total in the final accepted proposal.",
+        label="If two players would have a budget of B points if they formed a group on their own, then the payoff of both players should sum up to at least B points in total in the final accepted proposal.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
