@@ -36,7 +36,7 @@ def creating_session(subsession: Subsession):
     defaults = dict(
         trial_delay=1.0,
         retry_delay=0.1,
-        num_sliders=120,
+        num_sliders=150,
         num_columns=1,
         attempts_per_slider=10,
     )
