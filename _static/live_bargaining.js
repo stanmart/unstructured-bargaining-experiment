@@ -50,7 +50,7 @@ for (let i = 0; i < numPlayers; i++) {
         if (!isMemberCheckboxes[i].checked) {
             allocationTextBoxes[i].value = 0;
         } else {
-            allocationTextBoxes[i].value = 1;
+            allocationTextBoxes[i].value = '';
         }
         updateTotalShareable();
         updateTotalShared();
@@ -60,12 +60,12 @@ for (let i = 0; i < numPlayers; i++) {
     });
 
     allocationTextBoxes[i].addEventListener('change', function () {
-        allocationTextBoxes[i].value = Math.floor(Math.max(1, allocationTextBoxes[i].value));
+        allocationTextBoxes[i].value = Math.floor(Math.max(0, allocationTextBoxes[i].value));
         updateTotalShared();
     });
     allocationTextBoxes[i].addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
-            allocationTextBoxes[i].value = Math.floor(Math.max(1, allocationTextBoxes[i].value));
+            allocationTextBoxes[i].value = Math.floor(Math.max(0, allocationTextBoxes[i].value));
             updateTotalShared();
         }
     });
@@ -83,6 +83,12 @@ function sendOffer() {
     if (totalSharedValue > totalShareableValue) {
         openPopup('Invalid proposal: total amount exceeds the group budget', 'error');
         return;
+    }
+    for (let i = 0; i < numPlayers; i++) {
+        if (isMemberCheckboxes[i].checked && allocationTextBoxes[i].value === '') {
+            openPopup('Invalid proposal: please choose an amount for each group member', 'error');
+            return;
+        }
     }
     for (let i = 0; i < numPlayers; i++) {
         if (isMemberCheckboxes[i].checked && allocationTextBoxes[i].value === '0') {
@@ -157,7 +163,9 @@ function updateTotalShareable() {
 }
 
 function updateTotalShared() {
-    totalSharedValue = allocationTextBoxes.reduce((acc, curr) => acc + (curr.disabled ? 0 : parseInt(curr.value)), 0);
+    totalSharedValue = allocationTextBoxes.reduce(
+        (acc, curr) => acc + (curr.disabled || curr.value == '' ? 0 : parseInt(curr.value)), 0
+    );
     totalShared.innerHTML = totalSharedValue;
     if (totalSharedValue > totalShareableValue) {
         totalShared.style.color = 'red';
