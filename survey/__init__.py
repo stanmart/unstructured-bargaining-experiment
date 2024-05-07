@@ -7,7 +7,6 @@ from otree.api import (
     BasePlayer,
     BaseSubsession,
     Page,
-    cu,
     models,
     widgets,
 )

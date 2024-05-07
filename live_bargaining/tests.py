@@ -268,7 +268,6 @@ class PlayerBot(Bot):
 
         Y = list(self.session.config["prod_fct"].values())[1]
 
-        num_real_rounds = 4
         expected_payoffs = {
             1: [0, 0, 0],
             2: [50, 25, 25],
