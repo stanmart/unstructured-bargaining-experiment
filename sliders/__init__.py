@@ -234,14 +234,6 @@ def play_game(player: Player, message: dict):
             )
         }
 
-    if message_type == "cheat" and settings.DEBUG:
-        return {
-            my_id: dict(
-                type="solution",
-                solution={s.idx: s.target for s in Slider.filter(puzzle=puzzle)},
-            )
-        }
-
     raise RuntimeError("unrecognized message from client")
 
 
