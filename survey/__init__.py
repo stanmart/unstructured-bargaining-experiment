@@ -228,7 +228,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="Suppose in round 3 the group budgets are the sum of the group budgets in round 1 and 2, for any group. Then the payoff of each player should the be the sum of the payoffs that that player got in round 1 and 2.",
+        label="If one new round were to combine the group budgets of two previous rounds, the player payoffs should be the sum of the two previous rounds' payoffs.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
@@ -254,7 +254,7 @@ class Player(BasePlayer):
             "Strongly Agree",
             "No opinion",
         ],
-        label="If two players would have a budget of B points if they formed a group on their own, then the payoff of both players should sum up to at least B points in total in the final accepted proposal.",
+        label="If two players would have a group budget of X points if they formed a group on their own, then the payoff of both players should sum up to at least X points in total in the final accepted proposal.",
         widget=widgets.RadioSelectHorizontal,
     )  # type: ignore
 
