@@ -238,9 +238,11 @@ def play_game(player: Player, message: dict):
 
 
 class Game(Page):
-    timeout_seconds = 4 * 60
-
     live_method = play_game  # type: ignore
+
+    @staticmethod
+    def get_timeout_seconds(player: Player):
+        return player.session.config["seconds_for_sliders"]
 
     @staticmethod
     def js_vars(player: Player):
@@ -251,7 +253,13 @@ class Game(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        minutes_for_sliders = player.session.config["seconds_for_sliders"] // 60
+        and_seconds_for_sliders = player.session.config["seconds_for_sliders"] % 60
+        time_for_sliders_string = f"{minutes_for_sliders} minutes"
+        if and_seconds_for_sliders > 0:
+            time_for_sliders_string += f" and {and_seconds_for_sliders} seconds"
         return dict(
+            time_for_sliders_string=time_for_sliders_string,
             params=player.session.params,
             DEBUG=settings.DEBUG,
             last_player_is_dummy=len(player.session.config["prod_fct"])

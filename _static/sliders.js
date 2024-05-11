@@ -123,10 +123,6 @@ class View {
         let dx = x - this.grid[i][0];
         return Math.abs(dx) < this.slider_size[0]/2 ? dx : null;
     }
-
-    renderProgress() {
-        this.$progress.value = this.model.progress.solved;
-    }
 }
 
 class Controller {
@@ -267,6 +263,11 @@ class Controller {
         document.getElementById("form").submit();
     }
 }
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    let timer_text = $('.otree-timer:first p:first');
+    timer_text.html(timer_text.html().replace('complete this page', 'work on the task'));
+});
 
 window.onload = (event) => {
     const model = new Model();
