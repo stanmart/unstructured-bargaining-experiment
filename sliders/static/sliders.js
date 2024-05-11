@@ -123,10 +123,6 @@ class View {
         let dx = x - this.grid[i][0];
         return Math.abs(dx) < this.slider_size[0]/2 ? dx : null;
     }
-
-    renderProgress() {
-        this.$progress.value = this.model.progress.solved;
-    }
 }
 
 class Controller {
