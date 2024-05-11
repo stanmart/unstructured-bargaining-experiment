@@ -18,6 +18,7 @@ SESSION_CONFIGS = [
         app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
+        seconds_for_sliders=4 * 60,
         prod_fct={
             "B1+B2": 0,
             "A+B1<br>A+B2": 10,
@@ -36,6 +37,7 @@ SESSION_CONFIGS = [
         app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
+        seconds_for_sliders=4 * 60,
         prod_fct={
             "B1+B2": 0,
             "A+B1<br>A+B2": 30,
@@ -54,6 +56,7 @@ SESSION_CONFIGS = [
         app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
+        seconds_for_sliders=4 * 60,
         prod_fct={
             "B1+B2": 0,
             "A+B1<br>A+B2": 90,
@@ -72,6 +75,7 @@ SESSION_CONFIGS = [
         app_sequence=["introduction", "sliders", "live_bargaining", "survey"],
         num_demo_participants=3,
         seconds_per_round=5 * 60,
+        seconds_for_sliders=4 * 60,
         prod_fct={
             "A1+B<br>A2+B": 0,
             "A1+A2<br>A1+A2+B": 100,

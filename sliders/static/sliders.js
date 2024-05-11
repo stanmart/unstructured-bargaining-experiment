@@ -268,6 +268,11 @@ class Controller {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    let timer_text = $('.otree-timer:first p:first');
+    timer_text.html(timer_text.html().replace('complete this page', 'work on the task'));
+});
+
 window.onload = (event) => {
     const model = new Model();
     const view = new View(model, js_vars.slider_size);

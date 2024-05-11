@@ -1,5 +1,6 @@
 {% block styles  %}
     <link href="{% static 'sliders.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
 {% endblock %}
 
 {{ block title }}
@@ -15,7 +16,7 @@ Task
     {{ else }}
         Recall: The more sliders you put in the correct position, the higher the probability that you will be assigned player role {{P1}} or {{P2}}. 
     {{ endif }}
-    You have 4 minutes in total.
+    You have {{ time_for_sliders_string }} in total.
  </p>
 
 
