@@ -1,4 +1,4 @@
-{{ block head }}
+{{ block styles }}
 <link rel="stylesheet" href="{{ static 'live_bargaining.css' }}">
 {{ endblock }}
 
@@ -187,15 +187,14 @@ Instructions 2/4
     </table>
 </div>
 
+<b id="exercises-remaining-text" class="red-highlight">Please complete all exercises before moving to the next page.</b>
+{{ next_button }}
 
+{{ endblock }}
 
+{{ block scripts }}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ static 'proposal_demo.js' }}"></script>
-
-<b id="exercises-remaining-text" class="red-highlight">Please complete all exercises before moving to the next page.</b>
-
-{{ next_button }}
-
 
 {{ endblock }}
