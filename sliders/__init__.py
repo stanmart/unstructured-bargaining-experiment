@@ -275,7 +275,6 @@ class Game(Page):
         if puzzle and puzzle.response_timestamp:
             player.elapsed_time = puzzle.response_timestamp - puzzle.timestamp  # type: ignore
             player.num_correct = puzzle.num_correct
-            player.payoff = player.num_correct
 
 
 class Results(Page):

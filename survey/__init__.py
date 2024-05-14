@@ -312,14 +312,15 @@ class Questions(Page):
 class Completion(Page):
     @staticmethod
     def vars_for_template(player: Player):
+        num_of_rounds = len(player.participant.payoff_list) - 1
         return {
             "all_payoffs": [
                 f"Round {i}: {round_payoff:.2f} points"
                 for i, round_payoff in enumerate(player.participant.payoff_list)  # type: ignore
                 if i > 0
             ],
-            "num_of_rounds": len(player.participant.payoff_list) - 1,
-            "avg_payoff": float(player.participant.payoff) / 4,
+            "num_of_rounds": num_of_rounds,
+            "avg_payoff": float(player.participant.payoff) / num_of_rounds,
             "converted_bargaining_payoff": ceil(
                 player.participant.payoff.to_real_world_currency(player.session)
             ),
