@@ -1,0 +1,36 @@
+[workspace]
+authors = ["Mia W. Lu <mia.lu@econ.uzh.ch>", "Martin Stancsics <martin.stancsics@gmail.com>"]
+channels = ["conda-forge"]
+description = "An oTree experiment for testing unstructured bargaining in a specific context"
+name = "unstructured-bargaining-experiment"
+platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
+version = "1.0.2"
+
+[tasks]
+dev = "otree devserver"
+prod = "otree prodserver"
+test = "otree test 2> /tmp/stderr.log || cat /tmp/stderr.log; rm /tmp/stderr.log"
+
+[feature.lint.tasks]
+lint = "ruff check . && codespell && pyright"
+pre-commit-install = "pre-commit install"
+
+[feature.lint.pypi-dependencies]
+ruff = "*"
+codespell = "*"
+pyright = "*"
+pre-commit = "*"
+
+[environments]
+default = { solve-group = "default" }
+lint = { features = ["lint"], solve-group = "default" }
+
+[dependencies]
+python = "3.12.*"
+psycopg2 = "2.9.9.*"
+
+[pypi-dependencies]
+country_list = "==1.1.0"
+otree = "==5.10.4"
+pillow = "==10.3.0"
+requests = "==2.31.0"

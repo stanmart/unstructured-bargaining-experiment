@@ -171,3 +171,6 @@ _bots*s
 __temp*
 .DS_Store
 *.otreezip
+# pixi environments
+.pixi/*
+!.pixi/config.toml
