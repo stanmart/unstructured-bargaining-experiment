@@ -2,7 +2,6 @@ version: 6
 environments:
   default:
     channels:
-    - url: https://quantco.jfrog.io/artifactory/api/conda/qc-internal/
     - url: https://conda.anaconda.org/conda-forge/
     indexes:
     - https://pypi.org/simple
@@ -254,7 +253,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/b8/0c/47a2e5f0dc74c51160d414ab504d764247a4ff759a3b8785b49baf8bb341/WTForms_SQLAlchemy-0.2-py3-none-any.whl
   lint:
     channels:
-    - url: https://quantco.jfrog.io/artifactory/api/conda/qc-internal/
     - url: https://conda.anaconda.org/conda-forge/
     indexes:
     - https://pypi.org/simple
