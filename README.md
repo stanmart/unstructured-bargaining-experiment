@@ -98,7 +98,7 @@ pixi run test  # Run oTree tests with bots
 
 **Running linting and type checks locally:**
 ```bash
-pixi run -e lint lint  # Run all linting checks (ruff, codespell, pyright)
+pixi run lint  # Run all linting checks (ruff, codespell, pyright)
 ```
 
 <details>
