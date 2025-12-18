@@ -1,6 +1,6 @@
 [workspace]
-authors = ["Martin Stancsics <martin.stancsics@quantco.com>", "Mia W. Lu <mia.lu@econ.uzh.ch>"]
-channels = ["https://quantco.jfrog.io/artifactory/api/conda/qc-internal", "conda-forge"]
+authors = ["Mia W. Lu <mia.lu@econ.uzh.ch>", "Martin Stancsics <martin.stancsics@gmail.com>"]
+channels = ["conda-forge"]
 description = "An oTree experiment for testing unstructured bargaining in a specific context"
 name = "unstructured-bargaining-experiment"
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
