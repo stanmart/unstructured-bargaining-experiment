@@ -13,11 +13,13 @@ test = "otree test 2> /tmp/stderr.log || cat /tmp/stderr.log; rm /tmp/stderr.log
 
 [feature.lint.tasks]
 lint = "ruff check . && codespell && pyright"
+pre-commit-install = "pre-commit install"
 
 [feature.lint.pypi-dependencies]
 ruff = "*"
 codespell = "*"
 pyright = "*"
+pre-commit = "*"
 
 [environments]
 default = { solve-group = "default" }
